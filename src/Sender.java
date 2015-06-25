@@ -14,12 +14,15 @@ public class Sender
 	 */
 	public static boolean sendMessage(int chatId, String message)
 	{
-		try {
+		try 
+		{
 			Document doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&text=" + message).ignoreContentType(true).post();
-			if(doc.text().contains("\"ok\":true")) return true;
+			if(doc.text().contains("\"ok\":true")) return true; 
 			else return false;
-		} catch (IOException e) {
-			e.printStackTrace();
+		} 
+		catch (IOException e) 
+		{
+			//e.printStackTrace();
 			return false;
 		}
 	}

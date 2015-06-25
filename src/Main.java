@@ -13,7 +13,7 @@ public class Main
 	{
 		idCode = args[0];
 		url = "https://api.telegram.org/bot" + idCode;
-		Sender.sendMessage(84954308, "MessaggiodiProvaSender");
+		Sender.sendMessage(84954308, "Messaggio di Prova Sender");
 	}
 	
 	public static String getIdCode()
@@ -29,17 +29,17 @@ public class Main
 	public String getUpdate()
 	{
 		Document doc;
-		try 
-			{
-				doc = Jsoup.connect(url + "/getUpdates").get();
-				String contenent = doc.text();
-				return contenent;
-			} 
+		try
+		{
+			doc = Jsoup.connect(url + "/getUpdates").get();
+			String contenent = doc.text();
+			return contenent;
+		} 
 		catch (IOException e) 
-			{
-				e.printStackTrace();
-				return "";
-			}
+		{
+			e.printStackTrace();
+			return "";
+		}
 	}
 
 
