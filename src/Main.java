@@ -7,24 +7,31 @@ import org.jsoup.nodes.*;
 public class Main 
 {
 	private static String idCode = "";
+	private static String url;
 	
 	public static void main(String[] args) 
 	{
 		idCode = args[0];
+		url = "https://api.telegram.org/bot" + idCode;
+		Sender.sendMessage(84954308, "MessaggiodiProvaSender");
 	}
 	
-	public String getIdCode()
+	public static String getIdCode()
 	{
 		return idCode;
+	}
+	
+	public static String getUrl()
+	{
+		return url;
 	}
 
 	public String getUpdate()
 	{
-		String url = "https://api.telegram.org/bot" + idCode + "/getUpdates";
 		Document doc;
 		try 
 			{
-				doc = Jsoup.connect(url).get();
+				doc = Jsoup.connect(url + "/getUpdates").get();
 				String contenent = doc.text();
 				return contenent;
 			} 
