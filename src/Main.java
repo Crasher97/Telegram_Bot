@@ -1,8 +1,3 @@
-import java.io.IOException;
-
-import org.jsoup.*;
-import org.jsoup.nodes.*;
-
 
 public class Main 
 {
@@ -13,7 +8,8 @@ public class Main
 	{
 		idCode = args[0];
 		url = "https://api.telegram.org/bot" + idCode;
-		Sender.sendMessage(84954308, "Messaggio di Prova Sender");
+		Sender.sendMessage(84985065, "MessaggiodiProvaSender");
+		Reader.getUpdate();
 	}
 	
 	public static String getIdCode()
@@ -25,22 +21,5 @@ public class Main
 	{
 		return url;
 	}
-
-	public String getUpdate()
-	{
-		Document doc;
-		try
-		{
-			doc = Jsoup.connect(url + "/getUpdates").get();
-			String contenent = doc.text();
-			return contenent;
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-			return "";
-		}
-	}
-
 
 }
