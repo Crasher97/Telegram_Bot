@@ -6,28 +6,34 @@ import org.jsoup.nodes.*;
 
 public class Main 
 {
+	private static String idCode = "";
+	
 	public static void main(String[] args) 
 	{
-		final String idCode = args[0];
+		idCode = args[0];
+	}
+	
+	public String getIdCode()
+	{
+		return idCode;
 	}
 
-public String getUpdate()
-{
-	
-	String url = "https://api.telegram.org/bot" + idCode+ "/getUpdates";
-    Document doc;
-	try 
-		{
-			doc = Jsoup.connect(url).get();
-			String contenent = doc.text();
-			return contenent;
-		} 
-	catch (IOException e) 
-		{
-			e.printStackTrace();
-			return "";
-		}
-}
+	public String getUpdate()
+	{
+		String url = "https://api.telegram.org/bot" + idCode + "/getUpdates";
+		Document doc;
+		try 
+			{
+				doc = Jsoup.connect(url).get();
+				String contenent = doc.text();
+				return contenent;
+			} 
+		catch (IOException e) 
+			{
+				e.printStackTrace();
+				return "";
+			}
+	}
 
 
 }
