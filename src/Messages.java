@@ -20,8 +20,16 @@ public class Messages
 		else
 		{
 			messages.add(msg);
-			IO.writeOUT("C:\Users\Paolo\AppData\Roaming\TelegramBot" + Data.dataForWrite(), messages);
-			messages.removeAll(); //se non funziona mettere come parametro una collezione vuota
+			try 
+			{
+				IO.writeOUT("%appdata%\\TelegramBot" + Data.dataForWrite(), messages);
+			} 
+			catch (ParseException e)
+			{
+				
+				e.printStackTrace();
+			}
+			messages.clear();
 		}
 	}
 	

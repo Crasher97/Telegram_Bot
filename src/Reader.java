@@ -68,7 +68,14 @@ public class Reader
                 text = (String)jsonObjectMessage.get("text");
                 
                 message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text);
-                Messages.addMessage(message);
+                try 
+                {
+					Messages.addMessage(message);
+				} 
+                catch (IOException e) 
+                {
+					e.printStackTrace();
+				}
                 
             	
             }
