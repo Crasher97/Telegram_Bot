@@ -2,7 +2,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,6 +12,9 @@ import org.jsoup.nodes.Document;
 
 public class Reader 
 {
+	/**
+	 * Metodo che si connette al sito e scarica gli updates
+	 */
 	public static void getUpdate()
 	{
 		Document doc;
@@ -39,7 +41,7 @@ public class Reader
 			JSONObject jsonObject = (JSONObject) parser.parse(receivedJSON);
 			JSONArray resultList = (JSONArray) jsonObject.get("result"); //Crea un array dei vari risultati
 			
-			Iterator<String> iterator = resultList.iterator(); //Crea un iterature per poter scorrere l'array
+			Iterator<String> iterator = resultList.iterator(); //Crea un iteratore per poter scorrere l'array
             while (iterator.hasNext()) 
             {
             	Message message;

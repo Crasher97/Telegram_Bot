@@ -49,5 +49,12 @@ public class Message {
 		return text;
 	}
 	
-
+	/**
+	 * toString restituisce una string contenente tutte le informazioni in sequenza
+	 * @override
+	 */
+	public String toString()
+	{
+		return getUpdate_id() + " " + getMessage_id()+ " " + getSender_id() + " " + getFirst_name() + " " + getLast_name() + " " + getDate() + " " + getText();
+	}
 }

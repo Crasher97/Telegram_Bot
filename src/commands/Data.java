@@ -10,11 +10,18 @@ public class Data
     private static Date data;
     private static String dataString;
     
-    public Data()
+    public static void functionData()
     {
     	data = new Date();
         dataString = formatoData.format(data);
         //aggiungere Sender.sendMessage(, dataString)
+    }
+    
+    public static String dataForWrite()
+    {
+    	data = new Date();
+    	dataString = formatoData.format(data);
+    	return dataString;
     }
     
 }
