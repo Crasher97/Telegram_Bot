@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class Messages 
 {
 	private static ArrayList<Message> messages = new ArrayList<Message>();

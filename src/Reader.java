@@ -68,13 +68,14 @@ public class Reader
                 
                 message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text);
 				Messages.addMessage(message);
+				Document doc = Jsoup.connect(Main.getUrl() + "/getUpdates?offset=" + (update_id + 1)).ignoreContentType(true).post();
 				if(Identifier.checkCommand(message))
 				{
 					//Comando
 					if(Identifier.contains(message.getText()))
 					{
 						Identifier.exeCommand(message);
-					}
+            }
 					else
 					{
 						System.out.println("comando non riconosciuto");
@@ -88,7 +89,7 @@ public class Reader
             }
 			Messages.printMessagesList();
 			
-		} catch (ParseException e) {
+		} catch (ParseException | IOException e) {
 			e.printStackTrace();
 		}
 		

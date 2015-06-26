@@ -1,5 +1,7 @@
 import java.util.Date;
 
+import commands.Data;
+
 
 public class Message {
 	private long update_id;
@@ -55,6 +57,6 @@ public class Message {
 	 */
 	public String toString()
 	{
-		return getUpdate_id() + " " + getMessage_id()+ " " + getSender_id() + " " + getFirst_name() + " " + getLast_name() + " " + getDate() + " " + getText();
+		return getUpdate_id() + " " + getMessage_id()+ " " + getSender_id() + " " + getFirst_name() + " " + getLast_name() + " " + Data.dataToString(getDate()) + " " + getText();
 	}
 }

@@ -17,10 +17,9 @@ public class Data
         //aggiungere Sender.sendMessage(, dataString)
     }
     
-    public static String dataForWrite()
+    public static String dataToString(Date date)
     {
-    	data = new Date();
-    	dataString = formatoData.format(data);
+    	dataString = formatoData.format(date);
     	return dataString;
     }
     
