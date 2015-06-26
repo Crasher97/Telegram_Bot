@@ -10,6 +10,15 @@ public class Main
 	 */
 	public static void main(String[] args) 
 	{
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+		    public void run() { try {
+		    	//Cose da fare alla chiusura 
+				System.out.println("Terminato");
+			} catch (Exception e) {
+				e.printStackTrace();
+			} }
+		});
+		
 		idCode = args[0];
 		url = "https://api.telegram.org/bot" + idCode;
 		Sender.sendMessage(Integer.parseInt(args[1]), "MessaggiodiProvaSender"); // Al: 84954308  Pa: 84985065

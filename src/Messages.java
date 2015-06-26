@@ -34,6 +34,15 @@ public class Messages
 	}
 	
 	/**
+	 * Restituisce l'intero array
+	 * @return array
+	 */
+	public static ArrayList<Message> getArray()
+	{
+		return messages;
+	}
+	
+	/**
 	 * equals, controlla se due parametri passati come parametro sono uguali
 	 * @param msg
 	 * @param messaggio2

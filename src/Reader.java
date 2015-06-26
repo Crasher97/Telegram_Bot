@@ -1,4 +1,3 @@
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
@@ -64,7 +63,7 @@ public class Reader
                 sender_id = (long)jsonObjectChat.get("id");
                 first_name = (String)jsonObjectChat.get("first_name");
                 last_name = (String)jsonObjectChat.get("last_name");
-                date = new Date((long)jsonObjectMessage.get("date"));
+                date = new Date((long)jsonObjectMessage.get("date") * 1000);
                 text = (String)jsonObjectMessage.get("text");
                 
                 message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text);
