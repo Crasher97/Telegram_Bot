@@ -14,7 +14,7 @@ public class Messages
 	 */
 	public static void addMessage(Message msg)
 	{
-		if(messages.size()<100)
+		if(messages.size()<0)
 		{
 			messages.add(msg);
 		}
@@ -23,7 +23,7 @@ public class Messages
 			messages.add(msg);
 			try 
 			{
-				IO.writeOUT("%appdata%\\TelegramBot" + Data.dataForWrite(), messages);
+				IO.writeOUT("log", messages);
 			} 
 			catch (IOException e) 
 			{
