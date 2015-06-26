@@ -12,7 +12,7 @@ public class Main
 	{
 		idCode = args[0];
 		url = "https://api.telegram.org/bot" + idCode;
-		Sender.sendMessage(84985065, "MessaggiodiProvaSender"); // Al: 84954308  Pa: 84985065
+		Sender.sendMessage(Integer.parseInt(args[1]), "MessaggiodiProvaSender"); // Al: 84954308  Pa: 84985065
 		Reader.getUpdate();
 	}
 	

@@ -82,7 +82,6 @@ public class Reader
 			Messages.printMessagesList();
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

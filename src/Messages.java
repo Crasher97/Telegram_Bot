@@ -10,6 +10,7 @@ public class Messages
 	/**
 	 * addMessage - aggiunge un messaggio in memoria
 	 * @param msg
+	 * @throws IOException 
 	 */
 	public static void addMessage(Message msg)
 	{
@@ -20,6 +21,7 @@ public class Messages
 		else
 		{
 			messages.add(msg);
+<<<<<<< .mine
 			try 
 			{
 				IO.writeOUT("%appdata%\\TelegramBot" + Data.dataForWrite(), messages);
@@ -30,6 +32,18 @@ public class Messages
 				e.printStackTrace();
 			}
 			messages.clear();
+=======
+			try {
+				IO.writeOUT("%appdata%\\TelegramBot" + Data.dataForWrite(), messages);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			messages.clear(); //se non funziona mettere come parametro una collezione vuota
+
+
+
+
+>>>>>>> .theirs
 		}
 	}
 	
