@@ -13,6 +13,7 @@ public class Main
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 		    public void run() { try {
 		    	//Cose da fare alla chiusura 
+		    	
 				System.out.println("Terminato");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -22,7 +23,16 @@ public class Main
 		idCode = args[0];
 		url = "https://api.telegram.org/bot" + idCode;
 		Sender.sendMessage(Integer.parseInt(args[1]), "MessaggiodiProvaSender"); // Al: 84954308  Pa: 84985065
-		Reader.getUpdate();
+		while(true)
+		{
+			Reader.getUpdate();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**
