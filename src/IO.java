@@ -16,7 +16,7 @@ public class IO
 	public static void writeOUT(String filename, ArrayList<Message> messageList) throws IOException
 	{
 		  BufferedWriter outputWriter = null;
-		  outputWriter = new BufferedWriter(new FileWriter(filename));
+		  outputWriter = new BufferedWriter(new FileWriter(filename, true));
 		  for (int i = 0; i < messageList.size(); i++) 
 		  	{
 			  	outputWriter.write(messageList.get(i).toString());
