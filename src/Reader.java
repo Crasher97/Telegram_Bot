@@ -85,6 +85,7 @@ public class Reader
 				else
 				{
 					//messaggio normale per ora nulla
+					Sender.sendMessage((int)message.getSender_id(), "Non sono ancora in grado di parlare, per ora interpreto solo i comandi passati con /");
 				}
             }
 			Messages.printMessagesList();
