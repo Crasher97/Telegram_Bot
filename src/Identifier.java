@@ -14,6 +14,7 @@ public class Identifier
 		if(command!=null && command!="")
 		{
 			Identifier.commandList.add(command);
+			return true;
 		}
 		else
 		{
