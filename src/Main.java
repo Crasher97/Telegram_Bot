@@ -1,5 +1,7 @@
+import addons.JarFileLoader;
 
-public class Main 
+
+public class Main
 {
 	private static String idCode = "";
 	private static String url;
@@ -24,10 +26,14 @@ public class Main
 		//configurazione all'avvio
 		idCode = args[0];
 		url = "https://api.telegram.org/bot" + idCode;
-		Sender.sendMessage(Integer.parseInt(args[1]), "MessaggiodiProvaSender"); // Al: 84954308  Pa: 84985065
+		//Sender.sendMessage(Integer.parseInt(args[1]), "MessaggiodiProvaSender"); // Al: 84954308  Pa: 84985065
 		
 		//CARICAMENTO COMANDI
 		Identifier.loadCommands();
+		
+		//Caricamento Addons Jar
+		JarFileLoader JarFileLoader = new JarFileLoader();
+		JarFileLoader.invokeClassMethod("AddonsMain", "main");
 		
 		//CONTROLLO NUOVI MESSAGGI
 		while(true)
