@@ -1,3 +1,4 @@
+package bot;
 import java.util.ArrayList;
 
 public class Identifier 

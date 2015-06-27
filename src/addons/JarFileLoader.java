@@ -9,8 +9,11 @@ import java.net.URLClassLoader;
 
 public class JarFileLoader extends ClassLoader
 {
-	public void invokeClassMethod(String classBinName, String methodName)
+	public static void loadJarFile()
 	{
+		String classBinName = "Main";
+		String methodName = "main";
+			
 		File dir = new File("addons\\");
 		File[] directoryListing = dir.listFiles();
 		if (directoryListing != null)
