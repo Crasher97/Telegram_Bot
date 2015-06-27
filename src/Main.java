@@ -12,36 +12,44 @@ public class Main
 	 */
 	public static void main(String[] args) 
 	{
-		//ESEGUZIONE COMANDI ALLA CHIUSUSRA
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-		    public void run() { try {
-		    	//Cose da fare alla chiusura 
-		    	
-				System.out.println("Terminato");
-			} catch (Exception e) {
-				e.printStackTrace();
-			} }
-		});
-		
 		//configurazione all'avvio
 		idCode = args[0];
 		url = "https://api.telegram.org/bot" + idCode;
-		//Sender.sendMessage(Integer.parseInt(args[1]), "MessaggiodiProvaSender"); // Al: 84954308  Pa: 84985065
+				Sender.sendMessage(Integer.parseInt(args[1]),
+						"MessaggiodiProvaSender"); // Al:
+													// 84954308
+													// Pa:
+													// 84985065
 		
 		//CARICAMENTO COMANDI
 		Identifier.loadCommands();
 		
-		//Caricamento Addons Jar
-		JarFileLoader JarFileLoader = new JarFileLoader();
-		JarFileLoader.invokeClassMethod("AddonsMain", "main");
-		
+				// ESEGUZIONE COMANDI ALLA CHIUSUSRA
+				Runtime.getRuntime().addShutdownHook(new Thread()
+					{
+						public void run()
+							{
+								try
+									{
+										// In chiusura salva i messaggi nel log
+										IO.writeOUT("log.log", Messages.getArray());
+										System.out.println("Terminato");
+									} catch (Exception e)
+									{
+										e.printStackTrace();
+									}
+							}
+					});
+
 		//CONTROLLO NUOVI MESSAGGI
 		while(true)
 		{
 			Reader.getUpdate();
-			try {
+						try
+							{
 				Thread.sleep(1000);
-			} catch (InterruptedException e) {
+							} catch (InterruptedException e)
+							{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -50,6 +58,7 @@ public class Main
 	
 	/**
 	 * getIdCode - restituisce il codice identificativo
+		 * 
 	 * @return String idCode
 	 */
 	public static String getIdCode()
@@ -59,6 +68,7 @@ public class Main
 	
 	/**
 	 * Restituisce l'url di riferimento del bot
+		 * 
 	 * @return String - url
 	 */
 	public static String getUrl()
