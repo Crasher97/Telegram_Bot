@@ -10,6 +10,7 @@ public class Main
 	 */
 	public static void main(String[] args) 
 	{
+		//ESEGUZIONE COMANDI ALLA CHIUSUSRA
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 		    public void run() { try {
 		    	//Cose da fare alla chiusura 
@@ -20,9 +21,15 @@ public class Main
 			} }
 		});
 		
+		//configurazione all'avvio
 		idCode = args[0];
 		url = "https://api.telegram.org/bot" + idCode;
 		Sender.sendMessage(Integer.parseInt(args[1]), "MessaggiodiProvaSender"); // Al: 84954308  Pa: 84985065
+		
+		//CARICAMENTO COMANDI
+		Identifier.loadCommands();
+		
+		//CONTROLLO NUOVI MESSAGGI
 		while(true)
 		{
 			Reader.getUpdate();

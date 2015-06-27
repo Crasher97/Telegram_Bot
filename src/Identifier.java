@@ -38,18 +38,15 @@ public class Identifier
 	 */
 	public static boolean contains(String command)
 	{
+		boolean trovato = false;
 		for(String trueCommand : Identifier.commandList)
 		{
-			if(trueCommand == command)
+			if(trueCommand.equals(command))
 			{
-				return true;
-			}
-			else
-			{
-				return false;
+				trovato = true;
 			}
 		}
-		return false;
+		return trovato;
 	}
 	
 	/**
@@ -58,9 +55,9 @@ public class Identifier
 	 */
 	public static boolean loadCommands()
 	{
-		//TODO aggiungere reader che legge i comandi
+		//TODO aggiungere reader che legge i comandi aggiuti
 		Identifier.addCommand("/help");
-		Identifier.addCommand("/settings");
+		Identifier.addCommand("/test");
 		return true;
 	}
 	
@@ -88,7 +85,7 @@ public class Identifier
 	 */
 	public static boolean exeCommand(Message msg)
 	{
+		Executer.execute(msg);
 		return true;
-		//TODO aggiungere chiamata a executer se il comando esiste.
 	}
 }
