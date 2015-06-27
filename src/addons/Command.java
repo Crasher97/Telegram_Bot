@@ -7,6 +7,13 @@ public class Command
 	private String className;
 	private String methodName;
 	
+	/**
+	 * 
+	 * @param commandName nome del comando cui cui verrà identificato nei messaggi
+	 * @param jarFile il nome del jar da cui si carica il comando
+	 * @param className il nome della classe da caricare
+	 * @param methodName il nome del metodo da chiamare all'interno della classe
+	 */
 	public Command(String commandName, String jarFile, String className, String methodName)
 	{
 		this.commandName = commandName;

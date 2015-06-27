@@ -1,36 +1,8 @@
 package bot;
-import java.util.ArrayList;
-
+import addons.Commands;
 public class Identifier 
 {
-	private static ArrayList<String> commandList = new ArrayList<String>();
 	
-	/**
-	 * addCommand - aggiunge il comando
-	 * @param command
-	 * @return true se il comando è stato aggiunto
-	 */
-	public static boolean addCommand(String command)
-	{
-		if(command!=null && command!="")
-		{
-			Identifier.commandList.add(command);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	/**
-	 * Ritorna la lista di comandi
-	 * @return ArrayList<string>, la lista di comandi.
-	 */
-	public static ArrayList<String> getCommandList()
-	{
-		return commandList;
-	}
 	
 	/**
 	 * Controlla se un comando è presente all'interno dell'array
@@ -39,24 +11,7 @@ public class Identifier
 	 */
 	public static boolean contains(String command)
 	{
-		boolean trovato = false;
-		for(String trueCommand : Identifier.commandList)
-		{
-			if(trueCommand.equals(command))
-			{
-				trovato = true;
-			}
-		}
-		return trovato;
-	}
-	
-	/**
-	 * Carica i comandi allo startup del programma
-	 * @return true se i comandi sono stati caricati
-	 */
-	public static void loadCommands()
-	{
-		Identifier.commandList = IO.readCommands();
+		return Commands.commandExist(command);
 	}
 	
 	/**
