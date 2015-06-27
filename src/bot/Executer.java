@@ -27,6 +27,7 @@ public class Executer
 			    message = message + " " + line;
 			}
 			Sender.sendMessage((int)msg.getSender_id(), message);
+			process.destroy();
 		
 		}
 		catch (IOException e) 

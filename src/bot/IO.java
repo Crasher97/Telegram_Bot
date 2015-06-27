@@ -36,22 +36,23 @@ public class IO
 	public static ArrayList<String> readCommands()
 	{
 		try
+		{
+			ArrayList<String> commands = new ArrayList<String>();
+			BufferedReader br = new BufferedReader(new FileReader("addons//commands.cfg"));
+			String command;
+			while((command = br.readLine()) != null)
 			{
-				ArrayList<String> commands = new ArrayList<String>();
-				BufferedReader br = new BufferedReader(new FileReader("addons//commands.cfg"));
-				String command;
-				while((command = br.readLine()) != null)
-				{
 					commands.add(command);
-				}
-				return commands;
 			}
+			br.close();
+			return commands;
+		}
 		catch (IOException e) 
-			{
-				e.printStackTrace();
-				System.err.println("comandi non caricati");
-				Sender.sendMessage(84985065, "comandi non caricati");
-				return new ArrayList<String>();
-			}
+		{
+			e.printStackTrace();
+			System.err.println("comandi non caricati");
+			Sender.sendMessage(84985065, "comandi non caricati");
+			return new ArrayList<String>();
+		}
 	}
 }

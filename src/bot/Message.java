@@ -14,8 +14,6 @@ public class Message {
 	private String text;
 	
 	private static DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	private static Date data;
-	private static String dataString;
 	
 	public Message(long update_id, long message_id, long sender_id, String first_name, String last_name, Date date, String text) 
 	{
@@ -58,8 +56,7 @@ public class Message {
 	
 	public static String dataToString(Date date)
     {
-    	dataString = formatoData.format(date);
-    	return dataString;
+    	return formatoData.format(date);
     }
 	
 	/**

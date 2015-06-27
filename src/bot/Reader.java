@@ -2,12 +2,15 @@ package bot;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import addons.Commands;
 
 
 public class Reader 
@@ -69,18 +72,29 @@ public class Reader
                 
                 message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text);
 				Messages.addMessage(message);
-				Document doc = Jsoup.connect(Main.getUrl() + "/getUpdates?offset=" + (update_id + 1)).ignoreContentType(true).post();
+				Jsoup.connect(Main.getUrl() + "/getUpdates?offset=" + (update_id + 1)).ignoreContentType(true).post();
 				if(Identifier.checkCommand(message))
 				{
-					//Comando
-					if(Identifier.contains(message.getText()))
+					String command = message.getText();
+					command = command.substring(0, 0) + command.substring(1);
+					
+					//Comando Alderico
+					if(Commands.commandExist(command))
 					{
-						Identifier.exeCommand(message);
-            }
+						Commands.exeCommand(command, message);
+					}
 					else
 					{
-						System.out.println("comando non riconosciuto");
-						Sender.sendMessage((int)message.getSender_id(), "comando non riconosciuto");
+						//Comando Paolo
+						if(Identifier.contains(message.getText()))
+						{
+							Identifier.exeCommand(message);
+						}
+						else
+						{
+							System.out.println("comando non riconosciuto");
+							Sender.sendMessage((int)message.getSender_id(), "comando non riconosciuto");
+						}
 					}
 				}
 				else
@@ -89,9 +103,11 @@ public class Reader
 					Sender.sendMessage((int)message.getSender_id(), "Non sono ancora in grado di parlare, per ora interpreto solo i comandi passati con /");
 				}
             }
-			Messages.printMessagesList();
+			//Messages.printMessagesList();
 			
-		} catch (ParseException | IOException e) {
+		} 
+		catch (ParseException | IOException e) 
+		{
 			e.printStackTrace();
 		}
 		
