@@ -1,6 +1,6 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import commands.Data;
 
 
 public class Message {
@@ -11,6 +11,10 @@ public class Message {
 	private String last_name;
 	private Date date;
 	private String text;
+	
+	private static DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	private static Date data;
+	private static String dataString;
 	
 	public Message(long update_id, long message_id, long sender_id, String first_name, String last_name, Date date, String text) 
 	{
@@ -51,12 +55,18 @@ public class Message {
 		return text;
 	}
 	
+	public static String dataToString(Date date)
+    {
+    	dataString = formatoData.format(date);
+    	return dataString;
+    }
+	
 	/**
 	 * toString restituisce una string contenente tutte le informazioni in sequenza
 	 * @override
 	 */
 	public String toString()
 	{
-		return getUpdate_id() + " " + getMessage_id()+ " " + getSender_id() + " " + getFirst_name() + " " + getLast_name() + " " + Data.dataToString(getDate()) + " " + getText();
+		return getUpdate_id() + " " + getMessage_id()+ " " + getSender_id() + " " + getFirst_name() + " " + getLast_name() + " " + Message.dataToString(getDate()) + " " + getText();
 	}
 }

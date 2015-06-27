@@ -53,12 +53,9 @@ public class Identifier
 	 * Carica i comandi allo startup del programma
 	 * @return true se i comandi sono stati caricati
 	 */
-	public static boolean loadCommands()
+	public static void loadCommands()
 	{
-		//TODO aggiungere reader che legge i comandi aggiuti
-		Identifier.addCommand("/help");
-		Identifier.addCommand("/test");
-		return true;
+		Identifier.commandList = IO.readCommands();
 	}
 	
 	/**

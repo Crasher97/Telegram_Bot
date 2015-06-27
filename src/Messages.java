@@ -12,7 +12,7 @@ public class Messages
 	 */
 	public static void addMessage(Message msg)
 	{
-		if(messages.size()<0)
+		if(messages.size()<50)
 		{
 			messages.add(msg);
 		}
@@ -27,7 +27,7 @@ public class Messages
 			{
 				e.printStackTrace();
 			}
-			messages.clear(); //se non funziona mettere come parametro una collezione vuota
+			messages.clear();
 		}
 	}
 	
