@@ -10,11 +10,20 @@ import bot.Message;
 
 public class JarFileLoader extends ClassLoader
 {
+	/**
+	 * Esegue il metodo load di tutti gli addons
+	 */
 	public static void loadJarFile()
 	{
 		invokeClassMethod("Main", "load");
 	}
 
+	/**
+	 * Esegue un metodo in una classe di tutti i file jar presenti nella cartella addons
+	 * 
+	 * @param classBinName - Nome della classe
+	 * @param methodName - Nome del metodo
+	 */
 	public static void invokeClassMethod(String classBinName, String methodName)
 	{
 		File dir = new File("addons\\");
@@ -75,6 +84,14 @@ public class JarFileLoader extends ClassLoader
 
 	}
 
+	/**
+	 * Permette di chaiamare il metodo di un addons
+	 * 
+	 * @param jarName - Nome del file jar dell'addons
+	 * @param classBinName - Nome della classe
+	 * @param methodName - Nome del metodo
+	 * @param message - Oggetto Message da passare all'addons
+	 */
 	public static void invokeClassMethod(String jarName, String classBinName, String methodName, Message message)
 	{
 		File file = new File("addons\\" + jarName);
@@ -118,7 +135,7 @@ public class JarFileLoader extends ClassLoader
 		catch (ClassNotFoundException e)
 		{
 			e.printStackTrace();
-			System.err.println("Classe " + classBinName + " non trovata, impossibile caricare addons " + file.getName());
+			System.err.println("Classe " + classBinName + " non trovata nell addons " + file.getName());
 		}
 		catch (Exception e)
 		{
