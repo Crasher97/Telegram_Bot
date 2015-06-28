@@ -73,7 +73,7 @@ public class Reader
                 message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text);
 				Messages.addMessage(message);
 				Jsoup.connect(Main.getUrl() + "/getUpdates?offset=" + (update_id + 1)).ignoreContentType(true).post();
-				if(Identifier.checkCommand(message))
+				if(text.charAt(0)=='/')
 				{
 					String command = message.getText();
 					command = command.substring(0, 0) + command.substring(1);
@@ -85,16 +85,8 @@ public class Reader
 					}
 					else
 					{
-						//Comando Paolo
-						if(Identifier.contains(message.getText()))
-						{
-							Identifier.exeCommand(message);
-						}
-						else
-						{
 							System.out.println("comando non riconosciuto");
 							Sender.sendMessage((int)message.getSender_id(), "comando non riconosciuto");
-						}
 					}
 				}
 				else
