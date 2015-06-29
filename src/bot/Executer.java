@@ -32,7 +32,6 @@ public class Executer
 		}
 		catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.err.println("comando non eseguito");
 			Sender.sendMessage((int)msg.getSender_id(), "Sembra che ci sia stato un maledetto errore");
