@@ -1,4 +1,5 @@
 package bot;
+import addons.Help;
 import addons.JarFileLoader;
 
 public class Main
@@ -22,6 +23,7 @@ public class Main
 		
 		//CARICAMENTO ADDONS
 		JarFileLoader.loadJarFile();
+		Help.load();
 		
 		
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
@@ -52,7 +54,6 @@ public class Main
 			}
 			catch (InterruptedException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

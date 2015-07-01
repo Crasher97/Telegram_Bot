@@ -79,9 +79,9 @@ public class Reader
 					command = command.substring(0, 0) + command.substring(1);
 					
 					//Comando Alderico
-					if(Commands.commandExist(command))
+					if(Commands.commandExist(command.split(" ")[0]))
 					{
-						Commands.exeCommand(command, message);
+						Commands.exeCommand(command.split(" ")[0], message);
 					}
 					else
 					{
@@ -93,6 +93,7 @@ public class Reader
 				{
 					//messaggio normale per ora nulla
 					Sender.sendMessage((int)message.getSender_id(), "Non sono ancora in grado di parlare, per ora interpreto solo i comandi passati con /");
+					System.out.println(message.getText());
 				}
             }
 			//Messages.printMessagesList();

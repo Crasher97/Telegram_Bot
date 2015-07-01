@@ -6,6 +6,7 @@ public class Command
 	private String jarFile;
 	private String className;
 	private String methodName;
+	private boolean external;
 	
 	/**
 	 * 
@@ -20,8 +21,17 @@ public class Command
 		this.jarFile = jarFile;
 		this.className = className;
 		this.methodName = methodName;
+		external = true;
 	}
-
+	
+	public Command(String commandName, String className, String methodName)
+	{
+		this.commandName = commandName;
+		this.className = className;
+		this.methodName = methodName;
+		external = false;
+	}
+	
 	public String getCommandName()
 	{
 		return commandName;
@@ -40,6 +50,11 @@ public class Command
 	public String getMethodName()
 	{
 		return methodName;
+	}
+	
+	public boolean isExternal()
+	{
+		return external;
 	}
 	
 	
