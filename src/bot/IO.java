@@ -27,4 +27,13 @@ public class IO
 		  	outputWriter.close();  
 	}
 	
+	public static void writeOUT(String filename, String log) throws IOException
+		{
+			BufferedWriter outputWriter = null;
+			outputWriter = new BufferedWriter(new FileWriter(filename, true));
+			outputWriter.write(log);
+			outputWriter.newLine();
+			outputWriter.flush();  
+			outputWriter.close();  
+		}
 }

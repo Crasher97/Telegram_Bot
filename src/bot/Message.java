@@ -12,9 +12,18 @@ public class Message {
 	private String last_name;
 	private Date date;
 	private String text;
-	
 	private static DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
+	/**
+	 * Costruttore oggetto Message
+	 * @param update_id
+	 * @param message_id
+	 * @param sender_id
+	 * @param first_name
+	 * @param last_name
+	 * @param date
+	 * @param text
+	 */
 	public Message(long update_id, long message_id, long sender_id, String first_name, String last_name, Date date, String text) 
 	{
 		this.update_id = update_id;
@@ -26,34 +35,67 @@ public class Message {
 		this.text = text;
 	}
 
+	/**
+	 * Ritorna l'id del messaggio 
+	 * @return long update_id
+	 */
 	public long getUpdate_id() {
 		return update_id;
 	}
 
+	/**
+	 * Ritorna l'id del messaggio
+	 * @return long message_id
+	 */
 	public long getMessage_id() {
 		return message_id;
 	}
 
+	/**
+	 * Ritorna l'id del mittente del messaggio
+	 * @return long sender_id 
+	 */
 	public long getSender_id() {
 		return sender_id;
 	}
 
+	/**
+	 * Ritorna il nome del mittente
+	 * @return String first_name
+	 */
 	public String getFirst_name() {
 		return first_name;
 	}
 
+	/**
+	 * Ritorna il cognome del mittente
+	 * @return String last_name
+	 */
 	public String getLast_name() {
 		return last_name;
 	}
 
+	/**
+	 * Ritorna la data del messaggio
+	 * @return Date date (dd/MM/yyyy HH:mm:ss)
+	 */
 	public Date getDate() {
 		return date;
 	}
 
+	/**
+	 * Ritorna il testo del messaggio
+	 * @return String text
+	 */
 	public String getText() {
 		return text;
 	}
 	
+	/**
+	 * Ritorna la data sotto forma di stringa
+	 * @param Date date
+	 * @return String date
+	 */
 	public static String dataToString(Date date)
     {
     	return formatoData.format(date);

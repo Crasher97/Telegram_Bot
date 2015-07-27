@@ -2,7 +2,6 @@ package addons;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.URLClassLoader;
 import java.util.HashMap;
 
 import bot.Message;

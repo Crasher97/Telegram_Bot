@@ -5,13 +5,12 @@ import addons.JarFileLoader;
 public class Main
 {
 	private static String idCode = "";
-	private static String url;
+	private static String url = "";
 
 	/**
 	 * Metodo main, punto di partenza del programma
 	 * 
-	 * @param args
-	 *            , l'idCode del bot telegram, deve essere inserito
+	 * @param args, l'idCode del bot telegram, deve essere inserito
 	 */
 	public static void main(String[] args)
 	{
