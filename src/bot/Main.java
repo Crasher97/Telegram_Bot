@@ -12,7 +12,7 @@ public class Main
 	/**
 	 * Metodo main, punto di partenza del programma, terminare inviando un messaggio con scritto /stop
 	 * 
-	 * @param args, l'idCode del bot telegram, deve essere inserito
+	 * @param args, IN ORDER:l'idCode del bot telegram, l'id del propietario, 
 	 */
 	public static void main(String[] args)
 	{

@@ -26,6 +26,9 @@ public class Help
 		{
 			Sender.sendMessage((int) message.getSender_id(), helps.get(args[1]));
 		}
-		else Sender.sendMessage((int) message.getSender_id(), "TODO Lista dei comandi");
+		else 
+			{
+				Sender.sendMessage((int) message.getSender_id(), Commands.getCommands().keySet().toString());
+			}
 	}
 }

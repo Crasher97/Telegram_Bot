@@ -49,4 +49,8 @@ public class Commands
 		}
 	}
 	
+	public static HashMap<String, Command> getCommands()
+	{
+		return commands;
+	}
 }
