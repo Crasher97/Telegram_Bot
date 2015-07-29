@@ -31,7 +31,6 @@ public class Main
 		Help.load();
 		Console.loadCommand();
 		Console.openConsole();
-		FileDownloader.downloadFile("http://mirror.internode.on.net/pub/test/10meg.test");
 	    //addons.testAdd.upload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"));
 		
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
