@@ -36,6 +36,11 @@ public class Reader
 	}
 	
 	@SuppressWarnings("unchecked")
+	/**
+	 * Prende i messaggi dal metodo getUpdates di telegram, lo scompone in tutti i suoi contenuti(vedere documentazione telegram) e assegna il compito di rispondere
+	 * a un altra parte di programma a seconda che sia un comando o no.
+	 * @param receivedJSON
+	 */
 	public static void parseJSON(String receivedJSON)
 	{
 		JSONParser parser = new JSONParser();
@@ -77,6 +82,10 @@ public class Reader
 				{
 					String command = message.getText();
 					command = command.substring(0, 0) + command.substring(1);
+					
+					//spegne il bot
+					if(sender_id == 84954308 || sender_id == 84985065)
+						if(text.equals("/stop"))System.exit(0);
 					
 					//Comando Alderico
 					if(Commands.commandExist(command.split(" ")[0]))

@@ -1,14 +1,13 @@
 package bot;
 import addons.Help;
 import addons.JarFileLoader;
-
 public class Main
 {
 	private static String idCode = "";
 	private static String url = "";
 
 	/**
-	 * Metodo main, punto di partenza del programma
+	 * Metodo main, punto di partenza del programma, terminare inviando un messaggio con scritto /stop
 	 * 
 	 * @param args, l'idCode del bot telegram, deve essere inserito
 	 */
@@ -24,7 +23,6 @@ public class Main
 		JarFileLoader.loadJarFile();
 		Help.load();
 		
-		
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
 		Runtime.getRuntime().addShutdownHook(new Thread()
 		{
@@ -33,8 +31,9 @@ public class Main
 				try
 				{
 					// In chiusura salva i messaggi nel log
-					IO.writeOUT("log.log", Messages.getArray());
+					IO.writeOUT("log", Messages.getArray());
 					System.out.println("Terminato");
+					
 				}
 				catch (Exception e)
 				{
