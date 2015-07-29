@@ -1,5 +1,8 @@
 package bot;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -14,16 +17,29 @@ public class Console
 	 */
 	public static void openConsole()
 	{
-		while(true)
+		Runnable consoleRunnable = new Runnable()
 		{
-			System.out.printf(">");
-			Scanner scanner = new Scanner(System.in);
-			String[] command = scanner.nextLine().split(" ");
-			if(commandExist(command[0]))
-				exeCommand(command);
-			else
-				System.err.println("Comando Inesistente");
-		}
+			@Override
+			public void run()
+			{
+				Scanner scanner = new Scanner(System.in);
+				String[] command;
+				while(true)
+				{
+					//System.out.printf(">");
+					command = scanner.nextLine().split(" ");
+					if(commandExist(command[0]))
+					{
+						exeCommand(command);
+					}
+					else
+						System.err.println("Comando Inesistente");
+				}
+			}
+		};
+		Thread consoleThread =  new Thread(consoleRunnable);
+		consoleThread.start();
+
 	}
 	
 	/**
