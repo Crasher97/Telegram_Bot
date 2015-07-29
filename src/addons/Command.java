@@ -9,7 +9,7 @@ public class Command
 	private boolean external;
 	
 	/**
-	 * TODO
+	 * 
 	 * @param commandName nome del comando cui cui verrà identificato nei messaggi
 	 * @param jarFile il nome del jar da cui si carica il comando
 	 * @param className il nome della classe da caricare
@@ -25,7 +25,7 @@ public class Command
 	}
 	
 	/**
-	 * TODO
+	 * 
 	 * @param commandName
 	 * @param className
 	 * @param methodName
