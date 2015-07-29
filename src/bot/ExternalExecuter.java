@@ -10,7 +10,7 @@ public class ExternalExecuter
 	 * @param String command
 	 * @param String logFileName , the name of the log where images responses are saved
      */
-	public static void executeCmd(String command, String logFileName)
+	public static boolean executeCmd(String command, String logFileName)
 	{
 			try 
 				{
@@ -26,12 +26,13 @@ public class ExternalExecuter
 					{
             		IO.writeOUT(logFileName, s);
 					}
-            
+				return true;
 				}    
 			catch (Exception e)
 				{
 					e.printStackTrace(System.err);
 					System.err.println("Errore durante l'eseguzione");
+					return false;
 				}
 	}
 }

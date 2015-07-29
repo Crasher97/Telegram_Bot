@@ -84,7 +84,7 @@ public class Reader
 					command = command.substring(0, 0) + command.substring(1);
 					
 					//spegne il bot
-					if(sender_id == 84954308 || sender_id == 84985065)
+					if(Main.getOwner().equals(message.getSender_id()))
 						if(text.equals("/stop"))System.exit(0);
 					
 					//Comando Alderico
