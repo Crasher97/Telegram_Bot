@@ -85,7 +85,7 @@ public class JarFileLoader extends ClassLoader
 	}
 
 	/**
-	 * Permette di chaiamare il metodo di un addons
+	 * Permette di chiamare il metodo di un addons
 	 * 
 	 * @param jarName - Nome del file jar dell'addons
 	 * @param classBinName - Nome della classe
