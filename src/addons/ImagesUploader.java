@@ -6,6 +6,12 @@ import bot.Message;
 
 public class ImagesUploader
 	{
+		/**
+		 * CArica un'immagine dato il nome(nella cartella \tmp)
+		 * @param message
+		 * @param name
+		 * @return
+		 */
 		public static boolean uploadImage(Message message, String name)
 		{
 			boolean uploaded = false;

@@ -12,7 +12,7 @@ public class Main
 	/**
 	 * Metodo main, punto di partenza del programma, terminare inviando un messaggio con scritto /stop
 	 * 
-	 * @param args, l'idCode del bot telegram, deve essere inserito
+	 * @param args, IN ORDER:l'idCode del bot telegram, l'id del propietario, 
 	 */
 	public static void main(String[] args)
 	{
@@ -28,7 +28,7 @@ public class Main
 		//CARICAMENTO ADDONS
 		JarFileLoader.loadJarFile();
 		Help.load();
-	    addons.testAdd.upload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"));
+	    //addons.testAdd.upload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"));
 		
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
 		Runtime.getRuntime().addShutdownHook(new Thread()

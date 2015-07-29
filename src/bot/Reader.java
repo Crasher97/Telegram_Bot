@@ -84,7 +84,8 @@ public class Reader
 					command = command.substring(0, 0) + command.substring(1);
 					
 					//spegne il bot
-					if(Main.getOwner().equals(message.getSender_id()))
+					boolean admin = Main.getOwner().equals(String.valueOf(message.getSender_id()));
+					if(admin)
 						if(text.equals("/stop"))System.exit(0);
 					
 					//Comando Alderico

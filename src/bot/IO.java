@@ -9,7 +9,7 @@ public class IO
 {
 
 	/**
-	 * Scrive un array di stringhe un file esterno
+	 * Scrive un array di stringhe in un file esterno(append)
 	 * @param filename, il nome del file
 	 * @param messageList
 	 * @throws IOException
@@ -27,6 +27,13 @@ public class IO
 		  	outputWriter.close();  
 	}
 	
+
+	/**
+	 * Scrive una String in un file esterno(append)
+	 * @param filename, il nome del file
+	 * @param messageList
+	 * @throws IOException
+	 */
 	public static void writeOUT(String filename, String log) throws IOException
 		{
 			BufferedWriter outputWriter = null;
