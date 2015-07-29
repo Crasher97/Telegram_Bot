@@ -28,6 +28,8 @@ public class Main
 		//CARICAMENTO ADDONS
 		JarFileLoader.loadJarFile();
 		Help.load();
+		Console.loadCommand();
+		Console.openConsole();
 	    //addons.testAdd.upload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"));
 		
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
