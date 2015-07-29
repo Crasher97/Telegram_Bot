@@ -4,7 +4,10 @@ import addons.JarFileLoader;
 public class Main
 {
 	private static String idCode = "";
+	private static String owner = "";
+	private static String location = "";
 	private static String url = "";
+	private static String wgetLocation;
 
 	/**
 	 * Metodo main, punto di partenza del programma, terminare inviando un messaggio con scritto /stop
@@ -15,6 +18,9 @@ public class Main
 	{
 		// configurazione all'avvio
 		idCode = args[0];
+		owner = args[1];
+		location = args[2];
+		wgetLocation = args[3];
 		url = "https://api.telegram.org/bot" + idCode;
 		//Sender.sendMessage(Integer.parseInt(args[1]), "MessaggiodiProvaSender");
 		// Al 84954308 Pa 84985065
@@ -22,6 +28,7 @@ public class Main
 		//CARICAMENTO ADDONS
 		JarFileLoader.loadJarFile();
 		Help.load();
+	    addons.testAdd.upload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"));
 		
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
 		Runtime.getRuntime().addShutdownHook(new Thread()
@@ -76,5 +83,31 @@ public class Main
 	{
 		return url;
 	}
-
+	
+	/**
+	 * ritorna owner, il propietario del bot
+	 * @return String owner of bot
+	 */
+	public static String getOwner()
+	{
+		return owner;
+	}
+	
+	/**
+	 * Ritorna la posizione del bot
+	 * @return String - path folder of bot
+	 */
+	public static String getLocation()
+	{
+		return location;
+	}
+	
+	/**
+	 * Ritorna la posizione di wget(only windows)
+	 * @return
+	 */
+	public static String getWgetLocation()
+	{
+		return wgetLocation;
+	}
 }

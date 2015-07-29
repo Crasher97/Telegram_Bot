@@ -12,12 +12,8 @@ public class ExternalExecuter
      */
 	public static void executeCmd(String command, String logFileName)
 	{
-		String os = System.getProperty("os.name");
-		if(os.split(" ")[0].equalsIgnoreCase("windows")==true)
-		{
 			try 
 				{
-				// Run "netsh" Windows command
 				Process process = Runtime.getRuntime().exec(command);
 				System.out.println("eseguzione comando esterno in corso");
 
@@ -37,11 +33,6 @@ public class ExternalExecuter
 					e.printStackTrace(System.err);
 					System.err.println("Errore durante l'eseguzione");
 				}
-		}
-		else
-		{
-			//TODO linux
-		}
 	}
 }
 
