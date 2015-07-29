@@ -1,11 +1,10 @@
 package bot;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import addons.FileDownloader;
 
 
 public class Console
@@ -26,14 +25,18 @@ public class Console
 				String[] command;
 				while(true)
 				{
-					//System.out.printf(">");
-					command = scanner.nextLine().split(" ");
-					if(commandExist(command[0]))
+					synchronized (this)
 					{
-						exeCommand(command);
+						//System.out.printf(">");
+						command = scanner.nextLine().split(" ");
+						if(commandExist(command[0]))
+						{
+							exeCommand(command);
+						}
+						else
+							System.err.println("Comando Inesistente");
 					}
-					else
-						System.err.println("Comando Inesistente");
+
 				}
 			}
 		};
@@ -53,6 +56,18 @@ public class Console
 			public void run(String[] args)
 			{
 				System.out.println("Comando Help non finito");
+			}
+
+			@Override
+			public void run(){}
+		});
+		
+		addCommand("test", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
+			{
+				FileDownloader.downloadFile(args[0]);
 			}
 
 			@Override
