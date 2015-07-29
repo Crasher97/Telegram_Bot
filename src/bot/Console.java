@@ -62,7 +62,7 @@ public class Console
 			public void run(){}
 		});
 		
-		addCommand("test", new ConsoleCommandCode()
+		addCommand("download", new ConsoleCommandCode()
 		{
 			@Override
 			public void run(String[] args)
