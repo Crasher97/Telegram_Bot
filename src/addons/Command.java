@@ -9,6 +9,7 @@ public class Command
 	private boolean external;
 	
 	/**
+	 * Costruttore per i comandi inseriti da addons esterni
 	 * 
 	 * @param commandName nome del comando cui cui verrà identificato nei messaggi
 	 * @param jarFile il nome del jar da cui si carica il comando
@@ -25,6 +26,7 @@ public class Command
 	}
 	
 	/**
+	 * Construttore per comandi interni
 	 * 
 	 * @param commandName
 	 * @param className
@@ -62,7 +64,5 @@ public class Command
 	{
 		return external;
 	}
-	
-	
 	
 }

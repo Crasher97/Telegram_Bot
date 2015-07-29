@@ -10,11 +10,22 @@ public class Commands
 {
 	private static HashMap<String, Command> commands = new HashMap<String, Command>();
 	
+	/**
+	 * Aggiunge alla lista il comando passato come parametro
+	 * 
+	 * @param command
+	 */
 	public static void addCommand(Command command)
 	{
 		commands.put(command.getCommandName(), command);
 	}
 	
+	/**
+	 * Esegue il comando
+	 * 
+	 * @param commandName
+	 * @param message - Il messaggio da cui è stato lanciato il comando nel caso servano parametri o il sender id
+	 */
 	public static void exeCommand(String commandName, Message message)
 	{
 		Command command = commands.get(commandName);
@@ -28,12 +39,24 @@ public class Commands
 		}
 	}
 	
+	/**
+	 * Verifica se il comando passato come parametro esiste
+	 * @param commandName
+	 * @return
+	 */
 	public static boolean commandExist(String commandName)
 	{
 		if(commands.containsKey(commandName)) return true;
 		return false;
 	}
 	
+	/**
+	 * Chama un comando in una classe interna al programma
+	 * 
+	 * @param commandClass
+	 * @param commandMethod
+	 * @param message
+	 */
 	public static void callInternalCommand(String commandClass, String commandMethod, Message message)
 	{
 		try
