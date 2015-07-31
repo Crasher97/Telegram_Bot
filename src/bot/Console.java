@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import bot.FileDownloader;
-
 
 public class Console
 {
@@ -68,6 +66,18 @@ public class Console
 			public void run(String[] args)
 			{
 				FileDownloader.downloadFile(args[0]);
+			}
+
+			@Override
+			public void run(){}
+		});
+		
+		addCommand("upload", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
+			{
+				ImagesUploader.uploadImage(Long.parseLong(args[0]), args[1]);
 			}
 
 			@Override
