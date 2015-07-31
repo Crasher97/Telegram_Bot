@@ -1,5 +1,4 @@
 package bot;
-import addons.FileDownloader;
 import addons.Help;
 import addons.JarFileLoader;
 public class Main
