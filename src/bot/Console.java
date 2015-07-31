@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import addons.FileDownloader;
+import bot.FileDownloader;
 
 
 public class Console

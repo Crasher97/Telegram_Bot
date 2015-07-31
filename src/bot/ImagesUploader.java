@@ -1,8 +1,4 @@
-package addons;
-
-import bot.ExternalExecuter;
-import bot.Main;
-import bot.Message;
+package bot;
 
 public class ImagesUploader
 	{
