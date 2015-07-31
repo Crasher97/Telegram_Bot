@@ -3,12 +3,12 @@ package bot;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FileUtils;
 
 public class FileDownloader
 {
+	private static String nomeFile;
 	/**
 	 * Scarica un file dall'url passato come parametro
 	 * @param url
@@ -23,6 +23,7 @@ public class FileDownloader
 	     		{
 	     			String[] urlPart = urlF.split("/");
 	     			String fileName = urlPart[urlPart.length - 1];
+	     			nomeFile = fileName;
 	     			URL link = new URL(urlF);
 	     			FileUtils.copyURLToFile(link, new File("tmp/" + fileName));
 	     			System.out.println("Download Finished");
@@ -34,6 +35,15 @@ public class FileDownloader
 	         }
 	    });
 		thread.start();
+	}
+	
+	/**
+	 * getnomefile
+	 * @return String nomefile, il nome dell'ultimo file scaricato
+	 */
+	public static String getNomeFile()
+	{
+		return nomeFile;
 	}
 }
 

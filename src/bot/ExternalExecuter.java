@@ -9,6 +9,7 @@ public class ExternalExecuter
      * Esegue un comando esterno Windows & Linux
 	 * @param String command
 	 * @param String logFileName , the name of the log where images responses are saved
+	 * @return true se è stato eseguito correttamente
      */
 	public static boolean executeCmd(String command, String logFileName)
 	{
