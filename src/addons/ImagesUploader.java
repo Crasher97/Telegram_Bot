@@ -9,6 +9,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.HttpClientBuilder;
+import bot.ExternalExecuter;
+import bot.Main;
+import bot.Message;
 
 public class ImagesUploader
 	{

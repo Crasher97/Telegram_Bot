@@ -3,8 +3,6 @@ package bot;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
-
-import addons.FileDownloader;
 import addons.ImagesUploader;
 
 
