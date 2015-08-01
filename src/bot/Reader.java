@@ -39,7 +39,7 @@ public class Reader
 	/**
 	 * Prende i messaggi dal metodo getUpdates di telegram, lo scompone in tutti i suoi contenuti(vedere documentazione telegram) e assegna il compito di rispondere
 	 * a un altra parte di programma a seconda che sia un comando o no.
-	 * @param receivedJSON
+	 * @param String receivedJSON
 	 */
 	public static void parseJSON(String receivedJSON)
 	{

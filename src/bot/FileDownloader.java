@@ -15,8 +15,8 @@ public class FileDownloader
 	private static String returnThread;
 	/**
 	 * Scarica un file dall'url passato come parametro
-	 * @param url
-	 * @return true se il download è andato a buon fine, false se è fallito //TODO RETURN BOOLEAN
+	 * @param String url - file to be downloaded
+ 	 * @return true se il download è andato a buon fine, false se è fallito //TODO RETURN BOOLEAN
 	 */
 	public static String downloadFile(String url)
 	{	
@@ -43,7 +43,11 @@ public class FileDownloader
 		return returnThread;
 	}
 	
-	//TODO COMMENTI
+	/**
+	 * Scarica il video da youtube dato l'url e ritorna il nome del file salvato
+	 * @param String url
+	 * @return String filename, il nome del file
+	 */
 	public static String downloadVideo(String url)
 	{
 		try 

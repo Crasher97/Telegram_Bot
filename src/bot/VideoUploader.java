@@ -14,7 +14,7 @@ public class VideoUploader
 	{
 		/**
 		 * Carica un video data la posizione assoluta
-		 * @param message
+		 * @param message 
 		 * @param path
 		 * @return true se il file è stato uploadato
 		 */
@@ -23,14 +23,20 @@ public class VideoUploader
 			return bot.ExternalExecuter.executeCmd("curl -s -X POST \"https://api.telegram.org/bot" + Main.getIdCode() + "/sendVideo\" -F chat_id=46365292 -F video=\"@" + path + "\"", "ytLog");
 		}
 		
+		/**
+		 * Carica un video dato l'url di youtube e il messaggio
+		 * @param long senderId
+		 * @param String url
+		 * @return true se il file è stato uploadato
+		 */
 		public static boolean ytUpload(Message message, String url)
 		{
 			return ytUpload(message.getSender_id(), url);
 		}
 		
 		/**
-		 * Carica un video dato l'url di youtube
-		 * @param Message message
+		 * Carica un video dato l'url di youtube e l'id del destinatario
+		 * @param long senderId
 		 * @param String url
 		 * @return true se il file è stato uploadato
 		 */

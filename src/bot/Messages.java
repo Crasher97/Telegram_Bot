@@ -7,8 +7,8 @@ public class Messages
 	private static ArrayList<Message> messages = new ArrayList<Message>();
 	
 	/**
-	 * addMessage - aggiunge un messaggio in memoria
-	 * @param msg
+	 * addMessage - aggiunge un messaggio in memoria, quando si raggiungono i 100 messaggi li scrive in un log esterno e resetta l'array
+	 * @param MEssage msg
 	 * @throws IOException 
 	 */
 	public static void addMessage(Message msg)
@@ -33,7 +33,7 @@ public class Messages
 	}
 	
 	/**
-	 * Restituisce l'intero array
+	 * Restituisce l'intero array dei messaggi
 	 * @return array
 	 */
 	public static ArrayList<Message> getArray()
@@ -43,22 +43,22 @@ public class Messages
 	
 	/**
 	 * equals, controlla se due parametri passati come parametro sono uguali
-	 * @param msg
-	 * @param messaggio2
+	 * @param Message msg
+	 * @param Message msg2
 	 * @return boolean, true se sono uguali, false se non lo sono
 	 */
-	public static boolean equals(Message msg, Message messaggio2)
+	public static boolean equals(Message msg, Message msg2)
 	{
-		if(msg.getDate()!=messaggio2.getDate())
+		if(msg.getDate()!=msg2.getDate())
 		{
 			return false;
 		}
-		if     (msg.getUpdate_id()==messaggio2.getUpdate_id() &&
-				msg.getText()==messaggio2.getText() &&
-				msg.getFirst_name()==messaggio2.getFirst_name() &&
-				msg.getLast_name()==messaggio2.getLast_name() &&
-				msg.getMessage_id()==messaggio2.getMessage_id() &&
-				msg.getSender_id()==messaggio2.getSender_id())
+		if     (msg.getUpdate_id()==msg2.getUpdate_id() &&
+				msg.getText()==msg2.getText() &&
+				msg.getFirst_name()==msg2.getFirst_name() &&
+				msg.getLast_name()==msg2.getLast_name() &&
+				msg.getMessage_id()==msg2.getMessage_id() &&
+				msg.getSender_id()==msg2.getSender_id())
 		{
 			return true;
 		}

@@ -20,8 +20,8 @@ public class ImagesUploader
 		/**
 		 * Metodo per passare come parametro un messaggio al posto del sender id
 		 * 
-		 * @param message
-		 * @param fileName
+		 * @param Message message
+		 * @param String fileName - il nome dell'immagine da aricare in /tmp
 		 * @return true se l'invio è andato a buon fine, false altrimenti
 		 */
 		public static boolean uploadImage(Message message, String fileName)
@@ -32,7 +32,7 @@ public class ImagesUploader
 		/**
 		 * Metodo che invia una foto
 		 * 
-		 * @param senderId
+		 * @param senderId - l'id della persona a cui spedire l'immagine
 		 * @param fileName - Nome del file immagine da inviare, presente nella cartella tmp
 		 * @return true se l'invio è andato a buon fine, false altrimenti
 		 */

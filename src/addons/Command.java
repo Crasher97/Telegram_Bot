@@ -11,10 +11,10 @@ public class Command
 	/**
 	 * Costruttore per i comandi inseriti da addons esterni
 	 * 
-	 * @param commandName nome del comando cui cui verrà identificato nei messaggi
-	 * @param jarFile il nome del jar da cui si carica il comando
-	 * @param className il nome della classe da caricare
-	 * @param methodName il nome del metodo da chiamare all'interno della classe
+	 * @param String commandName nome del comando cui cui verrà identificato nei messaggi
+	 * @param String jarFile il nome del jar da cui si carica il comando
+	 * @param String className il nome della classe da caricare
+	 * @param String methodName il nome del metodo da chiamare all'interno della classe
 	 */
 	public Command(String commandName, String jarFile, String className, String methodName)
 	{
@@ -28,9 +28,9 @@ public class Command
 	/**
 	 * Construttore per comandi interni
 	 * 
-	 * @param commandName
-	 * @param className
-	 * @param methodName
+	 * @param String commandName - il nome del comando con cui verrà riconosciuto
+	 * @param String className - il nome della classe dove trovare il metodo load
+	 * @param String methodName - il nome del metodo da chiamare dentro la classe quando viene invocato il comando
 	 */
 	public Command(String commandName, String className, String methodName)
 	{
@@ -40,26 +40,46 @@ public class Command
 		external = false;
 	}
 	
+	/**
+	 * Ritorna il nome del comando
+	 * @return String commandName
+	 */
 	public String getCommandName()
 	{
 		return commandName;
 	}
 
+	/**
+	 * Ritorna il nome del jar
+	 * @return String jarName
+	 */
 	public String getJarFile()
 	{
 		return jarFile;
 	}
 
+	/**
+	 * Ritorna il nome della classe 
+	 * @return String className
+	 */
 	public String getClassName()
 	{
 		return className;
 	}
 
+	/**
+	 * Ritorna il nome del metodo da chiamare
+	 * @return String mathodName
+	 */
 	public String getMethodName()
 	{
 		return methodName;
 	}
 	
+	/**
+	 * Ritorna se il comando è esterno o no
+	 * @return boolean external
+	 */
 	public boolean isExternal()
 	{
 		return external;

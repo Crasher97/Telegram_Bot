@@ -16,13 +16,13 @@ public class Message {
 	
 	/**
 	 * Costruttore oggetto Message
-	 * @param update_id
-	 * @param message_id
-	 * @param sender_id
-	 * @param first_name
-	 * @param last_name
-	 * @param date
-	 * @param text
+	 * @param long update_id
+	 * @param long message_id
+	 * @param long sender_id
+	 * @param String first_name
+	 * @param String last_name
+	 * @param Date date
+	 * @param String text
 	 */
 	public Message(long update_id, long message_id, long sender_id, String first_name, String last_name, Date date, String text) 
 	{

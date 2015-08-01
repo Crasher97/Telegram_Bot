@@ -19,8 +19,6 @@ public class Main
 		// configurazione all'avvio
 		idCode = args[0];
 		owner = args[1];
-		location = args[2];
-		wgetLocation = args[3];
 		url = "https://api.telegram.org/bot" + idCode;
 		//Sender.sendMessage(Integer.parseInt(args[1]), "MessaggiodiProvaSender");
 		// Al 84954308 Pa 84985065
@@ -88,29 +86,11 @@ public class Main
 	}
 	
 	/**
-	 * ritorna owner, il propietario del bot
-	 * @return String owner of bot
+	 * ritorna l'id del propietario del bot
+	 * @return String owner - il proprietario
 	 */
 	public static String getOwner()
 	{
 		return owner;
-	}
-	
-	/**
-	 * Ritorna la posizione del bot
-	 * @return String - path folder of bot
-	 */
-	public static String getLocation()
-	{
-		return location;
-	}
-	
-	/**
-	 * Ritorna la posizione di wget(only windows)
-	 * @return
-	 */
-	public static String getWgetLocation()
-	{
-		return wgetLocation;
 	}
 }
