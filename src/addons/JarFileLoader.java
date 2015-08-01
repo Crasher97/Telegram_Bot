@@ -26,7 +26,7 @@ public class JarFileLoader extends ClassLoader
 	 */
 	public static void invokeClassMethod(String classBinName, String methodName)
 	{
-		File dir = new File("addons\\");
+		File dir = new File("addons/");
 		File[] directoryListing = dir.listFiles();
 		if (directoryListing != null)
 		{
@@ -94,7 +94,7 @@ public class JarFileLoader extends ClassLoader
 	 */
 	public static void invokeClassMethod(String jarName, String classBinName, String methodName, Message message)
 	{
-		File file = new File("addons\\" + jarName);
+		File file = new File("addons/" + jarName);
 
 		// Per ogni file presente nella cartella addons
 		try
