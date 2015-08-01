@@ -95,6 +95,18 @@ public class Console
 			@Override
 			public void run(){}
 		});
+		
+		addCommand("ytvideo", new ConsoleCommandCode()
+			{
+				@Override
+				public void run(String[] args)
+				{
+					bot.VideoUploader.ytUpload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"), args[0]);
+				}
+
+				@Override
+				public void run(){}
+			});
 	}
 
 	public interface ConsoleCommandCode extends Runnable 

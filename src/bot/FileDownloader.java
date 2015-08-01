@@ -14,7 +14,7 @@ public class FileDownloader
 	/**
 	 * Scarica un file dall'url passato come parametro
 	 * @param url
-	 * @return true se il download è andato a buon fine, false se è fallito
+	 * @return true se il download è andato a buon fine, false se è fallito //TODO RETURN BOOLEAN
 	 */
 	public static void downloadFile(String url)
 	{	
@@ -39,13 +39,15 @@ public class FileDownloader
 		thread.start();
 	}
 	
-	public static String downloadVideo(String url)
+	//TODO COMMENTI
+	public static boolean downloadVideo(String url)
 	{
 		try 
 		{
 			VGet v = new VGet(new URL(url), new File("tmp/"));
 	        v.download();
-	        return v.getVideo().getTitle();
+	        nomeFile = v.getVideo().getTitle() + ".webm";
+	        return true;
 	    } catch (Exception e) {
 	        throw new RuntimeException(e);
 	    }
