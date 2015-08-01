@@ -83,6 +83,18 @@ public class Console
 			@Override
 			public void run(){}
 		});
+		
+		addCommand("video", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
+			{
+				System.out.println(FileDownloader.downloadVideo(args[0]));
+			}
+
+			@Override
+			public void run(){}
+		});
 	}
 
 	public interface ConsoleCommandCode extends Runnable 

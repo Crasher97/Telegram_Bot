@@ -6,6 +6,8 @@ import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 
+import com.github.axet.vget.VGet;
+
 public class FileDownloader
 {
 	private static String nomeFile;
@@ -35,6 +37,18 @@ public class FileDownloader
 	         }
 	    });
 		thread.start();
+	}
+	
+	public static String downloadVideo(String url)
+	{
+		try 
+		{
+			VGet v = new VGet(new URL(url), new File("tmp/"));
+	        v.download();
+	        return v.getVideo().getTitle();
+	    } catch (Exception e) {
+	        throw new RuntimeException(e);
+	    }
 	}
 	
 	/**
