@@ -32,18 +32,18 @@ public class VideoUploader
 		public static boolean ytUpload(Message message, String url)
 		{
 			boolean caricato = false;
-			boolean scaricato = false;
+			String scaricato = "";
 			
 			//DOWNLOAD VIDEO
 			scaricato = FileDownloader.downloadVideo(url);
 			
 			//UPLOAD VIDEO
-			if(scaricato)
+			if(scaricato != null)
 				{
 					HttpClient httpclient = HttpClientBuilder.create().build();
 					HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + "/sendVideo?chat_id=" + message.getSender_id());
 
-					File video = new File("tmp/" + FileDownloader.getNomeFile());
+					File video = new File("tmp/" + scaricato);
 					FileBody uploadFilePart = new FileBody(video);
 					MultipartEntityBuilder  reqEntity = MultipartEntityBuilder.create();//
 					reqEntity.addPart("video", uploadFilePart);
