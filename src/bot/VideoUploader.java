@@ -35,11 +35,16 @@ public class VideoUploader
 			String scaricato = "";
 			
 			//DOWNLOAD VIDEO
+			System.out.println("Scaricamento video avviato");
 			scaricato = FileDownloader.downloadVideo(url);
 			
 			//UPLOAD VIDEO
+			
 			if(scaricato != null)
 				{
+
+					System.out.println("Scaricamento video completato");
+					System.out.println("Caricamento video avviato");
 					HttpClient httpclient = HttpClientBuilder.create().build();
 					HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + "/sendVideo?chat_id=" + message.getSender_id());
 
