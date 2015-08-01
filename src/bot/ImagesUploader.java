@@ -3,12 +3,16 @@ package bot;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 public class ImagesUploader
 	{
@@ -34,40 +38,46 @@ public class ImagesUploader
 		 */
 		public static boolean uploadImage(long senderId, String fileName)
 		{
-			HttpClient httpclient = HttpClientBuilder.create().build();
-			HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + "/sendPhoto?chat_id=" + senderId);
-
-			File photo = new File("tmp/" + fileName);
-			FileBody uploadFilePart = new FileBody(photo);
-			MultipartEntityBuilder  reqEntity = MultipartEntityBuilder.create();//
-			reqEntity.addPart("photo", uploadFilePart);
-			httpPost.setEntity(reqEntity.build());
-
-			try
+			String file_id = UploadedFileLogger.getFileId("tmp/" + fileName);
+			if(file_id == null)
 			{
-				HttpResponse response = httpclient.execute(httpPost);
-				return true;
+				HttpClient httpclient = HttpClientBuilder.create().build();
+				HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + "/sendPhoto?chat_id=" + senderId);
+
+				File photo = new File("tmp/" + fileName);
+				FileBody uploadFilePart = new FileBody(photo);
+				MultipartEntityBuilder  reqEntity = MultipartEntityBuilder.create();
+				reqEntity.addPart("photo", uploadFilePart);
+				httpPost.setEntity(reqEntity.build());
+
+				try
+				{
+					HttpResponse response = httpclient.execute(httpPost);
+					HttpEntity entity = response.getEntity();
+					String content = EntityUtils.toString(entity);
+					UploadedFileLogger.addToFileLog("tmp/" + fileName, content);
+
+					return true;
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+					return false;
+				}
 			}
-			catch (IOException e)
+			else
 			{
-				e.printStackTrace();
-				return false;
+				try
+				{
+					Document doc = Jsoup.connect(Main.getUrl() + "/sendPhoto?chat_id=" + senderId + "&photo=" + file_id).ignoreContentType(true).post();
+					return true;
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+					return false;
+				}
 			}
-			
 		}
 		
-		/**
-		 * Carica un'immagine dato il nome(nella cartella \tmp)
-		 * @param message
-		 * @param name
-		 * @return
-		 */
-		public static boolean uploadImageOld(Message message, String name)
-		{
-			boolean uploaded = false;
-			
-			uploaded = ExternalExecuter.executeCmd("curl -s -X POST \"https://api.telegram.org/bot" + Main.getIdCode() + "/sendPhoto\" -F chat_id="+ message.getSender_id() +" -F photo=\"@\"" + bot.Main.getLocation() + "\\tmp\\" + name +"\"", "imagesLog");
-			
-			return uploaded;
-		}
 	}
