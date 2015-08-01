@@ -17,6 +17,7 @@ public class Commands
 	 */
 	public static void addCommand(Command command)
 	{
+		System.out.println("Comando aggiunto: " + command.getCommandName());
 		commands.put(command.getCommandName(), command);
 	}
 	

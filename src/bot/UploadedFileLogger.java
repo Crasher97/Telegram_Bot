@@ -121,6 +121,7 @@ public class UploadedFileLogger
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	/**
 	 * Restituisce il file_id del file al percorso passato come parametro
 	 * @param String path - Percorso del file
@@ -135,6 +136,7 @@ public class UploadedFileLogger
 		{
 			obj = (JSONObject) parser.parse(new FileReader("uploadedFileLog.json"));
 			JSONArray files = (JSONArray) obj.get("Files");
+			
 			Iterator<JSONObject> iterator = files.iterator();
 			while(iterator.hasNext())
 			{

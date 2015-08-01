@@ -1,5 +1,7 @@
 package bot;
 import java.io.File;
+
+import addons.Commands;
 import addons.Help;
 import addons.JarFileLoader;
 
@@ -26,6 +28,7 @@ public class Main
 		//CARICAMENTO ADDONS
 		JarFileLoader.loadJarFile();
 		Help.load();
+		System.out.println(Commands.getCommands().keySet().toString());
 		Console.loadCommand();
 		Console.openConsole();
 	    //addons.testAdd.upload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"));
@@ -84,7 +87,6 @@ public class Main
 	        }
 		});
 		thread.start();
-
 	
 		
 		// CONTROLLO NUOVI MESSAGGI

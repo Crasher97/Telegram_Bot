@@ -12,7 +12,6 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 public class ImagesUploader
 	{
@@ -69,7 +68,7 @@ public class ImagesUploader
 			{
 				try
 				{
-					Document doc = Jsoup.connect(Main.getUrl() + "/sendPhoto?chat_id=" + senderId + "&photo=" + file_id).ignoreContentType(true).post();
+					Jsoup.connect(Main.getUrl() + "/sendPhoto?chat_id=" + senderId + "&photo=" + file_id).ignoreContentType(true).post();
 					return true;
 				}
 				catch (IOException e)

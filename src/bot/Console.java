@@ -19,6 +19,7 @@ public class Console
 			@Override
 			public void run()
 			{
+				@SuppressWarnings("resource")
 				Scanner scanner = new Scanner(System.in);
 				String[] command;
 				while(true)
