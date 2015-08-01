@@ -23,13 +23,18 @@ public class VideoUploader
 			return bot.ExternalExecuter.executeCmd("curl -s -X POST \"https://api.telegram.org/bot" + Main.getIdCode() + "/sendVideo\" -F chat_id=46365292 -F video=\"@" + path + "\"", "ytLog");
 		}
 		
+		public static boolean ytUpload(Message message, String url)
+		{
+			return ytUpload(message.getSender_id(), url);
+		}
+		
 		/**
 		 * Carica un video dato l'url di youtube
 		 * @param Message message
 		 * @param String url
 		 * @return true se il file è stato uploadato
 		 */
-		public static boolean ytUpload(Message message, String url)
+		public static boolean ytUpload(long senderId, String url)
 		{
 			boolean caricato = false;
 			String scaricato = "";
@@ -41,7 +46,7 @@ public class VideoUploader
 			if(scaricato != null)
 				{
 					HttpClient httpclient = HttpClientBuilder.create().build();
-					HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + "/sendVideo?chat_id=" + message.getSender_id());
+					HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + "/sendVideo?chat_id=" + senderId);
 
 					File video = new File("tmp/" + scaricato);
 					FileBody uploadFilePart = new FileBody(video);

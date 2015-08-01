@@ -101,7 +101,7 @@ public class Console
 				@Override
 				public void run(String[] args)
 				{
-					bot.VideoUploader.ytUpload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"), args[0]);
+					bot.VideoUploader.ytUpload(Long.parseLong(args[0]), args[1]);
 				}
 
 				@Override

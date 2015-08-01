@@ -52,7 +52,7 @@ public class FileDownloader
 			user = new YouTubeMPGParser();
 			VGet v = new VGet(new URL(url), new File("tmp/"));
 	        v.download(user);
-	        return v.getVideo().getTitle() + ".mp4";
+	        return v.getTarget().getName();
 	    } catch (Exception e) {
 	       e.printStackTrace();
 	        return null;
