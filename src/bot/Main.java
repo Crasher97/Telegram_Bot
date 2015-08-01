@@ -1,13 +1,13 @@
 package bot;
+import java.io.File;
 import addons.Help;
 import addons.JarFileLoader;
+
 public class Main
 {
 	private static String idCode = "";
 	private static String owner = "";
-	private static String location = "";
 	private static String url = "";
-	private static String wgetLocation;
 
 	/**
 	 * Metodo main, punto di partenza del programma, terminare inviando un messaggio con scritto /stop
@@ -49,7 +49,44 @@ public class Main
 				}
 			}
 		});
+		
+		// ESEGUZIONE ELIMINAZIONE FILE 
+		
+		Thread thread = new Thread(new Runnable() {
+	         public void run() {
+	        	while(true)
+	        		{
+	        			try
+	        				{
+	        					File dir = new File("tmp\\");
+	        					File[] directoryListing = dir.listFiles();
+	        					if(directoryListing != null)
+	        						{
+	        							for(File file : directoryListing)
+	        								{
+	        									if((System.currentTimeMillis() - file.lastModified()) > 259200000)
+	        										{
+	        											if(file.delete())
+	        												{
+	        													IO.writeOUT("DeleteLog", "File " + file.getName() + " CANCELLATO");
+	        													System.out.print("File Deleted");
+	        												}
+	        										}
+	        								}
+	        						}
+	    	        			Thread.sleep(43200000);
+	        				}
+	        			catch (Exception e)
+	        				{
+	        					System.err.println("Errore durante eliminazione file");
+	        				}
+	        		}
+	        }
+		});
+		thread.start();
 
+	
+		
 		// CONTROLLO NUOVI MESSAGGI
 		while (true)
 		{
