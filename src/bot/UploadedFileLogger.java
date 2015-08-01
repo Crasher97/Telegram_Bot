@@ -14,6 +14,11 @@ import org.json.simple.parser.ParseException;
 
 public class UploadedFileLogger
 {	
+	/**
+	 * Estrae il file_id dal JSON passato come parametro
+	 * @param receivedJSON
+	 * @return file_id
+	 */
 	public static String parseJSON(String receivedJSON)
 	{
 		JSONParser parser = new JSONParser();
@@ -35,6 +40,9 @@ public class UploadedFileLogger
 		
 	}
 	
+	/**
+	 * Crea il file uploadedFileLog.json
+	 */
 	@SuppressWarnings("unchecked")
 	public static void createLogFile()
 	{
@@ -53,6 +61,11 @@ public class UploadedFileLogger
         }
 	}
 	
+	/**
+	 * Aggiunge il file specificato al log
+	 * @param filePath - Percorso del file
+	 * @param receivedJSON - JSON ricevuto dall'upload del file
+	 */
 	public static void addToFileLog(String filePath, String receivedJSON)
 	{
 		File f = new File("uploadedFileLog.json");
@@ -87,6 +100,11 @@ public class UploadedFileLogger
 		}
 	}
 	
+	/**
+	 * Calcola l'MD5 del file passato come parametro
+	 * @param path - Percorso del file
+	 * @return hash MD5 del file
+	 */
 	public static String calculateFileMD5(String path)
 	{
 		try
@@ -103,6 +121,11 @@ public class UploadedFileLogger
 		}
 	}
 	
+	/**
+	 * Restituisce il file_id del file al percorso passato come parametro
+	 * @param path - Percorso del file
+	 * @return file_id oppure null se il file non è presente nel log
+	 */
 	public static String getFileId(String path)
 	{
 		JSONParser parser = new JSONParser();
