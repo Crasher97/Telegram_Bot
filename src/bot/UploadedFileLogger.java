@@ -7,19 +7,24 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class UploadedFileLogger
-{	
+{
+	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	public enum Type {PHOTO, VIDEO, DOCUMENT};
+
 	/**
 	 * Estrae il file_id dal JSON passato come parametro
 	 * @param receivedJSON
 	 * @return Il nome del file
 	 */
-	public static String parseJSON(String receivedJSON)
+	public static String parseJSON(String receivedJSON, Type type)
 	{
 		JSONParser parser = new JSONParser();
 		
@@ -27,17 +32,36 @@ public class UploadedFileLogger
 		{
 			JSONObject jsonObject = (JSONObject) parser.parse(receivedJSON);
 			JSONObject resultList = (JSONObject) jsonObject.get("result");
-			JSONArray photos = (JSONArray) resultList.get("photo");
-			JSONObject photo = (JSONObject) photos.get(2);
-			//System.out.println(photo.get("file_id"));
-			return (String) photo.get("file_id");
+			switch (type)
+			{
+				case PHOTO:
+				{
+					JSONArray photos = (JSONArray) resultList.get("photo");
+					JSONObject photo = (JSONObject) photos.get(2);
+					return (String) photo.get("file_id");
+				}
+
+				case VIDEO:
+				{
+					JSONObject document = (JSONObject) resultList.get("video");
+					return (String) document.get("file_id");
+				}
+
+				case DOCUMENT:
+				{
+					JSONObject document = (JSONObject) resultList.get("document");
+					return (String) document.get("file_id");
+				}
+
+			}
+
 		} 
 		catch (ParseException e) 
 		{
 			e.printStackTrace();
 			return null;
 		}
-		
+		return null;
 	}
 	
 	/**
@@ -51,7 +75,8 @@ public class UploadedFileLogger
         obj.put("Files", files);
         try {
         	FileWriter outFile = new FileWriter("uploadedFileLog.json");
-        	outFile.write(obj.toJSONString());
+        	//outFile.write(obj.toJSONString());
+			outFile.write(gson.toJson(obj));
             System.out.println("Creato file JSON");
             outFile.flush();
             outFile.close();
@@ -61,21 +86,13 @@ public class UploadedFileLogger
         }
 	}
 	
-	/**
-	 * Aggiunge il file specificato al log
-	 * @param filePath Percorso del file
-	 * @param receivedJSON JSON ricevuto dall'upload del file
-	 */
-	public static void addToFileLog(String filePath, String receivedJSON)
+	@SuppressWarnings("unchecked")
+	public static void addToFileLog(String filePath, String receivedJSON, Type type)
 	{
 		File f = new File("uploadedFileLog.json");
 		if(!f.exists()) createLogFile();
-		addToLog(calculateFileMD5(filePath), parseJSON(receivedJSON));
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static void addToLog(String fileMD5, String file_id)
-	{
+		String fileMD5 = calculateFileMD5(filePath);
+		String file_id = parseJSON(receivedJSON, type);
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		try
@@ -85,12 +102,12 @@ public class UploadedFileLogger
 			JSONObject file = new JSONObject();
 	        file.put("hash", fileMD5);
 	        file.put("file_id", file_id);
+			file.put("fileName", filePath.split("/")[1]);
+			file.put("fileType", type.toString());
 	        files.add(file);
 	        
         	FileWriter outFile = new FileWriter("uploadedFileLog.json");
-        	outFile.write(obj.toJSONString());
-            //System.out.println("Successfully Copied JSON Object to File...");
-            //System.out.println("\nJSON Object: " + obj);
+			outFile.write(gson.toJson(obj));
             outFile.flush();
             outFile.close();
 		}

@@ -3,12 +3,15 @@ package bot;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.jsoup.Jsoup;
 
 public class VideoUploader
 	{
@@ -53,28 +56,47 @@ public class VideoUploader
 			
 			if(scaricato != null)
 				{
-
-					System.out.println("Scaricamento video completato");
-					System.out.println("Caricamento video avviato");
-					HttpClient httpclient = HttpClientBuilder.create().build();
-					HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + "/sendVideo?chat_id=" + senderId);
-
-					File video = new File("tmp/" + scaricato);
-					FileBody uploadFilePart = new FileBody(video);
-					MultipartEntityBuilder  reqEntity = MultipartEntityBuilder.create();//
-					reqEntity.addPart("video", uploadFilePart);
-					httpPost.setEntity(reqEntity.build());
-
-					try
+					String file_id = UploadedFileLogger.getFileId("tmp/" + scaricato);
+					System.out.println(file_id);
+					if(file_id == null)
 					{
-						HttpResponse response = httpclient.execute(httpPost);
-						System.out.println(response);
-						caricato = true;
+						System.out.println("Scaricamento video completato");
+						System.out.println("Caricamento video avviato");
+						HttpClient httpclient = HttpClientBuilder.create().build();
+						HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + "/sendVideo?chat_id=" + senderId);
+
+						File video = new File("tmp/" + scaricato);
+						FileBody uploadFilePart = new FileBody(video);
+						MultipartEntityBuilder reqEntity = MultipartEntityBuilder.create();//
+						reqEntity.addPart("video", uploadFilePart);
+						httpPost.setEntity(reqEntity.build());
+
+						try
+						{
+							HttpResponse response = httpclient.execute(httpPost);
+							HttpEntity entity = response.getEntity();
+							String content = EntityUtils.toString(entity);
+							UploadedFileLogger.addToFileLog("tmp/" + scaricato, content, UploadedFileLogger.Type.VIDEO);
+							//System.out.println(response);
+							caricato = true;
+						} catch (IOException e)
+						{
+							e.printStackTrace();
+							caricato = false;
+						}
 					}
-					catch (IOException e)
+					else
 					{
-						e.printStackTrace();
-						caricato = false;
+						try
+						{
+							Jsoup.connect(Main.getUrl() + "/sendVideo?chat_id=" + senderId + "&video=" + file_id).ignoreContentType(true).post();
+							return true;
+						}
+						catch (IOException e)
+						{
+							e.printStackTrace();
+							return false;
+						}
 					}
 				}
 			return caricato;	

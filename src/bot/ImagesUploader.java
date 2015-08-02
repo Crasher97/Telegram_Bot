@@ -54,7 +54,7 @@ public class ImagesUploader
 					HttpResponse response = httpclient.execute(httpPost);
 					HttpEntity entity = response.getEntity();
 					String content = EntityUtils.toString(entity);
-					UploadedFileLogger.addToFileLog("tmp/" + fileName, content);
+					UploadedFileLogger.addToFileLog("tmp/" + fileName, content, UploadedFileLogger.Type.PHOTO);
 
 					return true;
 				}
