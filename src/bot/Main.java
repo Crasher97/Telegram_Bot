@@ -31,8 +31,8 @@ public class Main
 		System.out.println(Commands.getCommands().keySet().toString());
 		Console.loadCommand();
 		Console.openConsole();
-		//bot.VideoUploader.upload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"), "C:\\Users\\Paolo\\Videos\\Desktop\\Desktop 04.27.2015 - 18.47.14.02.mp4");
-		
+		//addons.TestAdd.functionYtAudio(new Message(0,0,9,"paolo","d",null,"/yta https://www.youtube.com/watch?v=36sambtCsGA"));
+	
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
 		Runtime.getRuntime().addShutdownHook(new Thread()
 		{

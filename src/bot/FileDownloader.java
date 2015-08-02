@@ -32,6 +32,7 @@ public class FileDownloader
 	     		}
 	     		catch (IOException e)
 	     		{
+	     			System.err.println("Download Error in class FileDownloader:downloadFile");
 	     			e.printStackTrace();
 	     			returnThread = null;
 	     		}

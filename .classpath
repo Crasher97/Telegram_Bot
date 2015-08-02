@@ -20,5 +20,7 @@
 	<classpathentry kind="lib" path="lib/libvget/xstream-1.4.2.jar"/>
 	<classpathentry kind="lib" path="lib/libvget/commons-codec-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/libvget/commons-lang3-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jave-1.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
