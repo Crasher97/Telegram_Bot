@@ -16,8 +16,8 @@ public class UploadedFileLogger
 {	
 	/**
 	 * Estrae il file_id dal JSON passato come parametro
-	 * @param String receivedJSON
-	 * @return String file_id - il nome del file
+	 * @param receivedJSON
+	 * @return Il nome del file
 	 */
 	public static String parseJSON(String receivedJSON)
 	{
@@ -63,8 +63,8 @@ public class UploadedFileLogger
 	
 	/**
 	 * Aggiunge il file specificato al log
-	 * @param String filePath - Percorso del file
-	 * @param String receivedJSON - JSON ricevuto dall'upload del file
+	 * @param filePath Percorso del file
+	 * @param receivedJSON JSON ricevuto dall'upload del file
 	 */
 	public static void addToFileLog(String filePath, String receivedJSON)
 	{
@@ -102,7 +102,7 @@ public class UploadedFileLogger
 	
 	/**
 	 * Calcola l'MD5 del file passato come parametro
-	 * @param String path - Percorso del file
+	 * @param path Percorso del file
 	 * @return String hash MD5 del file
 	 */
 	public static String calculateFileMD5(String path)
@@ -124,7 +124,7 @@ public class UploadedFileLogger
 	@SuppressWarnings("unchecked")
 	/**
 	 * Restituisce il file_id del file al percorso passato come parametro
-	 * @param String path - Percorso del file
+	 * @param path Percorso del file
 	 * @return String file_id - oppure null se il file non è presente nel log
 	 */
 	public static String getFileId(String path)
