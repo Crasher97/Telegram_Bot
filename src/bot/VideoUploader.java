@@ -25,8 +25,8 @@ public class VideoUploader
 		
 		/**
 		 * Carica un video dato l'url di youtube e il messaggio
-		 * @param long senderId
-		 * @param String url
+		 * @param message
+		 * @param url
 		 * @return true se il file è stato uploadato
 		 */
 		public static boolean ytUpload(Message message, String url)
@@ -36,8 +36,8 @@ public class VideoUploader
 		
 		/**
 		 * Carica un video dato l'url di youtube e l'id del destinatario
-		 * @param long senderId
-		 * @param String url
+		 * @param senderId
+		 * @param url
 		 * @return true se il file è stato uploadato
 		 */
 		public static boolean ytUpload(long senderId, String url)

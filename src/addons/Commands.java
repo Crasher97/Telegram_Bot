@@ -13,7 +13,7 @@ public class Commands
 	/**
 	 * Aggiunge alla lista il comando passato come parametro
 	 * 
-	 * @param command
+	 * @param command Oggetto Command da aggiungere
 	 */
 	public static void addCommand(Command command)
 	{
@@ -24,8 +24,8 @@ public class Commands
 	/**
 	 * Esegue il comando
 	 * 
-	 * @param commandName
-	 * @param message - Il messaggio da cui è stato lanciato il comando nel caso servano parametri o il sender id
+	 * @param commandName Nome del comando
+	 * @param message Il messaggio da cui è stato lanciato il comando nel caso servano parametri o il sender id
 	 */
 	public static void exeCommand(String commandName, Message message)
 	{
@@ -42,8 +42,8 @@ public class Commands
 	
 	/**
 	 * Verifica se il comando passato come parametro esiste
-	 * @param commandName
-	 * @return
+	 * @param commandName Nome del comando
+	 * @return true se il comando esiste, altrimenti false
 	 */
 	public static boolean commandExist(String commandName)
 	{
@@ -52,11 +52,11 @@ public class Commands
 	}
 	
 	/**
-	 * Chama un comando in una classe interna al programma
+	 * Chiama un comando in una classe interna al programma
 	 * 
-	 * @param commandClass
-	 * @param commandMethod
-	 * @param message
+	 * @param commandClass Classe del comando
+	 * @param commandMethod Metodo del comando
+	 * @param message Messaggio dal quale è stato chiamato il comando
 	 */
 	public static void callInternalCommand(String commandClass, String commandMethod, Message message)
 	{

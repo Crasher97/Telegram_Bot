@@ -10,8 +10,8 @@ public class IO
 
 	/**
 	 * Scrive un array di stringhe in un file esterno(append)
-	 * @param String filename - il nome del file
-	 * @param  Array<String> messageList - l'array da scrivere nel file
+	 * @param filename il nome del file
+	 * @param  messageList l'array da scrivere nel file
 	 * @throws IOException
 	 */
 	public static void writeOUT(String filename, ArrayList<Message> messageList) throws IOException
@@ -30,8 +30,8 @@ public class IO
 
 	/**
 	 * Scrive una String in un file esterno(append)
-	 * @param String filename - il nome del file 
-	 * @param String log - la stringa da scrivere all'interno del log
+	 * @param filename il nome del file
+	 * @param log la stringa da scrivere all'interno del log
 	 * @throws IOException
 	 */
 	public static void writeOUT(String filename, String log) throws IOException

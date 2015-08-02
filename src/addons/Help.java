@@ -21,8 +21,8 @@ public class Help
 	/**
 	 * Aggiunge un help
 	 * 
-	 * @param command - Comando di cui aggiungere l'help
-	 * @param help - Contenuto dell'help
+	 * @param command Comando di cui aggiungere l'help
+	 * @param help Contenuto dell'help
 	 */
 	public static void addHelp(String command, String help)
 	{
@@ -31,7 +31,7 @@ public class Help
 	
 	/**
 	 * Gestisce una richiesta di help e risponde con il contenuto, se viene lanciato solo "help" fa la lista dei comandi disponibili
-	 * @param message - Messaggio da cui prendere l'argomento e il sender id
+	 * @param message Messaggio da cui prendere l'argomento e il sender id
 	 */
 	public static void helpRequest(Message message)
 	{

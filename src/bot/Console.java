@@ -118,8 +118,8 @@ public class Console
 	/**
 	 * Aggiunge un comando alla lista
 	 * 
-	 * @param commandName - Nome del Comando
-	 * @param consoleCommandCode - Codice del comando
+	 * @param commandName Nome del Comando
+	 * @param consoleCommandCode Codice del comando
 	 */
 	public static void addCommand(String commandName, ConsoleCommandCode consoleCommandCode)
 	{
@@ -128,7 +128,7 @@ public class Console
 	
 	/**
 	 * Esegue il comando passato come parametro
-	 * @param command
+	 * @param command Comando da eseguire con parametri
 	 */
 	public static void exeCommand(String[] command)
 	{
@@ -139,7 +139,7 @@ public class Console
 	
 	/**
 	 * Verifica se il comando esiste
-	 * @param commandName
+	 * @param commandName Nome del comando
 	 * @return true se esiste, false se non esiste
 	 */
 	public static boolean commandExist(String commandName)

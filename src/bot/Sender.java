@@ -8,8 +8,8 @@ public class Sender
 {
 	/**
 	 * Metodo per inviare messaggi
-	 * @param long chatId - Chat id del destinatario
-	 * @param String message - Messaggio da inviare
+	 * @param chatId Chat id del destinatario
+	 * @param message Messaggio da inviare
 	 * @return true se l'invio è stato effettuato con successo, altrimenti false
 	 */
 	public static boolean sendMessage(int chatId, String message)
@@ -38,8 +38,8 @@ public class Sender
 	
 	/**
 	 * Metodo per inviare messaggi
-	 * @param int chatId - Chat id del destinatario
-	 * @param String message - Messaggio da inviare
+	 * @param chatId Chat id del destinatario
+	 * @param message Messaggio da inviare
 	 * @return true se l'invio è stato effettuato con successo, altrimenti false
 	 */
 	public static boolean sendMessage(long chatId, String message)

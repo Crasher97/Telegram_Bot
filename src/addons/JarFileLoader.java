@@ -21,8 +21,8 @@ public class JarFileLoader extends ClassLoader
 	/**
 	 * Esegue un metodo in una classe di tutti i file jar presenti nella cartella addons
 	 * 
-	 * @param classBinName - Nome della classe
-	 * @param methodName - Nome del metodo
+	 * @param classBinName Nome della classe
+	 * @param methodName Nome del metodo
 	 */
 	public static void invokeClassMethod(String classBinName, String methodName)
 	{
@@ -87,10 +87,10 @@ public class JarFileLoader extends ClassLoader
 	/**
 	 * Permette di chiamare il metodo di un addons
 	 * 
-	 * @param jarName - Nome del file jar dell'addons
-	 * @param classBinName - Nome della classe
-	 * @param methodName - Nome del metodo
-	 * @param message - Oggetto Message da passare all'addons
+	 * @param jarName Nome del file jar dell'addons
+	 * @param classBinName Nome della classe
+	 * @param methodName Nome del metodo
+	 * @param message Oggetto Message da passare all'addons
 	 */
 	public static void invokeClassMethod(String jarName, String classBinName, String methodName, Message message)
 	{

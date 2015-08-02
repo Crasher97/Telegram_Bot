@@ -8,8 +8,7 @@ public class Messages
 	
 	/**
 	 * addMessage - aggiunge un messaggio in memoria, quando si raggiungono i 100 messaggi li scrive in un log esterno e resetta l'array
-	 * @param MEssage msg
-	 * @throws IOException 
+	 * @param msg
 	 */
 	public static void addMessage(Message msg)
 	{
@@ -43,8 +42,8 @@ public class Messages
 	
 	/**
 	 * equals, controlla se due parametri passati come parametro sono uguali
-	 * @param Message msg
-	 * @param Message msg2
+	 * @param msg
+	 * @param msg2
 	 * @return boolean, true se sono uguali, false se non lo sono
 	 */
 	public static boolean equals(Message msg, Message msg2)
