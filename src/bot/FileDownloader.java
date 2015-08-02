@@ -16,7 +16,7 @@ public class FileDownloader
 	/**
 	 * Scarica un file dall'url passato come parametro
 	 * @param String url - file to be downloaded
- 	 * @return true se il download è andato a buon fine, false se è fallito //TODO RETURN BOOLEAN
+ 	 * @return Stringa con il nome del file, se il download è fallito null
 	 */
 	public static String downloadFile(String url)
 	{	
