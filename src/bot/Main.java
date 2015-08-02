@@ -31,7 +31,7 @@ public class Main
 		System.out.println(Commands.getCommands().keySet().toString());
 		Console.loadCommand();
 		Console.openConsole();
-		//addons.TestAdd.functionYtAudio(new Message(0,0,9,"paolo","d",null,"/yta https://www.youtube.com/watch?v=36sambtCsGA"));
+		//addons.TestAdd.functionYtAudio(new Message(0,0,84985065,"paolo","d",null,"/yta https://www.youtube.com/watch?v=36sambtCsGA"));
 	
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
 		Runtime.getRuntime().addShutdownHook(new Thread()

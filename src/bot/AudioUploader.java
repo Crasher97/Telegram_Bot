@@ -26,7 +26,7 @@ public class AudioUploader
 
 					FileBody uploadFilePart = new FileBody(audio);
 					MultipartEntityBuilder  reqEntity = MultipartEntityBuilder.create();//
-					reqEntity.addPart("video", uploadFilePart);
+					reqEntity.addPart("document", uploadFilePart);
 					httpPost.setEntity(reqEntity.build());
 
 					try
