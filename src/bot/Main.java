@@ -31,7 +31,6 @@ public class Main
 		System.out.println(Commands.getCommands().keySet().toString());
 		Console.loadCommand();
 		Console.openConsole();
-	    //addons.testAdd.upload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"));
 		//bot.VideoUploader.upload(new Message(0, 0, 84985065, "paolo", "paolo", null, "/uplimg -nasa"), "C:\\Users\\Paolo\\Videos\\Desktop\\Desktop 04.27.2015 - 18.47.14.02.mp4");
 		
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA

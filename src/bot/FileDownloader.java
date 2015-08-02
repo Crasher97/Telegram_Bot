@@ -21,8 +21,6 @@ public class FileDownloader
 	public static String downloadFile(String url)
 	{	
 		final String urlF = url;
-		Thread thread = new Thread(new Runnable() {
-	         public void run() {
 	        	try
 	     		{
 	     			String[] urlPart = urlF.split("/");
@@ -37,9 +35,6 @@ public class FileDownloader
 	     			e.printStackTrace();
 	     			returnThread = null;
 	     		}
-	         }
-	    });
-		thread.start();
 		return returnThread;
 	}
 	
