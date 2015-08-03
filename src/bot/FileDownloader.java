@@ -21,21 +21,21 @@ public class FileDownloader
 	public static String downloadFile(String url)
 	{	
 		final String urlF = url;
-	        	try
-	     		{
-	     			String[] urlPart = urlF.split("/");
-	     			String fileName = urlPart[urlPart.length - 1];
-	     			URL link = new URL(urlF);
-	     			FileUtils.copyURLToFile(link, new File("tmp/" + fileName));
-	     			Log.info("Download Finished");
-	     			returnThread = fileName;
-	     		}
-	     		catch (IOException e)
-	     		{
-	     			Log.error("Download Error");
-	     			e.printStackTrace();
-	     			returnThread = null;
-	     		}
+		try
+		{
+			String[] urlPart = urlF.split("/");
+			String fileName = urlPart[urlPart.length - 1];
+			URL link = new URL(urlF);
+			FileUtils.copyURLToFile(link, new File("tmp/" + fileName));
+			Log.info("Download Finished");
+			returnThread = fileName;
+		}
+		catch (IOException e)
+		{
+			Log.error("Download Error");
+			e.printStackTrace();
+			returnThread = null;
+		}
 		return returnThread;
 	}
 	
@@ -53,7 +53,9 @@ public class FileDownloader
 			VGet v = new VGet(new URL(url), new File("tmp/"));
 	        v.download(user);
 	        return v.getTarget().getName();
-	    } catch (Exception e) {
+	    }
+		catch (Exception e)
+		{
 	       e.printStackTrace();
 	        return null;
 	    }

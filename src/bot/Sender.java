@@ -14,26 +14,7 @@ public class Sender
 	 */
 	public static boolean sendMessage(int chatId, String message)
 	{
-		try 
-		{
-			Document doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&text=" + message).ignoreContentType(true).post();
-			if(doc.text().contains("\"ok\":true")) 
-				{
-					Log.info("Messaggio inviato: " + message);
-					return true; 
-				}
-			else 
-				{
-					Log.error("Messaggio non inviato");
-					return false;
-				}
-		} 
-		catch (IOException e) 
-		{
-			//e.printStackTrace();
-			Log.error("Messaggio non inviato");
-			return false;
-		}
+		return sendMessage((long)chatId, message);
 	}
 	
 	/**
