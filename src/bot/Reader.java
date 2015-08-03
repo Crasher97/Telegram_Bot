@@ -95,8 +95,8 @@ public class Reader
 					}
 					else
 					{
-							System.out.println("comando non riconosciuto");
-							Sender.sendMessage((int)message.getSender_id(), "comando non riconosciuto");
+							Log.warn("Comando non riconosciuto ricevuto da: " + first_name + " " + last_name);
+							Sender.sendMessage((int)message.getSender_id(), "Comando non riconosciuto");
 					}
 				}
 				else

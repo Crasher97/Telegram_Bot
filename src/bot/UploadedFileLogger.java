@@ -77,7 +77,7 @@ public class UploadedFileLogger
         	FileWriter outFile = new FileWriter("uploadedFileLog.json");
         	//outFile.write(obj.toJSONString());
 			outFile.write(gson.toJson(obj));
-            System.out.println("Creato file JSON");
+            Log.info("Creato file JSON");
             outFile.flush();
             outFile.close();
  

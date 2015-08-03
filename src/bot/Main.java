@@ -32,7 +32,7 @@ public class Main
 		Console.loadCommand();
 		Console.openConsole();
 		//addons.TestAdd.functionYtAudio(new Message(0,0,84985065,"paolo","d",null,"/yta https://www.youtube.com/watch?v=36sambtCsGA"));
-	
+
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
 		Runtime.getRuntime().addShutdownHook(new Thread()
 		{
@@ -42,7 +42,7 @@ public class Main
 				{
 					// In chiusura salva i messaggi nel log
 					IO.writeOUT("log", Messages.getArray());
-					System.out.println("Terminato");
+					Log.info("Terminato");
 					
 				}
 				catch (Exception e)
@@ -80,7 +80,7 @@ public class Main
 	        				}
 	        			catch (Exception e)
 	        				{
-	        					System.err.println("Errore durante eliminazione file");
+	        					Log.error("Errore durante eliminazione file");
 	        				}
 	        		}
 	        }

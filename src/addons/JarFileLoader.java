@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import bot.Log;
 import bot.Message;
 
 public class JarFileLoader extends ClassLoader
@@ -57,12 +58,12 @@ public class JarFileLoader extends ClassLoader
 						{
 							Method method = loadedMyClass.getMethod(methodName);
 							//System.out.println("Invoked method name: " + method.getName());
-							System.out.println("Addons " + file.getName() + " Caricato con successo");
+							Log.info("Addons " + file.getName() + " Caricato con successo");
 							method.invoke(myClassObject);
 						}
 						catch (NoSuchMethodException em)
 						{
-							System.err.println("Metodo " + methodName + " non trovato nel file " + file.getName());
+							Log.error("Metodo " + methodName + " non trovato nel file " + file.getName());
 						}
 						
 						((URLClassLoader) classLoader).close();
@@ -72,7 +73,7 @@ public class JarFileLoader extends ClassLoader
 				catch (ClassNotFoundException e)
 				{
 					// e.printStackTrace();
-					System.err.println("Classe " + classBinName + " non trovata, impossibile caricare addons " + file.getName());
+					Log.error("Classe " + classBinName + " non trovata, impossibile caricare addons " + file.getName());
 				}
 				catch (Exception e)
 				{
@@ -109,7 +110,7 @@ public class JarFileLoader extends ClassLoader
 
 				Class<?> loadedMyClass = classLoader.loadClass(classBinName);
 
-				System.out.println("Loaded class name: " + loadedMyClass.getName() + " From jar: " + file.getName());
+				Log.info("Loaded class name: " + loadedMyClass.getName() + " From jar: " + file.getName());
 
 				// Create a new instance from the loaded class
 				Constructor<?> constructor = loadedMyClass.getConstructor();
@@ -120,13 +121,13 @@ public class JarFileLoader extends ClassLoader
 				try
 				{
 					Method method = loadedMyClass.getMethod(methodName, Message.class);
-					System.out.println("Invoked method name: " + method.getName());
+					Log.info("Invoked method name: " + method.getName());
 					method.invoke(myClassObject, message);
 				}
 				catch (NoSuchMethodException em)
 				{
 					em.printStackTrace();
-					System.err.println("Metodo " + methodName + " non trovato nel file " + file.getName());
+					Log.error("Metodo " + methodName + " non trovato nel file " + file.getName());
 				}
 				((URLClassLoader) classLoader).close();
 			}
@@ -135,7 +136,7 @@ public class JarFileLoader extends ClassLoader
 		catch (ClassNotFoundException e)
 		{
 			e.printStackTrace();
-			System.err.println("Classe " + classBinName + " non trovata nell addons " + file.getName());
+			Log.error("Classe " + classBinName + " non trovata nell addons " + file.getName());
 		}
 		catch (Exception e)
 		{

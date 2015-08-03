@@ -16,7 +16,7 @@ public class ExternalExecuter
 			try 
 				{
 				Process process = Runtime.getRuntime().exec(command);
-				System.out.println("eseguzione comando esterno in corso");
+				Log.info("Eseguzione comando esterno in corso");
 
 				// Get input streams
 				BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -32,7 +32,7 @@ public class ExternalExecuter
 			catch (Exception e)
 				{
 					e.printStackTrace(System.err);
-					System.err.println("Errore durante l'eseguzione");
+					Log.error("Errore durante l'eseguzione");
 					return false;
 				}
 	}

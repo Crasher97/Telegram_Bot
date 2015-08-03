@@ -19,19 +19,19 @@ public class Sender
 			Document doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&text=" + message).ignoreContentType(true).post();
 			if(doc.text().contains("\"ok\":true")) 
 				{
-					System.out.println("Messaggio inviato: " + message);
+					Log.info("Messaggio inviato: " + message);
 					return true; 
 				}
 			else 
 				{
-					System.err.println("Messaggio non inviato");
+					Log.error("Messaggio non inviato");
 					return false;
 				}
 		} 
 		catch (IOException e) 
 		{
 			//e.printStackTrace();
-			System.err.println("Messaggio non inviato");
+			Log.error("Messaggio non inviato");
 			return false;
 		}
 	}
@@ -49,19 +49,19 @@ public class Sender
 				Document doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&text=" + message).ignoreContentType(true).post();
 				if(doc.text().contains("\"ok\":true")) 
 					{
-						System.out.println("Messaggio inviato: " + message);
+						Log.info("Messaggio inviato: " + message);
 						return true; 
 					}
 				else 
 					{
-						System.err.println("Messaggio non inviato");
+						Log.error("Messaggio non inviato");
 						return false;
 					}
 			}
 			catch (IOException e) 
 				{
 					//e.printStackTrace();
-					System.err.println("Messaggio non inviato");
+					Log.error("Messaggio non inviato");
 					return false;
 				}
 		}

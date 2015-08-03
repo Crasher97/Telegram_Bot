@@ -27,12 +27,12 @@ public class FileDownloader
 	     			String fileName = urlPart[urlPart.length - 1];
 	     			URL link = new URL(urlF);
 	     			FileUtils.copyURLToFile(link, new File("tmp/" + fileName));
-	     			System.out.println("Download Finished");
+	     			Log.info("Download Finished");
 	     			returnThread = fileName;
 	     		}
 	     		catch (IOException e)
 	     		{
-	     			System.err.println("Download Error in class FileDownloader:downloadFile");
+	     			Log.error("Download Error");
 	     			e.printStackTrace();
 	     			returnThread = null;
 	     		}

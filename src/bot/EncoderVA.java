@@ -29,12 +29,12 @@ public class EncoderVA
 			try
 				{
 					encoder.encode(fileMp4, fileMp3, attrs);
-					System.out.println("File MP4 convertito in MP3");
+					Log.info("File MP4 convertito in MP3");
 					return true;
 				} 
 			catch (IllegalArgumentException | EncoderException e)
 				{
-					System.err.println("File non convertito");
+					Log.error("File non convertito");
 					e.printStackTrace();
 					return false;
 				} 

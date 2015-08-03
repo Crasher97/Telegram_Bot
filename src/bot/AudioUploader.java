@@ -21,10 +21,9 @@ public class AudioUploader
 			if(audio != null)
 				{
 					String file_id = UploadedFileLogger.getFileId("tmp/" + audio.getName());
-					System.out.println(file_id);
 					if(file_id == null)
 					{
-						System.out.println("Caricamento Audio avviato");
+						Log.info("Caricamento Audio avviato");
 						HttpClient httpclient = HttpClientBuilder.create().build();
 						HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + "/sendDocument?chat_id=" + senderId);
 
@@ -39,7 +38,7 @@ public class AudioUploader
 							HttpEntity entity = response.getEntity();
 							String content = EntityUtils.toString(entity);
 							UploadedFileLogger.addToFileLog("tmp/" + audio.getName(), content, UploadedFileLogger.Type.DOCUMENT);
-							System.out.println("Caricamento Audio completato");
+							Log.info("Caricamento Audio completato");
 							caricato = true;
 						} catch (IOException e)
 						{

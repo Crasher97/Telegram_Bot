@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
+import bot.Log;
 import bot.Message;
 
 public class Commands
@@ -17,7 +18,7 @@ public class Commands
 	 */
 	public static void addCommand(Command command)
 	{
-		System.out.println("Comando aggiunto: " + command.getCommandName());
+		Log.info("Comando aggiunto: " + command.getCommandName());
 		commands.put(command.getCommandName(), command);
 	}
 	
