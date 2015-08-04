@@ -12,13 +12,25 @@ public class Log
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 	private static File logFile = null;
 
-	private static enum Level{INFO, WARN, DEBUG, ERROR, CONFIG};
+	/**
+	 * Enum contenente i vari livelli di errore
+	 */
+	private enum Level{INFO, WARN, DEBUG, ERROR, CONFIG}
 
+	/**
+	 * Restituisce la data in formato "HH:mm:ss" come Stringa
+	 * @return Ora attuale come stringa
+	 */
 	private static String getData()
 	{
 		return dateFormat.format(new Date());
 	}
 
+	/**
+	 * Metodo per scrivere sulla console e nei file di log
+	 * @param x Testo da scrivere
+	 * @param level Livello del messaggio
+	 */
 	public static void all(String x, Level level)
 	{
 		if(logFile == null) createLogFile();
@@ -60,15 +72,23 @@ public class Log
 		all(x, Level.CONFIG);
 	}
 
+	/**
+	 * Metodo che crea un nuovo file di log ad ogni avvio del programma, il nome del file è la data e l'ora a
+	 * cui viene lanciato il programma
+	 */
 	public static void createLogFile()
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy_HH.mm.ss");
 		File logFolder = new File("log");
-		if(!logFolder.isDirectory()) logFolder.mkdir();
+		if(logFolder.exists() && !logFolder.isDirectory())
+		{
+			System.err.println("Errore nella creazione della cartella log, esiste già un file con questo nome, eliminarlo per procedere");
+			return;
+		}
 		if(!logFolder.exists()) logFolder.mkdir();
 
 		logFile = new File("log/" + dateFormat.format(new Date()) + ".log");
-		BufferedWriter outputWriter = null;
+		BufferedWriter outputWriter;
 		try
 		{
 			outputWriter = new BufferedWriter(new FileWriter(logFile , true));
@@ -80,9 +100,13 @@ public class Log
 		}
 	}
 
+	/**
+	 * Aggiunge la stringa passata come parametro all'ultimo file di log creato
+	 * @param x Stringa da aggiungere al file
+	 */
 	public static void addToLog(String x)
 	{
-		BufferedWriter outputWriter = null;
+		BufferedWriter outputWriter;
 		try
 		{
 			outputWriter = new BufferedWriter(new FileWriter(logFile , true));
