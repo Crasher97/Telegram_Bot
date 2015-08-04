@@ -35,7 +35,7 @@ public class EncoderVA
 			catch (IllegalArgumentException | EncoderException e)
 				{
 					Log.error("File non convertito");
-					e.printStackTrace();
+					Log.stackTrace(e.getStackTrace());
 					return false;
 				} 
 		}

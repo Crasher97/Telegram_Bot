@@ -58,7 +58,7 @@ public class UploadedFileLogger
 		} 
 		catch (ParseException e) 
 		{
-			e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 			return null;
 		}
 		return null;
@@ -82,7 +82,7 @@ public class UploadedFileLogger
             outFile.close();
  
         } catch (IOException e) {
-            e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
         }
 	}
 	
@@ -113,7 +113,7 @@ public class UploadedFileLogger
 		}
 		catch (IOException | ParseException e)
 		{
-			e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 		}
 	}
 	
@@ -133,7 +133,7 @@ public class UploadedFileLogger
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 			return null;
 		}
 	}
@@ -170,7 +170,7 @@ public class UploadedFileLogger
 		}
 		catch (IOException | ParseException e)
 		{
-			e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 		}
 		return null;
 	}

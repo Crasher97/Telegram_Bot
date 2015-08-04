@@ -1,9 +1,6 @@
 package bot;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,7 +12,7 @@ public class Log
 	/**
 	 * Enum contenente i vari livelli di errore
 	 */
-	private enum Level{INFO, WARN, DEBUG, ERROR, CONFIG}
+	private enum Level{INFO, WARN, DEBUG, ERROR, CONFIG, FATAL}
 
 	/**
 	 * Restituisce la data in formato "HH:mm:ss" come Stringa
@@ -36,7 +33,7 @@ public class Log
 		if(logFile == null) createLogFile();
 
 		String y = ("[" + getData() + "] " + "[" + level + "] : " + x);
-		if(!(level == Level.ERROR))
+		if(!(level == Level.ERROR) && !(level == Level.FATAL))
 		{
 			System.out.println(y);
 		}
@@ -70,6 +67,16 @@ public class Log
 	public static void config(String x)
 	{
 		all(x, Level.CONFIG);
+	}
+
+	public static void stackTrace(StackTraceElement[] stackTraceElement)
+	{
+		String trace = "\n";
+		for(StackTraceElement line : stackTraceElement)
+		{
+			trace += line.toString() + "\n";
+		}
+		all(trace, Level.FATAL);
 	}
 
 	/**

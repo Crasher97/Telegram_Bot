@@ -82,7 +82,7 @@ public class VideoUploader
 							caricato = true;
 						} catch (IOException e)
 						{
-							e.printStackTrace();
+							Log.stackTrace(e.getStackTrace());
 							caricato = false;
 						}
 					}
@@ -95,7 +95,7 @@ public class VideoUploader
 						}
 						catch (IOException e)
 						{
-							e.printStackTrace();
+							Log.stackTrace(e.getStackTrace());
 							return false;
 						}
 					}

@@ -25,7 +25,7 @@ public class Messages
 			} 
 			catch (IOException e) 
 			{
-				e.printStackTrace();
+				Log.stackTrace(e.getStackTrace());
 			}
 			messages.clear();
 		}

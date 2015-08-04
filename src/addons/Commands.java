@@ -70,7 +70,7 @@ public class Commands
 		}
 		catch (NoSuchMethodException | ClassNotFoundException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e)
 		{
-			e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 		}
 	}
 	

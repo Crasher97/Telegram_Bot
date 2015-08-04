@@ -31,7 +31,7 @@ public class Reader
 		} 
 		catch (IOException e) 
 		{
-				e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 		}
 	}
 	
@@ -111,7 +111,7 @@ public class Reader
 		} 
 		catch (ParseException | IOException e) 
 		{
-			e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 		}
 		
 	}

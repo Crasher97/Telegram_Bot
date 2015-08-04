@@ -77,7 +77,7 @@ public class FileUploader
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				Log.stackTrace(e.getStackTrace());
 				return false;
 			}
 		}
@@ -90,7 +90,7 @@ public class FileUploader
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				Log.stackTrace(e.getStackTrace());
 				return false;
 			}
 		}

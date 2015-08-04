@@ -33,7 +33,7 @@ public class FileDownloader
 		catch (IOException e)
 		{
 			Log.error("Download Error");
-			e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 			returnThread = null;
 		}
 		return returnThread;
@@ -56,9 +56,20 @@ public class FileDownloader
 	    }
 		catch (Exception e)
 		{
-	       e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 	        return null;
 	    }
+	}
+
+	/**
+	 * Metodo da realizzare quando le API verranno aggiornate e lo permetteranno
+	 *
+	 * @param fileId
+	 * @return
+	 */
+	public static String downloadFileFormTelegram(String fileId)
+	{
+		return null;
 	}
 	
 }

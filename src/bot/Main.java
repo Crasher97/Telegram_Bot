@@ -47,7 +47,7 @@ public class Main
 				}
 				catch (Exception e)
 				{
-					e.printStackTrace();
+					Log.stackTrace(e.getStackTrace());
 				}
 			}
 		});
@@ -99,7 +99,7 @@ public class Main
 			}
 			catch (InterruptedException e)
 			{
-				e.printStackTrace();
+				Log.stackTrace(e.getStackTrace());
 			}
 		}
 	}

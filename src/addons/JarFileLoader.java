@@ -72,12 +72,11 @@ public class JarFileLoader extends ClassLoader
 				}
 				catch (ClassNotFoundException e)
 				{
-					// e.printStackTrace();
 					Log.error("Classe " + classBinName + " non trovata, impossibile caricare addons " + file.getName());
 				}
 				catch (Exception e)
 				{
-					e.printStackTrace();
+					Log.stackTrace(e.getStackTrace());
 				}
 			}
 
@@ -126,7 +125,7 @@ public class JarFileLoader extends ClassLoader
 				}
 				catch (NoSuchMethodException em)
 				{
-					em.printStackTrace();
+					Log.stackTrace(em.getStackTrace());
 					Log.error("Metodo " + methodName + " non trovato nel file " + file.getName());
 				}
 				((URLClassLoader) classLoader).close();
@@ -135,12 +134,12 @@ public class JarFileLoader extends ClassLoader
 		}
 		catch (ClassNotFoundException e)
 		{
-			e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 			Log.error("Classe " + classBinName + " non trovata nell addons " + file.getName());
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			Log.stackTrace(e.getStackTrace());
 		}
 	}
 
