@@ -55,34 +55,35 @@ public class Main
 		// ESEGUZIONE ELIMINAZIONE FILE 
 		
 		Thread thread = new Thread(new Runnable() {
-	         public void run() {
+	         public void run()
+			 {
 	        	while(true)
-	        		{
-	        			try
-	        				{
-	        					File dir = new File("tmp\\");
-	        					File[] directoryListing = dir.listFiles();
-	        					if(directoryListing != null)
-	        						{
-	        							for(File file : directoryListing)
-	        								{
-	        									if((System.currentTimeMillis() - file.lastModified()) > 259200000)
-	        										{
-	        											if(file.delete())
-	        												{
-	        													IO.writeOUT("DeleteLog", "File " + file.getName() + " CANCELLATO");
-	        													System.out.print("File Deleted");
-	        												}
-	        										}
-	        								}
-	        						}
-	    	        			Thread.sleep(43200000);
-	        				}
-	        			catch (Exception e)
-	        				{
-	        					Log.error("Errore durante eliminazione file");
-	        				}
-	        		}
+				{
+					try
+					{
+						File dir = new File("tmp\\");
+						File[] directoryListing = dir.listFiles();
+						if(directoryListing != null)
+						{
+							for(File file : directoryListing)
+							{
+								if((System.currentTimeMillis() - file.lastModified()) > 259200000)
+								{
+									if(file.delete())
+									{
+										IO.writeOUT("DeleteLog", "File " + file.getName() + " CANCELLATO");
+										System.out.print("File Deleted");
+									}
+								}
+							}
+						}
+						Thread.sleep(43200000);
+					}
+					catch (Exception e)
+					{
+						Log.error("Errore durante eliminazione file");
+					}
+				}
 	        }
 		});
 		thread.start();

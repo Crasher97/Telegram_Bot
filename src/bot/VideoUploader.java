@@ -13,6 +13,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 
+@Deprecated
 public class VideoUploader
 	{
 		/**
@@ -21,6 +22,7 @@ public class VideoUploader
 		 * @param path
 		 * @return true se il file è stato uploadato
 		 */
+		@Deprecated
 		public static boolean oldUpload(Message message, String path)
 		{
 			return bot.ExternalExecuter.executeCmd("curl -s -X POST \"https://api.telegram.org/bot" + Main.getIdCode() + "/sendVideo\" -F chat_id=46365292 -F video=\"@" + path + "\"", "ytLog");

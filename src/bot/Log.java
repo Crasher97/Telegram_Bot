@@ -114,7 +114,8 @@ public class Log
 			outputWriter.newLine();
 			outputWriter.flush();
 			outputWriter.close();
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			e.printStackTrace();
 		}

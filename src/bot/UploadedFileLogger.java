@@ -146,6 +146,8 @@ public class UploadedFileLogger
 	 */
 	public static String getFileId(String path)
 	{
+		File f = new File("uploadedFileLog.json");
+		if(!f.exists()) createLogFile();
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		String fileMD5 = calculateFileMD5(path);
