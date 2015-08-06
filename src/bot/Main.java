@@ -31,6 +31,12 @@ public class Main
 		System.out.println(Commands.getCommands().keySet().toString());
 		Console.loadCommand();
 		Console.openConsole();
+		Setting.createSettingFile();
+		Setting.addSetting("Chiave", "Valore", "Categoria");
+		Setting.addSetting("Chiave1", "Valore1", "Categoria");
+		Setting.addSetting("Chiave11", "Valore11", "Categoria1");
+		Setting.addSetting("Chiave12", "Valore12", "Categoria1");
+
 		//addons.TestAdd.functionYtAudio(new Message(0,0,84985065,"paolo","d",null,"/yta https://www.youtube.com/watch?v=36sambtCsGA"));
 
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
@@ -43,9 +49,8 @@ public class Main
 					// In chiusura salva i messaggi nel log
 					IO.writeOUT("log", Messages.getArray());
 					Log.info("Terminato");
-					
-				}
-				catch (Exception e)
+
+				} catch (Exception e)
 				{
 					Log.stackTrace(e.getStackTrace());
 				}
