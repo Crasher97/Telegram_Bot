@@ -32,10 +32,6 @@ public class Main
 		Console.loadCommand();
 		Console.openConsole();
 		Setting.createSettingFile();
-		Setting.addSetting("Chiave", "Valore", "Categoria");
-		Setting.addSetting("Chiave1", "Valore1", "Categoria");
-		Setting.addSetting("Chiave11", "Valore11", "Categoria1");
-		Setting.addSetting("Chiave12", "Valore12", "Categoria1");
 
 		//addons.TestAdd.functionYtAudio(new Message(0,0,84985065,"paolo","d",null,"/yta https://www.youtube.com/watch?v=36sambtCsGA"));
 
