@@ -52,6 +52,7 @@ public class Setting
 	 * @param value Valore default
 	 * @param category Categoria dell'impostazione
 	 */
+	@SuppressWarnings("unchecked")
 	public static void addSetting(String key, String value, String category)
 	{
 		if(!settingFile.exists()) createSettingFile();
@@ -108,6 +109,7 @@ public class Setting
 	 * @param category Categoria della chiave
 	 * @return True se la modifica è stata effettuata con successo altrimenti false
 	 */
+	@SuppressWarnings("unchecked")
 	public static boolean editSetting(String key, String value, String category)
 	{
 		if(!settingExist(key, category)) return false;

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Messages 
 {
-	private static ArrayList<Message> messages = new ArrayList<Message>();
+	private static Message[] messages = new Message[100];
+	private static int index = 0;
 	
 	/**
 	 * addMessage - aggiunge un messaggio in memoria, quando si raggiungono i 100 messaggi li scrive in un log esterno e resetta l'array
@@ -12,22 +13,15 @@ public class Messages
 	 */
 	public static void addMessage(Message msg)
 	{
-		if(messages.size()<50)
+		if(index < 100)
 		{
-			messages.add(msg);
+			messages[index] = msg;
 		}
 		else
 		{
-			messages.add(msg);
-			try 
-			{
-				IO.writeOUT("log", messages);
-			} 
-			catch (IOException e) 
-			{
-				Log.stackTrace(e.getStackTrace());
-			}
-			messages.clear();
+			printLog();
+			index = 0;
+			messages[index] = msg;
 		}
 	}
 	
@@ -35,16 +29,35 @@ public class Messages
 	 * Restituisce l'intero array dei messaggi
 	 * @return array
 	 */
-	public static ArrayList<Message> getArray()
+	public static Message[] getArray()
 	{
 		return messages;
+	}
+	
+	public static boolean printLog()
+	{
+		try
+			{
+				ArrayList<Message> printMessages = new ArrayList<Message>();
+				for(Message message : messages)
+					{
+						printMessages.add(message);
+					}
+				IO.writeOUT("Messageslog", printMessages);
+				return true;
+			}
+		catch (IOException e)
+			{
+				Log.stackTrace(e.getStackTrace());
+				return false;
+			}
 	}
 	
 	/**
 	 * equals, controlla se due parametri passati come parametro sono uguali
 	 * @param msg
 	 * @param msg2
-	 * @return boolean, true se sono uguali, false se non lo sono
+	 * @return boolean, true se è lo stesso messaggio, false se non lo è
 	 */
 	public static boolean equals(Message msg, Message msg2)
 	{

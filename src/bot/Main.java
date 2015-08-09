@@ -1,5 +1,6 @@
 package bot;
 import java.io.File;
+import java.util.ArrayList;
 
 import addons.Commands;
 import addons.Help;
@@ -10,7 +11,7 @@ public class Main
 	private static String idCode = "";
 	private static String owner = "";
 	private static String url = "";
-
+	private static String update = "";
 	/**
 	 * Metodo main, punto di partenza del programma, terminare inviando un messaggio con scritto /stop
 	 * 
@@ -33,7 +34,7 @@ public class Main
 		Console.openConsole();
 		Setting.createSettingFile();
 
-		//addons.TestAdd.functionYtAudio(new Message(0,0,84985065,"paolo","d",null,"/yta https://www.youtube.com/watch?v=36sambtCsGA"));
+		//addons.TEst.functionYtAudio(new Message(0,0,84985065,"paolo","d",null,"/yta https://www.youtube.com/watch?v=36sambtCsGA"));
 
 		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
 		Runtime.getRuntime().addShutdownHook(new Thread()
@@ -43,7 +44,7 @@ public class Main
 				try
 				{
 					// In chiusura salva i messaggi nel log
-					IO.writeOUT("log", Messages.getArray());
+					Messages.printLog();
 					Log.info("Terminato");
 
 				} catch (Exception e)
@@ -90,10 +91,28 @@ public class Main
 		thread.start();
 	
 		
-		// CONTROLLO NUOVI MESSAGGI
-		while (true)
+		// CONTROLLO NUOVI MESSAGGI ED ESEGUZIONE
+	while (true)
 		{
-			Reader.getUpdate();
+			String tmp = UpdatesReader.getUpdate();
+			if(tmp != null)
+				{
+					update = tmp;
+					ArrayList<Message> updates = UpdatesReader.parseJSON(update);
+					if(updates.size() > 0)
+						{
+							for(Message msg : updates)
+								{
+									Thread updateThread = new Thread(new Runnable() {
+								         public void run()
+										 {
+											Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg); 
+										 }
+									});
+									updateThread.start();
+								}
+						}
+				}
 			try
 			{
 				Thread.sleep(1000);
@@ -132,5 +151,14 @@ public class Main
 	public static String getOwner()
 	{
 		return owner;
+	}
+	
+	/**
+	 * ritorna l'ultimo update ricevuto
+	 * @return lastUpdate - JSON format
+	 */
+	public static String getLastUpdate()
+	{
+		return update;
 	}
 }

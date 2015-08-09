@@ -76,36 +76,12 @@ public class Console
 			public void run(){}
 		});
 		
-		addCommand("upload", new ConsoleCommandCode()
-		{
-			@Override
-			public void run(String[] args)
-			{
-				ImagesUploader.uploadImage(Long.parseLong(args[0]), args[1]);
-			}
-
-			@Override
-			public void run(){}
-		});
-		
 		addCommand("video", new ConsoleCommandCode()
 		{
 			@Override
 			public void run(String[] args)
 			{
 				System.out.println(FileDownloader.downloadVideo(args[0]));
-			}
-
-			@Override
-			public void run(){}
-		});
-		
-		addCommand("ytvideo", new ConsoleCommandCode()
-		{
-			@Override
-			public void run(String[] args)
-			{
-				bot.VideoUploader.ytUpload(Long.parseLong(args[0]), args[1]);
 			}
 
 			@Override
