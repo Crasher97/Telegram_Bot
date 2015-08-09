@@ -1,5 +1,8 @@
 package bot;
 
+import bot.webServer.Server;
+import bot.webServer.WebHook;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -98,16 +101,29 @@ public class Console
 		});
 		
 		addCommand("ytvideo", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
 			{
-				@Override
-				public void run(String[] args)
-				{
-					bot.VideoUploader.ytUpload(Long.parseLong(args[0]), args[1]);
-				}
+				bot.VideoUploader.ytUpload(Long.parseLong(args[0]), args[1]);
+			}
 
-				@Override
-				public void run(){}
-			});
+			@Override
+			public void run(){}
+		});
+
+		addCommand("webhook", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
+			{
+				WebHook.setWebHook(args[0] + ":8443");
+				Server.startWebServer();
+			}
+
+			@Override
+			public void run(){}
+		});
 	}
 
 	public interface ConsoleCommandCode extends Runnable 
