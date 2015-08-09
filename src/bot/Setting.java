@@ -148,6 +148,7 @@ public class Setting
 		{
 			obj = (JSONObject) parser.parse(new FileReader(settingFile));
 			JSONObject setting = (JSONObject) obj.get(category);
+			if(setting.get(key) == null) return false;
 			if(setting.get(key) != "")
 			{
 				return true;
