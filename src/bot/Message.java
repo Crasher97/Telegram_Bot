@@ -15,7 +15,7 @@ public class Message {
 	private static DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
 	/**
-	 * Costruttore oggetto Message
+	 * Costruttor of Message
 	 * @param update_id
 	 * @param message_id
 	 * @param sender_id

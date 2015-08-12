@@ -1,4 +1,4 @@
-package bot;
+package functions;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +9,9 @@ import java.util.Iterator;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import bot.Log;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

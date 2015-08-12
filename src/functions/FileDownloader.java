@@ -1,4 +1,4 @@
-package bot;
+package functions;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,8 @@ import org.apache.commons.io.FileUtils;
 import com.github.axet.vget.VGet;
 import com.github.axet.vget.info.VGetParser;
 import com.github.axet.vget.vhs.YouTubeMPGParser;
+
+import bot.Log;
 
 public class FileDownloader
 {

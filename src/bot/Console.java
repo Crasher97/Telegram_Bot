@@ -2,6 +2,7 @@ package bot;
 
 import bot.webServer.Server;
 import bot.webServer.WebHook;
+import functions.FileDownloader;
 
 import java.util.Arrays;
 import java.util.HashMap;

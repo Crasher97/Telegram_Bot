@@ -30,7 +30,7 @@ public class Main
 		Help.load();
 		
 		//PRINT LIST OF LOADED COMMANDS
-		System.out.println(Commands.getCommands().keySet().toString());
+		Log.info(Commands.getCommands().keySet().toString());
 		
 		//LOAD CONSOLE COMMANDS
 		Console.loadCommand();
