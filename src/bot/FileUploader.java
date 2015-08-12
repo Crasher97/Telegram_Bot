@@ -14,12 +14,19 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Classe che serve a sostituire tutte le altri classi Uplaoder
+ * Uploads file
  */
 public class FileUploader
 {
 	public enum FileType{PHOTO, AUDIO, VIDEO, DOCUMENT}
-
+	
+	/**
+	 * Send files
+	 * @param fileName
+	 * @param senderId
+	 * @param fileType
+	 * @return true if file has been sent
+	 */
 	public static boolean uploadFile(String fileName, long senderId, FileType fileType)
 	{
 		String urlMethod = "";

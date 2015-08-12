@@ -21,7 +21,7 @@ public class Help
 	/**
 	 * Aggiunge un help
 	 * 
-	 * @param command Comando di cui aggiungere l'help
+	 * @param command Cgaggiaomando di cui aggiungere l'help
 	 * @param help Contenuto dell'help
 	 */
 	public static void addHelp(String command, String help)

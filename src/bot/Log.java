@@ -10,29 +10,29 @@ public class Log
 	private static File logFile = null;
 
 	/**
-	 * Enum contenente i vari livelli di errore
+	 * Enum contains all printline message tipes
 	 */
 	private enum Level{INFO, WARN, DEBUG, ERROR, CONFIG, FATAL}
 
 	/**
-	 * Restituisce la data in formato "HH:mm:ss" come Stringa
-	 * @return Ora attuale come stringa
+	 * Return current time
+	 * @return actual time HH:mm:ss
 	 */
-	private static String getData()
+	private static String getTime()
 	{
 		return dateFormat.format(new Date());
 	}
 
 	/**
-	 * Metodo per scrivere sulla console e nei file di log
-	 * @param x Testo da scrivere
-	 * @param level Livello del messaggio
+	 * Write on console and on log file
+	 * @param textToWrite
+	 * @param level - tipe of message
 	 */
-	public static void all(String x, Level level)
+	public static void all(String textToWrite, Level level)
 	{
 		if(logFile == null) createLogFile();
 
-		String y = ("[" + getData() + "] " + "[" + level + "] : " + x);
+		String y = ("[" + getTime() + "] " + "[" + level + "] : " + textToWrite);
 		if(!(level == Level.ERROR) && !(level == Level.FATAL))
 		{
 			System.out.println(y);
@@ -44,31 +44,55 @@ public class Log
 		addToLog(y);
 	}
 
+	/**
+	 * Print info on console and write into log
+	 * @param x
+	 */
 	public static void info(String x)
 	{
 		all(x, Level.INFO);
 	}
 
+	/**
+	 * Print warns on console and write into log
+	 * @param x
+	 */
 	public static void warn(String x)
 	{
 		all(x, Level.WARN);
 	}
 
+	/**
+	 * Print debug info on console and write into log
+	 * @param x
+	 */
 	public static void debug(String x)
 	{
 		all(x, Level.DEBUG);
 	}
 
+	/**
+	 * Print errors on console and write into log
+	 * @param x
+	 */
 	public static void error(String x)
 	{
 		all(x, Level.ERROR);
 	}
 
+	/**
+	 * Print config messages on console and write into log
+	 * @param x
+	 */
 	public static void config(String x)
 	{
 		all(x, Level.CONFIG);
 	}
 
+	/**
+	 * Print exeptions on console and into log
+	 * @param stackTraceElement
+	 */
 	public static void stackTrace(StackTraceElement[] stackTraceElement)
 	{
 		String trace = "\n";
@@ -80,8 +104,7 @@ public class Log
 	}
 
 	/**
-	 * Metodo che crea un nuovo file di log ad ogni avvio del programma, il nome del file è la data e l'ora a
-	 * cui viene lanciato il programma
+	 * Make new log file everytime, program starts. file name is actual data & time
 	 */
 	public static void createLogFile()
 	{
@@ -89,7 +112,7 @@ public class Log
 		File logFolder = new File("log");
 		if(logFolder.exists() && !logFolder.isDirectory())
 		{
-			System.err.println("Errore nella creazione della cartella log, esiste già un file con questo nome, eliminarlo per procedere");
+			System.err.println("Log.createLogFile, error creating log folder, delete file that name is log");
 			return;
 		}
 		if(!logFolder.exists()) logFolder.mkdir();
@@ -103,13 +126,13 @@ public class Log
 			outputWriter.close();
 		} catch (IOException e)
 		{
-			e.printStackTrace();
+			stackTrace(e.getStackTrace());
 		}
 	}
 
 	/**
-	 * Aggiunge la stringa passata come parametro all'ultimo file di log creato
-	 * @param x Stringa da aggiungere al file
+	 * Write ,at the end of the last log file , parameter string
+	 * @param x 
 	 */
 	public static void addToLog(String x)
 	{
@@ -124,7 +147,7 @@ public class Log
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			stackTrace(e.getStackTrace());
 		}
 	}
 }

@@ -10,10 +10,10 @@ import it.sauronsoftware.jave.EncoderException;
 public class EncoderVA
 	{
 		/**
-		 * Converte un file Mp4 in un file mp3
+		 * Converts Mp4 file to MP3
 		 * @param fileMp4
 		 * @param fileMp3
-		 * @return true se è stato convertito
+		 * @return true if it has been converted
 		 */
 		public static boolean mp4ToMp3(File fileMp4, File fileMp3)
 		{

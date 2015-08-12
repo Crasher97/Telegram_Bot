@@ -13,39 +13,44 @@ public class Main
 	private static String url = "";
 	private static String update = "";
 	/**
-	 * Metodo main, punto di partenza del programma, terminare inviando un messaggio con scritto /stop
-	 * 
-	 * @param args, IN ORDER:l'idCode del bot telegram, l'id del propietario, 
+	 * Main method
+	 * @param botId - get it from bot Father
+	 * @param ownerId - your telegram id
 	 */
 	public static void main(String[] args)
 	{
-		// configurazione all'avvio
 		idCode = args[0];
 		owner = args[1];
 		url = "https://api.telegram.org/bot" + idCode;
-		//Sender.sendMessage(Integer.parseInt(args[1]), "MessaggiodiProvaSender");
-		// Al 84954308 Pa 84985065
 		
-		//CARICAMENTO ADDONS
+		//LOAD EXTERNAL ADDONS
 		JarFileLoader.loadJarFile();
+		
+		//LOAD INTERNAL COMMANDS
 		Help.load();
+		
+		//PRINT LIST OF LOADED COMMANDS
 		System.out.println(Commands.getCommands().keySet().toString());
+		
+		//LOAD CONSOLE COMMANDS
 		Console.loadCommand();
 		Console.openConsole();
+		
+		//CREATE SETTING FILE (NOT ALREADY USED) TODO use setting file
 		Setting.createSettingFile();
 
 		//addons.TEst.functionYtAudio(new Message(0,0,84985065,"paolo","d",null,"/yta https://www.youtube.com/watch?v=36sambtCsGA"));
 
-		// ESEGUZIONE COMANDI ALLA CHIUSUSRA
+		//THREAD STARTS WHEN PROGRAM HAS BEEN TERMINATED
 		Runtime.getRuntime().addShutdownHook(new Thread()
 		{
 			public void run()
 			{
 				try
 				{
-					// In chiusura salva i messaggi nel log
+					//Saves messages into log
 					Messages.printLog();
-					Log.info("Terminato");
+					Log.info("Terminated");
 
 				} catch (Exception e)
 				{
@@ -54,8 +59,7 @@ public class Main
 			}
 		});
 		
-		// ESEGUZIONE ELIMINAZIONE FILE 
-		
+		//DELETE FILES OLDER THAN 3 DAYS EVERY 12 HOURS
 		Thread thread = new Thread(new Runnable() {
 	         public void run()
 			 {
@@ -73,7 +77,7 @@ public class Main
 								{
 									if(file.delete())
 									{
-										IO.writeOUT("DeleteLog", "File " + file.getName() + " CANCELLATO");
+										IO.writeOUT("DeleteLog", "File " + file.getName() + " DELETED");
 										System.out.print("File Deleted");
 									}
 								}
@@ -83,7 +87,7 @@ public class Main
 					}
 					catch (Exception e)
 					{
-						Log.error("Errore durante eliminazione file");
+						Log.error("Error deleting file");
 					}
 				}
 	        }
@@ -91,7 +95,7 @@ public class Main
 		thread.start();
 	
 		
-		// CONTROLLO NUOVI MESSAGGI ED ESEGUZIONE
+		//CHECK FOR NEW UPDATES, STARTS NEW THREAD FOR EVERY UPDATE
 	while (true)
 		{
 			String tmp = UpdatesReader.getUpdate();
@@ -106,7 +110,7 @@ public class Main
 									Thread updateThread = new Thread(new Runnable() {
 								         public void run()
 										 {
-											Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg); 
+											Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 										 }
 									});
 									updateThread.start();
@@ -125,9 +129,9 @@ public class Main
 	}
 
 	/**
-	 * getIdCode - restituisce il codice identificativo
+	 * Return bot idCode
 	 * 
-	 * @return String idCode
+	 * @return idCode
 	 */
 	public static String getIdCode()
 	{
@@ -135,9 +139,9 @@ public class Main
 	}
 
 	/**
-	 * Restituisce l'url di riferimento del bot
+	 * Return url of bot
 	 * 
-	 * @return String - url
+	 * @return url
 	 */
 	public static String getUrl()
 	{
@@ -145,8 +149,8 @@ public class Main
 	}
 	
 	/**
-	 * ritorna l'id del propietario del bot
-	 * @return String owner - il proprietario
+	 * Return owner's id code.
+	 * @return owner
 	 */
 	public static String getOwner()
 	{
@@ -154,7 +158,7 @@ public class Main
 	}
 	
 	/**
-	 * ritorna l'ultimo update ricevuto
+	 * Return last received update
 	 * @return lastUpdate - JSON format
 	 */
 	public static String getLastUpdate()

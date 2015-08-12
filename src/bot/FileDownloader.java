@@ -14,9 +14,9 @@ public class FileDownloader
 {
 	private static String returnThread;
 	/**
-	 * Scarica un file dall'url passato come parametro
-	 * @param url File to be downloaded
- 	 * @return Stringa con il nome del file, se il download è fallito null
+	 * Download a file from url
+	 * @param url - File to be downloaded
+ 	 * @return name of file, it download fails return null
 	 */
 	public static String downloadFile(String url)
 	{	
@@ -40,9 +40,9 @@ public class FileDownloader
 	}
 	
 	/**
-	 * Scarica il video da youtube dato l'url e ritorna il nome del file salvato
-	 * @param url Indirizzo del video youtube
-	 * @return String filename, il nome del file
+	 * Download video from youtube
+	 * @param url Indirizzo del video youtube.
+	 * @return name of video
 	 */
 	public static String downloadVideo(String url)
 	{
@@ -62,7 +62,7 @@ public class FileDownloader
 	}
 
 	/**
-	 * Metodo da realizzare quando le API verranno aggiornate e lo permetteranno
+	 * Metodo da realizzare quando le API verranno aggiornate e lo permetteranno TODO download from telegram
 	 *
 	 * @param fileId
 	 * @return

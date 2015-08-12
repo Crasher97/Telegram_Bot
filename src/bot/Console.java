@@ -13,7 +13,7 @@ public class Console
 	private static HashMap<String, ConsoleCommandCode> consoleCommands = new HashMap<String, ConsoleCommandCode>();
 	
 	/**
-	 * Metodo che apre la console e riceve i comandi dell'utente
+	 * Opens console and receive commands from users
 	 */
 	public static void openConsole()
 	{
@@ -48,7 +48,7 @@ public class Console
 	}
 	
 	/**
-	 * Carica i comandi predefiniti nell'hashmap
+	 * Load default commands in console
 	 */
 	public static void loadCommand()
 	{
@@ -108,10 +108,10 @@ public class Console
 	}
 	
 	/**
-	 * Aggiunge un comando alla lista
+	 * Add command to commands list
 	 * 
-	 * @param commandName Nome del Comando
-	 * @param consoleCommandCode Codice del comando
+	 * @param commandName
+	 * @param consoleCommandCode - Source code of command
 	 */
 	public static void addCommand(String commandName, ConsoleCommandCode consoleCommandCode)
 	{
@@ -119,8 +119,8 @@ public class Console
 	}
 	
 	/**
-	 * Esegue il comando passato come parametro
-	 * @param command Comando da eseguire con parametri
+	 * Performs command that has been given via parameter
+	 * @param command - Command to execute + parameters
 	 */
 	public static void exeCommand(String[] command)
 	{
@@ -130,9 +130,9 @@ public class Console
 	}
 	
 	/**
-	 * Verifica se il comando esiste
-	 * @param commandName Nome del comando
-	 * @return true se esiste, false se non esiste
+	 * Check if commands exist
+	 * @param commandName
+	 * @return true if command exist
 	 */
 	public static boolean commandExist(String commandName)
 	{
