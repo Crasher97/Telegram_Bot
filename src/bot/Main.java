@@ -78,7 +78,7 @@ public class Main
 									if(file.delete())
 									{
 										IO.writeOUT("DeleteLog", "File " + file.getName() + " DELETED");
-										System.out.print("File Deleted");
+										Log.info("File Deleted");
 									}
 								}
 							}
@@ -107,13 +107,14 @@ public class Main
 						{
 							for(Message msg : updates)
 								{
-									Thread updateThread = new Thread(new Runnable() {
+									/*Thread updateThread = new Thread(new Runnable() {
 								         public void run()
 										 {
 											Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 										 }
 									});
-									updateThread.start();
+									updateThread.start();*/
+									Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 								}
 						}
 				}

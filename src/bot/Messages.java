@@ -15,13 +15,13 @@ public class Messages
 	{
 		if(index < 100)
 		{
-			messages[index] = msg;
+			messages[index++] = msg;
 		}
 		else
 		{
 			printLog();
 			index = 0;
-			messages[index] = msg;
+			messages[index++] = msg;
 		}
 	}
 	
@@ -39,9 +39,9 @@ public class Messages
 		try
 			{
 				ArrayList<Message> printMessages = new ArrayList<Message>();
-				for(Message message : messages)
+				for(int tmpIndex = 0; tmpIndex <index; tmpIndex++)
 					{
-						printMessages.add(message);
+						printMessages.add(messages[tmpIndex]);
 					}
 				IO.writeOUT("Messageslog", printMessages);
 				return true;
