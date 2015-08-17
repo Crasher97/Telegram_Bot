@@ -94,8 +94,20 @@ public class Console
 			@Override
 			public void run(String[] args)
 			{
-				WebHook.setWebHook(args[0] + ":8443");
+				WebHook.setWebHook();
 				Server.startWebServer();
+			}
+
+			@Override
+			public void run(){}
+		});
+
+		addCommand("webhookUnset", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
+			{
+				WebHook.unsetWebHook();
 			}
 
 			@Override

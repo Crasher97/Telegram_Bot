@@ -9,11 +9,11 @@ import java.io.IOException;
 
 public class WebHook
 {
-	public static void setWebHook(String ip)
+	public static void setWebHook()
 	{
 		try
 		{
-			Jsoup.connect(Main.getUrl() + "/setWebhook" + "?url=" + ip + "/" + Setting.readSetting("Bot_ID", "Main")).ignoreContentType(true).post();
+			Jsoup.connect(Main.getUrl() + "/setWebhook" + "?url=" + Setting.readSetting("WebHook_Url", "WebHook")).ignoreContentType(true).post();
 		}
 		catch (IOException e)
 		{

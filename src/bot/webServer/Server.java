@@ -15,8 +15,8 @@ public class Server
 	public static void startWebServer() {
 		try
 		{
-			HttpServer server = HttpServer.create(new InetSocketAddress(8443), 0);
-			server.createContext("/" + Setting.readSetting("Bot_ID", "Main"), new MyHandler());
+			HttpServer server = HttpServer.create(new InetSocketAddress(Integer.parseInt(Setting.readSetting("WebHook_Port", "WebHook"))), 0);
+			server.createContext("/" + Setting.readSetting("WebHook_Local", "WebHook"), new MyHandler());
 			server.setExecutor(null);
 			server.start();
 		}

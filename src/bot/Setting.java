@@ -41,9 +41,15 @@ public class Setting
 	 */
 	public static void writeDefaultSettings()
 	{
+		//Main Setting
 		addSetting("Bot_ID", "", "Main");
 		addSetting("Owner_ID", "", "Main");
 		addSetting("Update_Frequence", "1000", "Main");
+
+		//Webhook setting
+		addSetting("WebHook_Url", "", "WebHook");
+		addSetting("WebHook_Local", "webhook", "WebHook");
+		addSetting("WebHook_Port", "8443", "WebHook");
 	}
 
 	/**
@@ -150,6 +156,7 @@ public class Setting
 		{
 			obj = (JSONObject) parser.parse(new FileReader(settingFile));
 			JSONObject setting = (JSONObject) obj.get(category);
+			if(setting == null) return false;
 			if(setting.get(key) == null) return false;
 			if(setting.get(key) != "")
 			{
