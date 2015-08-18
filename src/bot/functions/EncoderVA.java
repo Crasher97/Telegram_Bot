@@ -1,4 +1,4 @@
-package functions;
+package bot.functions;
 
 import java.io.File;
 

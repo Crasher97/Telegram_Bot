@@ -1,4 +1,4 @@
-package functions;
+package bot.functions;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

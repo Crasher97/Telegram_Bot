@@ -63,7 +63,7 @@ public class Commands
 	{
 		try
 		{
-			Class<?> cls = Class.forName("addons." + commandClass);
+			Class<?> cls = Class.forName(commandClass);
 			Method method = cls.getDeclaredMethod(commandMethod, Message.class);
 			Object obj = cls.newInstance();
 			method.invoke(obj, message);

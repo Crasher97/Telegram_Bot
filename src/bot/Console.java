@@ -1,12 +1,14 @@
 package bot;
 
+import bot.functions.FileDownloader;
 import bot.webServer.Server;
 import bot.webServer.WebHook;
-import functions.FileDownloader;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import addons.Help;
 
 
 public class Console
@@ -58,12 +60,24 @@ public class Console
 			@Override
 			public void run(String[] args)
 			{
-				System.out.println("Comando Help non finito");
+				Help.helpRequest(args);
 			}
 
 			@Override
 			public void run(){}
 		});
+		
+		addCommand("stop", new ConsoleCommandCode()
+			{
+				@Override
+				public void run(String[] args)
+				{
+					System.exit(0);
+				}
+
+				@Override
+				public void run(){}
+			});
 		
 		addCommand("download", new ConsoleCommandCode()
 		{
