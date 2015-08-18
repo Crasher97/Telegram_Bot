@@ -1,5 +1,7 @@
 package bot;
 import java.io.IOException;
+
+import bot.functions.Keyboard;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -16,6 +18,11 @@ public class Sender
 	{
 		return sendMessage((long)chatId, message);
 	}
+
+	public static boolean sendMessage(int chatId, String message, Keyboard keyboard)
+	{
+		return sendMessage((long)chatId, message + "&reply_markup=" + keyboard.toJSONString());
+	}
 	
 	/**
 	 * Metodo per inviare messaggi
@@ -24,26 +31,25 @@ public class Sender
 	 * @return true se l'invio è stato effettuato con successo, altrimenti false
 	 */
 	public static boolean sendMessage(long chatId, String message)
+	{
+		try
 		{
-			try 
+			Document doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&text=" + message).ignoreContentType(true).post();
+			if(doc.text().contains("\"ok\":true"))
 			{
-				Document doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&text=" + message).ignoreContentType(true).post();
-				if(doc.text().contains("\"ok\":true")) 
-					{
-						Log.info("Messaggio inviato: " + message);
-						return true; 
-					}
-				else 
-					{
-						Log.error("Messaggio non inviato");
-						return false;
-					}
+				Log.info("Messaggio inviato: " + message.split("&")[0]);
+				return true;
 			}
-			catch (IOException e) 
-				{
-					//e.printStackTrace();
-					Log.error("Messaggio non inviato");
-					return false;
-				}
+			else
+			{
+				Log.error("Messaggio non inviato");
+				return false;
+			}
 		}
+			catch (IOException e) 
+			{
+				Log.error("Messaggio non inviato");
+				return false;
+			}
+	}
 }

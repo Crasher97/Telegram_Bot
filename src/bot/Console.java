@@ -1,6 +1,7 @@
 package bot;
 
 import bot.functions.FileDownloader;
+import bot.functions.Keyboard;
 import bot.webServer.Server;
 import bot.webServer.WebHook;
 
@@ -126,6 +127,22 @@ public class Console
 
 			@Override
 			public void run(){}
+		});
+
+		addCommand("testKeyboard", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
+			{
+				String[][] keys = {{"11", "12", "13"}, {"21", "22", "23"}};
+				Keyboard k = new Keyboard(keys, true, false, false);
+				Sender.sendMessage(84954308, "Messaggio prova", k);
+			}
+
+			@Override
+			public void run()
+			{
+			}
 		});
 	}
 
