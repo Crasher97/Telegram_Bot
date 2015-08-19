@@ -48,7 +48,7 @@ public class PollOption
 		
 		/**
 		 * Return option
-		 * @return option
+		 * @return optionName
 		 */
 		public String getOption()
 		{
@@ -70,6 +70,6 @@ public class PollOption
 		@Override
 		public String toString()
 		{
-			return option + " " + votes;
+			return option + ": votes[" + votes + "]";
 		}
 	}

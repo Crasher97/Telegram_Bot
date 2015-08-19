@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import bot.Log;
 import bot.Message;
 import bot.Sender;
+import bot.functions.Keyboard;
 
 public class Polls
 	{
@@ -116,35 +117,41 @@ public class Polls
 		public static void addPoll(String messageText, long senderId)
 		{
 			String[] messageSplit = messageText.split(" ");
-			String pollName = messageSplit[1];
-			if(messageSplit.length > 3)
+			if(messageSplit.length > 3 && messageSplit.length < 9)
 				{
-					String[] options = new String[messageSplit.length-2];
-					String optionsToSend = "";
-					for(int index = 0; index < options.length; index++)
+					String pollName = messageSplit[1];
+					if(pollExist(pollName) < 0)
 						{
-							optionsToSend = optionsToSend + ", " + messageSplit[index+2];
-							options[index] = messageSplit[index+2];
+					
+							String[] options = new String[messageSplit.length-2];
+							String optionsToSend = "";
+							for(int index = 0; index < options.length; index++)
+								{
+									optionsToSend = optionsToSend + ", " + messageSplit[index+2];
+									options[index] = messageSplit[index+2];
+								}
+							addPoll(pollName, options, senderId);
+							Sender.sendMessage(senderId, "You have created poll " + pollName + ". Options are: " + optionsToSend);
 						}
-					addPoll(pollName, options, senderId);
-					Sender.sendMessage(senderId, "You have created poll " + pollName + ". Options are: " + optionsToSend);
+					else 
+						{
+							Sender.sendMessage(senderId, "Poll already exists");
+						}
 				}
 			else
 				{
-					Sender.sendMessage(senderId, "Few options to change vote");
+					Sender.sendMessage(senderId, "Few or too many options");
 				}
 		}
 		
 		/**
 		 * Send list options of poll
-		 * @param name
-		 * @param senderId
-		 * @return null if poll has not been founded
+		 * @param Message
 		 */
-		public static void sendPollOptions(Message msg)
+		public static void sendOptions(Message msg, String command)
 		{
 			String[] text = msg.getText().split(" ");
-			if(text.length > 0)
+			if(text.length > 1)
 				{
 					String pollName = text[1];
 					long senderId = msg.getSender_id();
@@ -152,11 +159,74 @@ public class Polls
 			
 					if(found >= 0)
 						{
-							String tmp = "";
-							for(int index = 0; index <= polls.get(found).getOptions().size(); index++)tmp = tmp + " " + polls.get(found).getOptions().get(index);
-							Sender.sendMessage(senderId, tmp);
+							ArrayList<PollOption> options = polls.get(found).getOptions();
+							String[][] keys = new String[3][3];
+							for(int index = 0, l = 0, h = 0; index < 9; index++)
+								{
+									keys[h][l] = (index < options.size())?command + " " + pollName + " " + options.get(index).getOption():"null";
+									if(l < 2)l++;
+									else
+										{
+											h++;
+											l = 0;
+										}
+								}
+							Keyboard k = new Keyboard(keys, true, true, true);
+							Sender.sendMessage(senderId, pollName + "Options are on the custom kayboard", k);
 						}
 					else Sender.sendMessage(senderId, "Poll non trovata");
+				}
+		}
+		
+		/**
+		 * Send all poll options and their votes
+		 * @param message
+		 */
+		public static void sendPollOptions(Message msg)
+		{
+			String[] text = msg.getText().split(" ");
+			if(text.length > 1)
+				{
+					String pollName = text[1];
+					long senderId = msg.getSender_id();
+					int found = pollExist(pollName);
+			
+					if(found >= 0)
+						{
+							String x = "";
+							ArrayList<PollOption> options = polls.get(found).getOptions();
+							for(PollOption option : options)
+								{
+									x = x + option.getOption() + " [" + option.getVotes() + "]%0A";
+								}
+							Sender.sendMessage(msg.getSender_id(), x);
+						}
+					else Sender.sendMessage(senderId, "Poll non trovata");
+				}
+		}
+		
+		/**
+		 * Send list of all polls
+		 * @param Message
+		 */
+		public static void sendPolls(Message msg)
+		{
+			String[] text = msg.getText().split(" ");
+			if(text.length > 0)
+				{
+					String x = "Polls Active: ";
+					for(Poll poll : polls)
+						{
+							x = x + " %0A" + poll.getPollName();
+						}
+					if(x.equals("Polls Active: "))
+						{
+							Sender.sendMessage(msg.getSender_id(), "There are no polls actives");
+						}
+					else
+						{
+							Sender.sendMessage(msg.getSender_id(), x);
+						}
 				}
 		}
 		

@@ -9,7 +9,8 @@ import org.jsoup.nodes.Document;
 public class Sender 
 {
 	/**
-	 * Metodo per inviare messaggi
+	 * @deprecated
+	 * 	 * Metodo per inviare messaggi
 	 * @param chatId Chat id del destinatario
 	 * @param message Messaggio da inviare
 	 * @return true se l'invio è stato effettuato con successo, altrimenti false
@@ -19,7 +20,26 @@ public class Sender
 		return sendMessage((long)chatId, message);
 	}
 
+	/**
+	 * @deprecated
+	 * @param chatId
+	 * @param message
+	 * @param keyboard
+	 * @return
+	 */
 	public static boolean sendMessage(int chatId, String message, Keyboard keyboard)
+	{
+		return sendMessage((long)chatId, message + "&reply_markup=" + keyboard.toJSONString());
+	}
+	
+	/**
+	 * Send message with customized keyboard
+	 * @param chatId
+	 * @param message
+	 * @param keyboard
+	 * @return true if message has been sent
+	 */
+	public static boolean sendMessage(long chatId, String message, Keyboard keyboard)
 	{
 		return sendMessage((long)chatId, message + "&reply_markup=" + keyboard.toJSONString());
 	}

@@ -23,10 +23,19 @@ public class Help
 		addHelp("addpoll", "Add a poll. (/addpoll pollname polloption polloption2 ...)");
 		Commands.addCommand(new Command("rmpoll", "bot.functions.polls.Polls", "removePoll"));
 		addHelp("rmpoll", "Remove a poll, only owner can remove poll. (/rmpoll pollname)");
-		Commands.addCommand(new Command("changevote", "bot.functions.polls.Polls", "changePollVote"));
-		Commands.addCommand(new Command("vote", "bot.functions.polls.Polls", "vote"));
+		
+		Commands.addCommand(new Command("changevote", "bot.functions.polls.TelegramInterface", "changeVote"));
+		addHelp("changevote", "Change your vote in a poll. (/changevote pollname)");
+		Commands.addCommand(new Command("cgv", "bot.functions.polls.Polls", "changeVote"));
+		
+		Commands.addCommand(new Command("vote", "bot.functions.polls.TelegramInterface", "vote"));
+		addHelp("vote", "Vote for a poll. (/vote pollname)");
+		Commands.addCommand(new Command("vf", "bot.functions.polls.Polls", "vote"));
+		
 		Commands.addCommand(new Command("poll", "bot.functions.polls.Polls", "sendPollOptions"));
-		Commands.addCommand(new Command("polls", "bot.functions.polls.Polls", "sendPolls"));//TODO
+		addHelp("poll", "Send all information abount poll. (/poll pollname)");
+		Commands.addCommand(new Command("polls", "bot.functions.polls.Polls", "sendPolls"));
+		addHelp("polls", "Send polls list. (/polls)");
 	}
 	
 	/**
@@ -49,11 +58,11 @@ public class Help
 		String args[] = message.getText().split(" ");
 		if(args.length == 2)
 		{
-			Sender.sendMessage((int) message.getSender_id(), helps.get(args[1]));
+			Sender.sendMessage( message.getSender_id(), helps.get(args[1]));
 		}
 		else 
 			{
-				Sender.sendMessage((int) message.getSender_id(), Commands.getCommands().keySet().toString());
+				Sender.sendMessage(message.getSender_id(), Commands.getCommands().keySet().toString());
 			}
 	}
 	

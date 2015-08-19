@@ -124,7 +124,6 @@ public class UpdatesReader
 			}
 		else
 			{
-				//Sender.sendMessage(msg.getSender_id(), "Non sono ancora in grado di parlare, per ora interpreto solo i comandi passati con /");
 				Sender.sendMessage(msg.getSender_id(), SimSimi.toSimSimi(msg.getText()));
 				Log.info(msg.getText());
 				return null;

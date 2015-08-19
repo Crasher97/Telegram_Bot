@@ -33,12 +33,15 @@ public class Poll
 		 */
 		public boolean addOption(PollOption option)
 		{
-			if(option!=null)
+			if(option!=null && options.size() < 10)
 				{
 					options.add(option);
 					return true;
 				}
-			else return false;
+			else
+				{	
+					return false;
+				}
 		}
 		
 		/**
