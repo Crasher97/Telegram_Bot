@@ -177,7 +177,7 @@
   <target name="all" depends="build.modules" description="build all"/>
 
   <target name="build-jar">
-  <jar destfile = "${telegram_bot.output.dir}/jar/TelegramBot.jar"
+  <jar destfile = "${telegram_bot.output.dir}/jar/TelegramBot_$BUILD_NUMBER.jar"
        basedir = "${telegram_bot.output.dir}"
        >
     <zipgroupfileset dir="${basedir}/lib" includes="**/*.jar" />
