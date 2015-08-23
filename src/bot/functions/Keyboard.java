@@ -1,6 +1,5 @@
 package bot.functions;
 
-import bot.Log;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -26,6 +25,7 @@ public class Keyboard
 	 * Add a row to the keyboard
 	 * @param row array containing the keys for the row
 	 */
+	@SuppressWarnings("unchecked")
 	private void addRow(String[] row)
 	{
 		JSONArray rowJSON = new JSONArray();
@@ -44,6 +44,7 @@ public class Keyboard
 	 * @param resize true if you want the keyboard to resize itself
 	 * @param selective true if you want the keyboard to appear only to a mentioned user or if the bot message is a reply
 	 */
+	@SuppressWarnings("unchecked")
 	private void makeKeyboard(String[][] keys, boolean oneTime, boolean resize, boolean selective)
 	{
 		for(String[] row : keys)

@@ -67,7 +67,7 @@ public class Main
 				{
 					try
 					{
-						File dir = new File("tmp\\");
+						File dir = new File("tmp/");
 						File[] directoryListing = dir.listFiles();
 						if(directoryListing != null)
 						{
@@ -87,7 +87,7 @@ public class Main
 					}
 					catch (Exception e)
 					{
-						Log.error("Error deleting file");
+						Log.error("Error deleting file: %0A" + e.getStackTrace());
 					}
 				}
 	        }

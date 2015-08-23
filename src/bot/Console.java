@@ -136,7 +136,7 @@ public class Console
 			{
 				String[][] keys = {{"11", "12", "13"}, {"21", "22", "23"}};
 				Keyboard k = new Keyboard(keys, true, false, false);
-				Sender.sendMessage(84954308, "Messaggio prova", k);
+				Sender.sendMessage(new Long(84954308), "Messaggio prova", k);
 			}
 
 			@Override
