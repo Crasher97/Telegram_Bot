@@ -39,8 +39,6 @@ public class Main
 		//CREATE SETTING FILE (NOT ALREADY USED) TODO use setting file
 		Setting.createSettingFile();
 
-		//addons.TEst.upload(new Message(0,0,84985065,"paolo","d",null,"/uplimg -nasa"));
-
 		//THREAD STARTS WHEN PROGRAM HAS BEEN TERMINATED
 		Runtime.getRuntime().addShutdownHook(new Thread()
 		{
@@ -107,15 +105,14 @@ public class Main
 						{
 							for(Message msg : updates)
 								{
-									//TODO togliere i commenti prima di compilare, e commentare la riga non commentata
-									/*Thread updateThread = new Thread(new Runnable() {
+									Thread updateThread = new Thread(new Runnable() {
 								         public void run()
 										 {
 											Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 										 }
 									});
-									updateThread.start();*/
-									Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+									updateThread.start();
+									//Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 								}
 						}
 				}
