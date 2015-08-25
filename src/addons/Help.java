@@ -18,24 +18,8 @@ public class Help
 	{
 		Commands.addCommand(new Command("help", "addons.Help", "helpRequest"));
 		addHelp("help", "Do you need some help?");
+
 		Commands.addCommand(new Command("start", "addons.Help", "startRequest"));
-		Commands.addCommand(new Command("addpoll", "bot.functions.polls.Polls", "addPoll"));
-		addHelp("addpoll", "Add a poll. (/addpoll pollname polloption polloption2 ...)");
-		Commands.addCommand(new Command("rmpoll", "bot.functions.polls.Polls", "removePoll"));
-		addHelp("rmpoll", "Remove a poll, only owner can remove poll. (/rmpoll pollname)");
-		
-		Commands.addCommand(new Command("changevote", "bot.functions.polls.TelegramInterface", "changeVote"));
-		addHelp("changevote", "Change your vote in a poll. (/changevote pollname)");
-		Commands.addCommand(new Command("cgv", "bot.functions.polls.Polls", "changeVote"));
-		
-		Commands.addCommand(new Command("vote", "bot.functions.polls.TelegramInterface", "vote"));
-		addHelp("vote", "Vote for a poll. (/vote pollname)");
-		Commands.addCommand(new Command("vf", "bot.functions.polls.Polls", "vote"));
-		
-		Commands.addCommand(new Command("poll", "bot.functions.polls.Polls", "sendPollOptions"));
-		addHelp("poll", "Send all information abount poll. (/poll pollname)");
-		Commands.addCommand(new Command("polls", "bot.functions.polls.Polls", "sendPolls"));
-		addHelp("polls", "Send polls list. (/polls)");
 	}
 	
 	/**

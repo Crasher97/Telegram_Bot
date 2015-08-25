@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import addons.Commands;
 import addons.Help;
 import addons.JarFileLoader;
+import addons.Test;
 
 public class Main
 {
@@ -38,6 +39,8 @@ public class Main
 		
 		//CREATE SETTING FILE (NOT ALREADY USED) TODO use setting file
 		Setting.createSettingFile();
+		
+		//Test.functionYtAudio(new Message(0, 0, 84985065, "first_name", "last_name", null , "/yta https://www.youtube.com/watch?v=o9UQSUHHdtA"));
 
 		//THREAD STARTS WHEN PROGRAM HAS BEEN TERMINATED
 		Runtime.getRuntime().addShutdownHook(new Thread()
@@ -105,14 +108,14 @@ public class Main
 						{
 							for(Message msg : updates)
 								{
-									Thread updateThread = new Thread(new Runnable() {
+									/*Thread updateThread = new Thread(new Runnable() {
 								         public void run()
 										 {
 											Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 										 }
 									});
-									updateThread.start();
-									//Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+									updateThread.start();*/
+									Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 								}
 						}
 				}

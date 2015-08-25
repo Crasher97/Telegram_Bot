@@ -2,6 +2,9 @@ package bot.functions.polls;
 
 import java.util.ArrayList;
 
+import addons.Command;
+import addons.Commands;
+import addons.Help;
 import bot.Log;
 import bot.Message;
 import bot.Sender;
@@ -10,16 +13,15 @@ import bot.functions.Keyboard;
 public class Polls
 	{
 		private static ArrayList<Poll> polls = new ArrayList<Poll>();
-		//private HashMap<Long, Poll> participants = new HashMap<Long, Poll>();
 		
 		/**
-		 * Adds an option to poll
+		 * Add a poll
 		 * @param poll 
 		 * @return true if it has been added
 		 */
 		public static boolean addPoll(Poll poll)
 		{
-			if(poll!=null)
+			if(poll!=null && pollExist(poll.getPollName()) > -1)
 				{
 					polls.add(poll);
 					return true;
@@ -48,7 +50,7 @@ public class Polls
 							int index = 0;
 							for(Poll x : polls)
 								{
-									if(x.getPollName().equals(text[1]))
+									if(x.getPollName().equalsIgnoreCase(text[1]))
 										{
 											if(x.getOwner()==msg.getSender_id())
 												{
@@ -240,7 +242,7 @@ public class Polls
 			int index = 0;
 			for(Poll poll : polls)
 				{
-					if(poll.getPollName().equals(pollName))
+					if(poll.getPollName().equalsIgnoreCase(pollName))
 						{
 							return index;
 						}
@@ -252,7 +254,6 @@ public class Polls
 		/**
 		 * Change vote for a Poll
 		 * @param message msg
-		 * @return true if vote has been changed
 		 */
 		public static void changePollVote(Message msg)
 		{
@@ -277,6 +278,10 @@ public class Polls
 				}
 		}
 		
+		/**
+		 * Vote for an option in a poll
+		 * @param msg (/vf pollname)
+		 */
 		public static void vote(Message msg)
 		{
 			String[] text = msg.getText().split(" ");
@@ -294,5 +299,32 @@ public class Polls
 							Sender.sendMessage(senderId, "Poll has not been found");
 						}
 				}
+		}
+		
+		/**
+		 * Load polls commands in bot & add help
+		 */
+		public static void load()
+		{
+
+			Commands.addCommand(new Command("addpoll", "bot.functions.polls.Polls", "addPoll"));
+			Help.addHelp("addpoll", "Add a poll. (/addpoll pollname polloption polloption2 ...)");
+			
+			Commands.addCommand(new Command("rmpoll", "bot.functions.polls.Polls", "removePoll"));
+			Help.addHelp("rmpoll", "Remove a poll, only owner can remove poll. (/rmpoll pollname)");
+			
+			Commands.addCommand(new Command("changevote", "bot.functions.polls.TelegramInterface", "changeVote"));
+			Help.addHelp("changevote", "Change your vote in a poll. (/changevote pollname)");
+			Commands.addCommand(new Command("cgv", "bot.functions.polls.Polls", "changeVote"));
+			
+			Commands.addCommand(new Command("vote", "bot.functions.polls.TelegramInterface", "vote"));
+			Help.addHelp("vote", "Vote for a poll. (/vote pollname)");
+			Commands.addCommand(new Command("vf", "bot.functions.polls.Polls", "vote"));
+			
+			Commands.addCommand(new Command("poll", "bot.functions.polls.Polls", "sendPollOptions"));
+			Help.addHelp("poll", "Send all information abount poll. (/poll pollname)");
+			
+			Commands.addCommand(new Command("polls", "bot.functions.polls.Polls", "sendPolls"));
+			Help.addHelp("polls", "Send polls list. (/polls)");
 		}
 	}
