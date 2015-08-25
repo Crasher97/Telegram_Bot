@@ -117,15 +117,16 @@ public class UpdatesReader
 					}
 				else
 					{
-						Log.warn("Comando non riconosciuto ricevuto da: " + msg.getFirst_name() + " " + msg.getLast_name());
+						Log.warn("Comando non riconosciuto ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 						Sender.sendMessage(msg.getSender_id(), "Comando non riconosciuto");
 						return null;
 					}
 			}
 		else
 			{
+
+				Log.info("Messaggio ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 				Sender.sendMessage(msg.getSender_id(), SimSimi.toSimSimi(msg.getText()));
-				Log.info(msg.getText());
 				return null;
 			}
 	}
