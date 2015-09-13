@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import addons.Commands;
 import addons.Help;
 import addons.JarFileLoader;
-import addons.Test;
 
 public class Main
 {
