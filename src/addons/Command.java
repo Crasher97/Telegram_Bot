@@ -9,12 +9,12 @@ public class Command
 	private boolean external;
 	
 	/**
-	 * Costruttore per i comandi inseriti da addons esterni
+	 * Constructor for the command added by external addons
 	 * 
-	 * @param commandName nome del comando cui cui verrà identificato nei messaggi
-	 * @param jarFile il nome del jar da cui si carica il comando
-	 * @param className il nome della classe da caricare
-	 * @param methodName il nome del metodo da chiamare all'interno della classe
+	 * @param commandName name of the command, the way it will be identified in messages
+	 * @param jarFile the name of the jar where is the command located
+	 * @param className the name of the class to load
+	 * @param methodName the name of the method to call
 	 */
 	public Command(String commandName, String jarFile, String className, String methodName)
 	{
@@ -26,11 +26,11 @@ public class Command
 	}
 	
 	/**
-	 * Construttore per comandi interni
+	 * Constructor for internal command
 	 * 
-	 * @param commandName il nome del comando con cui verrà riconosciuto
-	 * @param className il nome della classe dove trovare il metodo load
-	 * @param methodName il nome del metodo da chiamare dentro la classe quando viene invocato il comando
+	 * @param commandName name of the command, the way it will be identified in messages
+	 * @param className the name of the class where the method load is
+	 * @param methodName the name of the class to load
 	 */
 	public Command(String commandName, String className, String methodName)
 	{
@@ -41,7 +41,7 @@ public class Command
 	}
 	
 	/**
-	 * Ritorna il nome del comando
+	 * Return the name of the command
 	 * @return String commandName
 	 */
 	public String getCommandName()
@@ -50,7 +50,7 @@ public class Command
 	}
 
 	/**
-	 * Ritorna il nome del jar
+	 * Return the jar name
 	 * @return String jarName
 	 */
 	public String getJarFile()
@@ -59,7 +59,7 @@ public class Command
 	}
 
 	/**
-	 * Ritorna il nome della classe 
+	 * Return the name of the class
 	 * @return String className
 	 */
 	public String getClassName()
@@ -68,7 +68,7 @@ public class Command
 	}
 
 	/**
-	 * Ritorna il nome del metodo da chiamare
+	 * Return the name of the method to call
 	 * @return String mathodName
 	 */
 	public String getMethodName()
@@ -77,7 +77,7 @@ public class Command
 	}
 	
 	/**
-	 * Ritorna se il comando è esterno o no
+	 * Return true if the command is external, false if is internal
 	 * @return boolean external
 	 */
 	public boolean isExternal()
