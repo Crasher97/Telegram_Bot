@@ -75,7 +75,7 @@ public class UpdatesReader
                 		Jsoup.connect(Main.getUrl() + "/getUpdates?offset=" + (update_id + 1)).ignoreContentType(true).post();
 				
                 		boolean owner = Main.getOwner().equals(String.valueOf(message.getSender_id()));
-    					if(owner)
+    					if(owner && text != null)
     						if(text.equals("/stop"))System.exit(0);
                 		
                 		if(isCommand(message) != null)
@@ -107,7 +107,7 @@ public class UpdatesReader
 	 */
 	public static String isCommand(Message msg)
 	{
-		if(msg.getText().charAt(0)=='/')
+		if(msg.getText() != null && msg.getText().charAt(0)=='/')
 			{
 				String command = msg.getText();
 				command = command.substring(1).split(" ")[0];
@@ -124,7 +124,7 @@ public class UpdatesReader
 			}
 		else
 			{
-
+				
 				Log.info("Messaggio ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 				Sender.sendMessage(msg.getSender_id(), SimSimi.toSimSimi(msg.getText()));
 				return null;

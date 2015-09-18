@@ -34,11 +34,11 @@ public class Gui implements ActionListener
 			{
 				stop = false;
 				
-				OUT = new JTextArea(7, 75);
+				OUT = new JTextArea(10, 50);
 				stdOUT = new JScrollPane(OUT);
 				stdOUT.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 				
-				ERR = new JTextArea(7, 75);
+				ERR = new JTextArea(10, 50);
 				stdERR = new JScrollPane(ERR);
 				stdERR.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 				
@@ -68,14 +68,15 @@ public class Gui implements ActionListener
 				panel.add(label1);
 				botUrl.setEditable(true);
 				panel.add(botUrl);
+				botUrl.setText(lastBotUrl());
 				
 				
 				JLabel label2 = new JLabel("Owner ID :");
 				label2.setVisible(true);
 				panel.add(label2);
 				ownerId.setEditable(true);
-				ownerId.setText("84985065"); //TODO DELETE
 				panel.add(ownerId);
+				ownerId.setText(lastOwner());
 				
 				
 				JLabel label3 = new JLabel("CONSOLE");
@@ -116,8 +117,12 @@ public class Gui implements ActionListener
 						thread = new Thread(new Runnable() {
 							public void run()
 								{
-									String[] args = { botUrl.getText(), ownerId.getText()};
-									bot.Main.main(args);
+									if(botUrl.getText() != null && ownerId.getText() != null)
+									{
+										String[] args = { botUrl.getText(), ownerId.getText()};
+										saveConfiguration(botUrl.getText(), ownerId.getText());
+										bot.Main.main(args);
+									}
 								}
 						});
 						thread.start();
@@ -132,5 +137,79 @@ public class Gui implements ActionListener
 						button.setText("Start");
 						frame.pack();
 					}
+			}
+		
+		/**
+		 * Change text inside botUrl textArea
+		 * @param botUrl
+		 */
+		public void setBotUrl(String botUrl)
+		{
+			this.botUrl.setText(botUrl);
+		}
+		
+		/**
+		 * Change text inside ownerId textArea
+		 * @param ownerId
+		 */
+		public void setOwner0Id(String ownerId)
+		{
+			this.ownerId.setText(ownerId);
+		}
+		
+		/**
+		 * Save confuguration for next start
+		 * @param botUrl
+		 * @param ownerId
+		 */
+		public void saveConfiguration(String botUrl, String ownerId)
+		{
+			//SAVE BOT URL CONFIGURATION
+			if(bot.Setting.settingExist("Bot_ID", "Main"))
+				{
+					bot.Setting.editSetting("Bot_ID", botUrl, "Main");
+				}
+			else
+				{
+					bot.Setting.addSetting("Bot_ID", botUrl, "Main");
+				}
+			
+			//SAVE OWNER CONFIGURATION
+			if(bot.Setting.settingExist("Owner_ID", "Main"))
+				{
+					bot.Setting.editSetting("Owner_ID", ownerId, "Main");
+				}
+			else
+				{
+					bot.Setting.addSetting("Owner_ID", ownerId, "Main");
+				}
+		}
+		
+		/**
+		 * Return last botUrl used
+		 * @return lastBotUrl
+		 */
+		public String lastBotUrl()
+		{
+			if(bot.Setting.settingExist("Bot_ID", "Main"))
+				{
+					return bot.Setting.readSetting("Bot_ID", "Main");
+				}
+			else
+				return "";
+		}
+		
+		/**
+		 * Return last owner used
+		 * @return lastOwner
+		 */
+		public String lastOwner()
+			{
+				if(bot.Setting.settingExist("Owner_ID", "Main"))
+					{
+						return bot.Setting.readSetting("Owner_ID", "Main");
+					}
+				else
+					return "";
 			}
 	}
