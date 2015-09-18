@@ -14,19 +14,22 @@ public class SimSimi
 		String simSimiJSONReply = "";
 		String simSimiReply = "";
 		JSONParser parser = new JSONParser();
-		try
-		{
-			Document doc = Jsoup.connect(SIMSIMI_URL + message).ignoreContentType(true).get();
-			simSimiJSONReply = doc.text();
-			JSONObject jsonObject = (JSONObject) parser.parse(simSimiJSONReply);
-			simSimiReply = jsonObject.get("res").toString();
-			return simSimiReply;
-
-		}
-		catch (Exception e)
-		{
-			Log.stackTrace(e.getStackTrace());
-			return null;
-		}
+		if(message != null)
+			{
+			try
+				{
+					Document doc = Jsoup.connect(SIMSIMI_URL + message).ignoreContentType(true).get();
+					simSimiJSONReply = doc.text();
+					JSONObject jsonObject = (JSONObject) parser.parse(simSimiJSONReply);
+					simSimiReply = jsonObject.get("res").toString();
+					return simSimiReply;
+				}
+			catch (Exception e)
+				{
+					Log.stackTrace(e.getStackTrace());
+					return null;
+				}
+			}
+		return null;
 	}
 }

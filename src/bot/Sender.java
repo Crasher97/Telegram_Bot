@@ -57,7 +57,10 @@ public class Sender
 			Document doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&text=" + message).ignoreContentType(true).post();
 			if(doc.text().contains("\"ok\":true"))
 			{
-				Log.info("Messaggio inviato: " + message.split("&")[0]);
+				if(message != null)
+					Log.info("Messaggio inviato: " + message.split("&")[0]);
+				else
+					Log.warn("Message not sent, text is empty");
 				return true;
 			}
 			else
