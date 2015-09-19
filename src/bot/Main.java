@@ -97,14 +97,14 @@ public class Main
 						{
 							for(Message msg : updates)
 								{
-									Thread updateThread = new Thread(new Runnable() {
+									/*Thread updateThread = new Thread(new Runnable() {
 								         public void run()
 										 {
 											Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 										 }
 									});
-									updateThread.start();
-									//Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+									updateThread.start();*/
+									Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 								}
 						}
 				}
