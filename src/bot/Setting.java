@@ -170,4 +170,24 @@ public class Setting
 		}
 		return false;
 	}
+	
+	/**
+	 * Return last launching configuration
+	 * @param idCode
+	 * @param owner
+	 * @return an array[2], where in [0] there is bot ID & in [1] there is the owner ID
+	 */
+	public static String[] readLastSettings()
+	{
+		String idCode = Setting.readSetting("Bot_ID", "Main");
+		String owner = Setting.readSetting("Owner_ID", "Main");
+		if(idCode != null && owner != null)
+			{
+				String[] tmp = new String[2];
+				tmp[0] = idCode;
+				tmp[1] = owner;
+				return tmp;
+			}
+		return null;
+	}
 }

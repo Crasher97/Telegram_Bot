@@ -1,17 +1,17 @@
 package bot;
 import java.io.File;
 import java.util.ArrayList;
-
 import addons.Commands;
 import addons.Help;
 import addons.JarFileLoader;
 
 public class Main
 {
-	private static String idCode = "";
+	private static String botId = "";
 	private static String owner = "";
 	private static String url = "";
 	private static String update = "";
+	
 	/**
 	 * Main method
 	 * @param botId - get it from bot Father
@@ -19,9 +19,24 @@ public class Main
 	 */
 	public static void main(String[] args)
 	{
-		idCode = args[0];
+		if(args.length == 2)
+			{
+				server(args);
+			}
+		else
+			{
+				GUI.Gui.startGui();
+			}
+	}
+	
+	/**
+	 * Start server without gui 
+	 */
+	public static void server(String[] args)
+	{
+		botId = args[0];
 		owner = args[1];
-		url = "https://api.telegram.org/bot" + idCode;
+		url = "https://api.telegram.org/bot" + botId;
 		
 		//LOAD EXTERNAL ADDONS
 		JarFileLoader.loadJarFile();
@@ -36,12 +51,18 @@ public class Main
 		Console.loadCommand();
 		Console.openConsole();
 		
-		//CREATE SETTING FILE (NOT ALREADY USED) TODO use setting file
-		Setting.createSettingFile();
 		
-		//Test.functionYtAudio(new Message(0, 0, 84985065, "first_name", "last_name", null , "/yta https://www.youtube.com/watch?v=o9UQSUHHdtA"));
-
-		//THREAD STARTS WHEN PROGRAM HAS BEEN TERMINATED
+		//START THREADS
+		shutDownThread();
+		deletingThread();
+		update();
+	}
+	
+	/**
+	 * THREAD STARTS WHEN PROGRAM HAS BEEN TERMINATED
+	 */
+	private static void shutDownThread()
+	{
 		Runtime.getRuntime().addShutdownHook(new Thread()
 		{
 			public void run()
@@ -58,8 +79,52 @@ public class Main
 				}
 			}
 		});
-		
-		//DELETE FILES OLDER THAN 3 DAYS EVERY 12 HOURS
+	}
+	
+		/**
+		 * CHECK FOR NEW UPDATES, STARTS NEW THREAD FOR EVERY UPDATE
+		 */
+	public static void update() //TODO far in modo che questo metodo venga avviato alla ricezione di un webhook
+	{
+		while (true)
+		{
+			String tmp = UpdatesReader.getUpdate();
+			if(tmp != null)
+				{
+					update = tmp;
+					ArrayList<Message> updates = UpdatesReader.parseJSON(update);
+					if(updates.size() > 0)
+						{
+							for(Message msg : updates)
+								{
+									Thread updateThread = new Thread(new Runnable() {
+								         public void run()
+										 {
+											Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+										 }
+									});
+									updateThread.start();
+									//Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+								}
+						}
+				}
+			try
+			{
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException e)
+			{
+				Log.stackTrace(e.getStackTrace());
+			}
+		}
+	}
+
+	
+	/**
+	 * Start thread that delete files older than 3 days, every 12 hours 
+	 */
+	private static void deletingThread()
+	{
 		Thread thread = new Thread(new Runnable() {
 	         public void run()
 			 {
@@ -93,42 +158,8 @@ public class Main
 	        }
 		});
 		thread.start();
-	
-		
-		//CHECK FOR NEW UPDATES, STARTS NEW THREAD FOR EVERY UPDATE
-	while (true)
-		{
-			String tmp = UpdatesReader.getUpdate();
-			if(tmp != null)
-				{
-					update = tmp;
-					ArrayList<Message> updates = UpdatesReader.parseJSON(update);
-					if(updates.size() > 0)
-						{
-							for(Message msg : updates)
-								{
-									/*Thread updateThread = new Thread(new Runnable() {
-								         public void run()
-										 {
-											Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
-										 }
-									});
-									updateThread.start();*/
-									Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
-								}
-						}
-				}
-			try
-			{
-				Thread.sleep(1000);
-			}
-			catch (InterruptedException e)
-			{
-				Log.stackTrace(e.getStackTrace());
-			}
-		}
 	}
-
+	
 	/**
 	 * Return bot idCode
 	 * 
@@ -136,17 +167,31 @@ public class Main
 	 */
 	public static String getIdCode()
 	{
-		return idCode;
+		return botId;
 	}
 
 	/**
 	 * Return url of bot
-	 * 
 	 * @return url
 	 */
 	public static String getUrl()
 	{
 		return url;
+	}
+	
+	/**
+	 * Change bot ID
+	 * @param botId
+	 * @return true if it has been changed
+	 */
+	public static boolean setBotId(String botIdP)
+	{
+		if(botId != null)
+		{
+			botId = botIdP;
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -156,6 +201,21 @@ public class Main
 	public static String getOwner()
 	{
 		return owner;
+	}
+	
+	/**
+	 * Change owner ID
+	 * @param ownerId
+	 * @return true if it has been changed
+	 */
+	public static boolean setOwnerId(String ownerIdP)
+	{
+		if(botId != null)
+		{
+			owner = ownerIdP;
+			return true;
+		}
+		return false;
 	}
 	
 	/**
