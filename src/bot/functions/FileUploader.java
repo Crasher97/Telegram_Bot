@@ -31,7 +31,7 @@ public class FileUploader
 	 *
 	 * @param fileName
 	 * @param senderId
-	 * @param fileType
+	 * @param fileType {PHOTO, AUDIO, VIDEO, DOCUMENT}
 	 * @return true if file has been sent
 	 */
 	public static boolean uploadFile(String fileName, long senderId, FileType fileType)
