@@ -15,15 +15,16 @@ public class Setting
 {
 	private static File settingFile = new File("setting.json");
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	
+
 	/**
-	 * Crea un file per le impostazioni
+	 * Create a new file for the setting
 	 */
 	public static void createSettingFile()
 	{
-		if(settingFile.exists()) return;
+		if (settingFile.exists()) return;
 		JSONObject obj = new JSONObject();
-		try {
+		try
+		{
 			FileWriter outFile = new FileWriter(settingFile);
 			outFile.write(gson.toJson(obj));
 			Log.info("Creato file Setting");
@@ -31,13 +32,15 @@ public class Setting
 			outFile.close();
 			writeDefaultSettings();
 
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			Log.stackTrace(e.getStackTrace());
 		}
 	}
 
 	/**
-	 * Scrive sul file le impostazioni di default
+	 * Write on the file the default setting
 	 */
 	public static void writeDefaultSettings()
 	{
@@ -53,16 +56,17 @@ public class Setting
 	}
 
 	/**
-	 * Aggiunge un impostazione al file
- 	 * @param key Chiave per recuperare l'impostazione
-	 * @param value Valore default
-	 * @param category Categoria dell'impostazione
+	 * Add a setting to the file
+	 *
+	 * @param key      Key for the setting
+	 * @param value    Default value
+	 * @param category Category of the setting
 	 */
 	@SuppressWarnings("unchecked")
 	public static void addSetting(String key, String value, String category)
 	{
-		if(!settingFile.exists()) createSettingFile();
-		if(settingExist(key, category)) return;
+		if (!settingFile.exists()) createSettingFile();
+		if (settingExist(key, category)) return;
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		try
@@ -84,10 +88,11 @@ public class Setting
 	}
 
 	/**
-	 * Legge Un impostazione dal file
-	 * @param key Chiave di ricerca
-	 * @param category Categoria
-	 * @return Valore dell'impostazione con la chiave di ricerca
+	 * Read a setting from the file
+	 *
+	 * @param key      Key
+	 * @param category Category
+	 * @return Value of the setting
 	 */
 	public static String readSetting(String key, String category)
 	{
@@ -109,16 +114,17 @@ public class Setting
 	}
 
 	/**
-	 * Modifica un impostazione
-	 * @param key Chiave da modificare
-	 * @param value Nuovo valore
-	 * @param category Categoria della chiave
-	 * @return True se la modifica è stata effettuata con successo altrimenti false
+	 * Edit a setting
+	 *
+	 * @param key      Key to edit
+	 * @param value    New value
+	 * @param category Category
+	 * @return True if the setting was successfully edited, else false
 	 */
 	@SuppressWarnings("unchecked")
 	public static boolean editSetting(String key, String value, String category)
 	{
-		if(!settingExist(key, category)) return false;
+		if (!settingExist(key, category)) return false;
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		try
@@ -143,10 +149,11 @@ public class Setting
 	}
 
 	/**
-	 * Verifica se una particolare chiave in una certa categoria esiste
-	 * @param key Chiave da cercare
-	 * @param category Categoria in cui cercare
-	 * @return true se la chiave esiste, false se non esiste
+	 * Test if a key exist
+	 *
+	 * @param key      Key
+	 * @param category Category
+	 * @return true if exist, else false
 	 */
 	public static boolean settingExist(String key, String category)
 	{
@@ -156,9 +163,9 @@ public class Setting
 		{
 			obj = (JSONObject) parser.parse(new FileReader(settingFile));
 			JSONObject setting = (JSONObject) obj.get(category);
-			if(setting == null) return false;
-			if(setting.get(key) == null) return false;
-			if(setting.get(key) != "")
+			if (setting == null) return false;
+			if (setting.get(key) == null) return false;
+			if (setting.get(key) != "")
 			{
 				return true;
 			}
@@ -170,24 +177,23 @@ public class Setting
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Return last launching configuration
-	 * @param idCode
-	 * @param owner
+	 *
 	 * @return an array[2], where in [0] there is bot ID & in [1] there is the owner ID
 	 */
 	public static String[] readLastSettings()
 	{
 		String idCode = Setting.readSetting("Bot_ID", "Main");
 		String owner = Setting.readSetting("Owner_ID", "Main");
-		if(idCode != null && owner != null)
-			{
-				String[] tmp = new String[2];
-				tmp[0] = idCode;
-				tmp[1] = owner;
-				return tmp;
-			}
+		if (idCode != null && owner != null)
+		{
+			String[] tmp = new String[2];
+			tmp[0] = idCode;
+			tmp[1] = owner;
+			return tmp;
+		}
 		return null;
 	}
 }

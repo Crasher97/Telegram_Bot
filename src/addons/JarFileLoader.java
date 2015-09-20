@@ -12,7 +12,7 @@ import bot.Message;
 public class JarFileLoader extends ClassLoader
 {
 	/**
-	 * Esegue il metodo load di tutti gli addons
+	 * Execute the method load in all the addons
 	 */
 	public static void loadJarFile()
 	{
@@ -20,10 +20,10 @@ public class JarFileLoader extends ClassLoader
 	}
 
 	/**
-	 * Esegue un metodo in una classe di tutti i file jar presenti nella cartella addons
-	 * 
-	 * @param classBinName Nome della classe
-	 * @param methodName Nome del metodo
+	 * Execute a method in a class of all the jar file in the addons directory
+	 *
+	 * @param classBinName Class name
+	 * @param methodName   Method name
 	 */
 	public static void invokeClassMethod(String classBinName, String methodName)
 	{
@@ -39,7 +39,7 @@ public class JarFileLoader extends ClassLoader
 					if (file.toURI().toURL().toString().endsWith(".jar"))
 					{
 						URL url = file.toURI().toURL();
-						URL[] urls = new URL[] { url };
+						URL[] urls = new URL[]{url};
 
 						// Crea il Class Loader
 						ClassLoader classLoader = new URLClassLoader(urls);
@@ -65,7 +65,7 @@ public class JarFileLoader extends ClassLoader
 						{
 							Log.error("Metodo " + methodName + " non trovato nel file " + file.getName());
 						}
-						
+
 						((URLClassLoader) classLoader).close();
 					}
 
@@ -85,12 +85,12 @@ public class JarFileLoader extends ClassLoader
 	}
 
 	/**
-	 * Permette di chiamare il metodo di un addons
-	 * 
-	 * @param jarName Nome del file jar dell'addons
-	 * @param classBinName Nome della classe
-	 * @param methodName Nome del metodo
-	 * @param message Oggetto Message da passare all'addons
+	 * Call an addon's method
+	 *
+	 * @param jarName      Name of the addon's jar file
+	 * @param classBinName Class name
+	 * @param methodName   Method name
+	 * @param message      Message
 	 */
 	public static void invokeClassMethod(String jarName, String classBinName, String methodName, Message message)
 	{
@@ -102,7 +102,7 @@ public class JarFileLoader extends ClassLoader
 			if (file.toURI().toURL().toString().endsWith(".jar"))
 			{
 				URL url = file.toURI().toURL();
-				URL[] urls = new URL[] { url };
+				URL[] urls = new URL[]{url};
 
 				// Crea il Class Loader
 				ClassLoader classLoader = new URLClassLoader(urls);

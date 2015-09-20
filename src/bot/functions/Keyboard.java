@@ -11,9 +11,9 @@ public class Keyboard
 	/**
 	 * Constructor for the keyboard
 	 *
-	 * @param keys 2d array containing the keys for the keyboard
-	 * @param oneTime true if you want the keyboard to hide after the user press a key
-	 * @param resize true if you want the keyboard to resize itself
+	 * @param keys      2d array containing the keys for the keyboard
+	 * @param oneTime   true if you want the keyboard to hide after the user press a key
+	 * @param resize    true if you want the keyboard to resize itself
 	 * @param selective true if you want the keyboard to appear only to a mentioned user or if the bot message is a reply
 	 */
 	public Keyboard(String[][] keys, boolean oneTime, boolean resize, boolean selective)
@@ -23,13 +23,14 @@ public class Keyboard
 
 	/**
 	 * Add a row to the keyboard
+	 *
 	 * @param row array containing the keys for the row
 	 */
 	@SuppressWarnings("unchecked")
 	private void addRow(String[] row)
 	{
 		JSONArray rowJSON = new JSONArray();
-		for(String r : row)
+		for (String r : row)
 		{
 			rowJSON.add(r);
 		}
@@ -39,15 +40,15 @@ public class Keyboard
 	/**
 	 * Make the keyboard object
 	 *
-	 * @param keys 2d array containing the keys for the keyboard
-	 * @param oneTime true if you want the keyboard to hide after the user press a key
-	 * @param resize true if you want the keyboard to resize itself
+	 * @param keys      2d array containing the keys for the keyboard
+	 * @param oneTime   true if you want the keyboard to hide after the user press a key
+	 * @param resize    true if you want the keyboard to resize itself
 	 * @param selective true if you want the keyboard to appear only to a mentioned user or if the bot message is a reply
 	 */
 	@SuppressWarnings("unchecked")
 	private void makeKeyboard(String[][] keys, boolean oneTime, boolean resize, boolean selective)
 	{
-		for(String[] row : keys)
+		for (String[] row : keys)
 		{
 			addRow(row);
 		}
@@ -59,6 +60,7 @@ public class Keyboard
 
 	/**
 	 * Return the keyboard object as string
+	 *
 	 * @return keyboard object
 	 */
 	public String toJSONString()

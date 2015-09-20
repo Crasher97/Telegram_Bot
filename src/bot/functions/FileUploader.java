@@ -21,10 +21,14 @@ import java.io.IOException;
  */
 public class FileUploader
 {
-	public enum FileType{PHOTO, AUDIO, VIDEO, DOCUMENT}
-	
+	public enum FileType
+	{
+		PHOTO, AUDIO, VIDEO, DOCUMENT
+	}
+
 	/**
 	 * Send files
+	 *
 	 * @param fileName
 	 * @param senderId
 	 * @param fileType
@@ -65,7 +69,7 @@ public class FileUploader
 		}
 
 		String file_id = UploadedFileLogger.getFileId("tmp/" + fileName);
-		if(file_id == null)
+		if (file_id == null)
 		{
 			HttpClient httpclient = HttpClientBuilder.create().build();
 			HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + urlMethod + "?chat_id=" + senderId);

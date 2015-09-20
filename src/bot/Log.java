@@ -12,10 +12,14 @@ public class Log
 	/**
 	 * Enum contains all printline message tipes
 	 */
-	private enum Level{INFO, WARN, DEBUG, ERROR, CONFIG, FATAL}
+	private enum Level
+	{
+		INFO, WARN, DEBUG, ERROR, CONFIG, FATAL
+	}
 
 	/**
 	 * Return current time
+	 *
 	 * @return actual time HH:mm:ss
 	 */
 	private static String getTime()
@@ -25,15 +29,16 @@ public class Log
 
 	/**
 	 * Write on console and on log file
+	 *
 	 * @param textToWrite
-	 * @param level - tipe of message
+	 * @param level       - tipe of message
 	 */
 	public static void all(String textToWrite, Level level)
 	{
-		if(logFile == null) createLogFile();
+		if (logFile == null) createLogFile();
 
 		String y = ("[" + getTime() + "] " + "[" + level + "] : " + textToWrite);
-		if(!(level == Level.ERROR) && !(level == Level.FATAL))
+		if (!(level == Level.ERROR) && !(level == Level.FATAL))
 		{
 			System.out.println(y);
 		}
@@ -46,6 +51,7 @@ public class Log
 
 	/**
 	 * Print info on console and write into log
+	 *
 	 * @param x
 	 */
 	public static void info(String x)
@@ -55,6 +61,7 @@ public class Log
 
 	/**
 	 * Print warns on console and write into log
+	 *
 	 * @param x
 	 */
 	public static void warn(String x)
@@ -64,6 +71,7 @@ public class Log
 
 	/**
 	 * Print debug info on console and write into log
+	 *
 	 * @param x
 	 */
 	public static void debug(String x)
@@ -73,6 +81,7 @@ public class Log
 
 	/**
 	 * Print errors on console and write into log
+	 *
 	 * @param x
 	 */
 	public static void error(String x)
@@ -82,6 +91,7 @@ public class Log
 
 	/**
 	 * Print config messages on console and write into log
+	 *
 	 * @param x
 	 */
 	public static void config(String x)
@@ -91,12 +101,13 @@ public class Log
 
 	/**
 	 * Print exeptions on console and into log
+	 *
 	 * @param stackTraceElement
 	 */
 	public static void stackTrace(StackTraceElement[] stackTraceElement)
 	{
 		String trace = "\n";
-		for(StackTraceElement line : stackTraceElement)
+		for (StackTraceElement line : stackTraceElement)
 		{
 			trace += line.toString() + "\n";
 		}
@@ -104,42 +115,44 @@ public class Log
 	}
 
 	/**
-	 * Make new log file everytime, program starts. file name is actual data & time
+	 * Make new log file every time the program starts. file name is current date & time
 	 */
 	public static void createLogFile()
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy_HH.mm.ss");
 		File logFolder = new File("log");
-		if(logFolder.exists() && !logFolder.isDirectory())
+		if (logFolder.exists() && !logFolder.isDirectory())
 		{
 			System.err.println("Log.createLogFile, error creating log folder, delete file that name is log");
 			return;
 		}
-		if(!logFolder.exists()) logFolder.mkdir();
+		if (!logFolder.exists()) logFolder.mkdir();
 
 		logFile = new File("log/" + dateFormat.format(new Date()) + ".log");
 		BufferedWriter outputWriter;
 		try
 		{
-			outputWriter = new BufferedWriter(new FileWriter(logFile , true));
+			outputWriter = new BufferedWriter(new FileWriter(logFile, true));
 			outputWriter.flush();
 			outputWriter.close();
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			stackTrace(e.getStackTrace());
 		}
 	}
 
 	/**
-	 * Write ,at the end of the last log file , parameter string
-	 * @param x 
+	 * Write at the end of the last log file , parameter string
+	 *
+	 * @param x
 	 */
 	public static void addToLog(String x)
 	{
 		BufferedWriter outputWriter;
 		try
 		{
-			outputWriter = new BufferedWriter(new FileWriter(logFile , true));
+			outputWriter = new BufferedWriter(new FileWriter(logFile, true));
 			outputWriter.write(x);
 			outputWriter.newLine();
 			outputWriter.flush();

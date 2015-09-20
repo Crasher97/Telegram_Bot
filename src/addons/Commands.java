@@ -10,28 +10,28 @@ import bot.Message;
 public class Commands
 {
 	private static HashMap<String, Command> commands = new HashMap<String, Command>();
-	
+
 	/**
-	 * Aggiunge alla lista il comando passato come parametro
-	 * 
-	 * @param command Oggetto Command da aggiungere
+	 * Add the command passed as parameter to the Hashmap
+	 *
+	 * @param command Object Command to add
 	 */
 	public static void addCommand(Command command)
 	{
-		Log.info("Comando aggiunto: " + command.getCommandName());
+		Log.info("Command Added: " + command.getCommandName());
 		commands.put(command.getCommandName(), command);
 	}
-	
+
 	/**
-	 * Esegue il comando
-	 * 
-	 * @param commandName Nome del comando
-	 * @param message Il messaggio da cui è stato lanciato il comando nel caso servano parametri o il sender id
+	 * Execute the command
+	 *
+	 * @param commandName Name of the command
+	 * @param message     The message that started the command
 	 */
 	public static void exeCommand(String commandName, Message message)
 	{
 		Command command = commands.get(commandName);
-		if(command.isExternal())
+		if (command.isExternal())
 		{
 			JarFileLoader.invokeClassMethod(command.getJarFile(), command.getClassName(), command.getMethodName(), message);
 		}
@@ -40,24 +40,25 @@ public class Commands
 			callInternalCommand(command.getClassName(), command.getMethodName(), message);
 		}
 	}
-	
+
 	/**
-	 * Verifica se il comando passato come parametro esiste
-	 * @param commandName Nome del comando
-	 * @return true se il comando esiste, altrimenti false
+	 * Test if the command exist
+	 *
+	 * @param commandName Name of the command
+	 * @return true if the command exist, false if not
 	 */
 	public static boolean commandExist(String commandName)
 	{
-		if(commands.containsKey(commandName)) return true;
+		if (commands.containsKey(commandName)) return true;
 		return false;
 	}
-	
+
 	/**
-	 * Chiama un comando in una classe interna al programma
-	 * 
-	 * @param commandClass Classe del comando
-	 * @param commandMethod Metodo del comando
-	 * @param message Messaggio dal quale è stato chiamato il comando
+	 * Call a command in a internal class
+	 *
+	 * @param commandClass  Class of the command
+	 * @param commandMethod Method of the command
+	 * @param message       The message that started the command
 	 */
 	public static void callInternalCommand(String commandClass, String commandMethod, Message message)
 	{
@@ -73,7 +74,7 @@ public class Commands
 			Log.stackTrace(e.getStackTrace());
 		}
 	}
-	
+
 	public static HashMap<String, Command> getCommands()
 	{
 		return commands;

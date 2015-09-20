@@ -15,13 +15,15 @@ import bot.Log;
 public class FileDownloader
 {
 	private static String returnThread;
+
 	/**
 	 * Download a file from url
+	 *
 	 * @param url - File to be downloaded
- 	 * @return name of file, it download fails return null
+	 * @return name of file, it download fails return null
 	 */
 	public static String downloadFile(String url)
-	{	
+	{
 		final String urlF = url;
 		try
 		{
@@ -40,27 +42,28 @@ public class FileDownloader
 		}
 		return returnThread;
 	}
-	
+
 	/**
 	 * Download video from youtube
-	 * @param url Indirizzo del video youtube.
+	 *
+	 * @param url Youtube url
 	 * @return name of video
 	 */
 	public static String downloadVideo(String url)
 	{
-		try 
+		try
 		{
 			VGetParser user = null;
 			user = new YouTubeMPGParser();
 			VGet v = new VGet(new URL(url), new File("tmp/"));
-	        v.download(user);
-	        return v.getTarget().getName();
-	    }
+			v.download(user);
+			return v.getTarget().getName();
+		}
 		catch (Exception e)
 		{
 			Log.stackTrace(e.getStackTrace());
-	        return null;
-	    }
+			return null;
+		}
 	}
 
 	/**
@@ -73,6 +76,6 @@ public class FileDownloader
 	{
 		return null;
 	}
-	
+
 }
 

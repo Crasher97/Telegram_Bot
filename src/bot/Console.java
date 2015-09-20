@@ -15,7 +15,7 @@ import addons.Help;
 public class Console
 {
 	private static HashMap<String, ConsoleCommandCode> consoleCommands = new HashMap<String, ConsoleCommandCode>();
-	
+
 	/**
 	 * Opens console and receive commands from users
 	 */
@@ -29,13 +29,13 @@ public class Console
 				@SuppressWarnings("resource")
 				Scanner scanner = new Scanner(System.in);
 				String[] command;
-				while(true)
+				while (true)
 				{
 					synchronized (this)
 					{
 						//System.out.printf(">");
 						command = scanner.nextLine().split(" ");
-						if(commandExist(command[0]))
+						if (commandExist(command[0]))
 						{
 							exeCommand(command);
 						}
@@ -46,11 +46,11 @@ public class Console
 				}
 			}
 		};
-		Thread consoleThread =  new Thread(consoleRunnable);
+		Thread consoleThread = new Thread(consoleRunnable);
 		consoleThread.start();
 
 	}
-	
+
 	/**
 	 * Load default commands in console
 	 */
@@ -65,21 +65,25 @@ public class Console
 			}
 
 			@Override
-			public void run(){}
-		});
-		
-		addCommand("stop", new ConsoleCommandCode()
+			public void run()
 			{
-				@Override
-				public void run(String[] args)
-				{
-					System.exit(0);
-				}
+			}
+		});
 
-				@Override
-				public void run(){}
-			});
-		
+		addCommand("stop", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
+			{
+				System.exit(0);
+			}
+
+			@Override
+			public void run()
+			{
+			}
+		});
+
 		addCommand("download", new ConsoleCommandCode()
 		{
 			@Override
@@ -89,9 +93,11 @@ public class Console
 			}
 
 			@Override
-			public void run(){}
+			public void run()
+			{
+			}
 		});
-		
+
 		addCommand("video", new ConsoleCommandCode()
 		{
 			@Override
@@ -101,7 +107,9 @@ public class Console
 			}
 
 			@Override
-			public void run(){}
+			public void run()
+			{
+			}
 		});
 
 		addCommand("webhook", new ConsoleCommandCode()
@@ -114,7 +122,9 @@ public class Console
 			}
 
 			@Override
-			public void run(){}
+			public void run()
+			{
+			}
 		});
 
 		addCommand("webhookUnset", new ConsoleCommandCode()
@@ -126,7 +136,9 @@ public class Console
 			}
 
 			@Override
-			public void run(){}
+			public void run()
+			{
+			}
 		});
 
 		addCommand("testKeyboard", new ConsoleCommandCode()
@@ -146,14 +158,14 @@ public class Console
 		});
 	}
 
-	public interface ConsoleCommandCode extends Runnable 
+	public interface ConsoleCommandCode extends Runnable
 	{
-	    public void run(String[] args);
+		public void run(String[] args);
 	}
-	
+
 	/**
 	 * Add command to commands list
-	 * 
+	 *
 	 * @param commandName
 	 * @param consoleCommandCode - Source code of command
 	 */
@@ -161,26 +173,28 @@ public class Console
 	{
 		consoleCommands.put(commandName, consoleCommandCode);
 	}
-	
+
 	/**
 	 * Performs command that has been given via parameter
+	 *
 	 * @param command - Command to execute + parameters
 	 */
 	public static void exeCommand(String[] command)
 	{
 		String[] args = Arrays.copyOfRange(command, 1, command.length);
 		consoleCommands.get(command[0]).run(args);
-		
+
 	}
-	
+
 	/**
 	 * Check if commands exist
+	 *
 	 * @param commandName
 	 * @return true if command exist
 	 */
 	public static boolean commandExist(String commandName)
 	{
-		if(consoleCommands.containsKey(commandName)) return true;
+		if (consoleCommands.containsKey(commandName)) return true;
 		return false;
 	}
 }

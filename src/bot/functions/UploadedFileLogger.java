@@ -20,18 +20,23 @@ import org.json.simple.parser.ParseException;
 public class UploadedFileLogger
 {
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	public enum Type {PHOTO, VIDEO, DOCUMENT};
+
+	public enum Type
+	{
+		PHOTO, VIDEO, DOCUMENT
+	}
 
 	/**
-	 * Estrae il file_id dal JSON passato come parametro
-	 * @param receivedJSON
-	 * @return Il nome del file
+	 * Extract the file_id form the passed JSON
+	 *
+	 * @param receivedJSON JSON
+	 * @return Name of the file
 	 */
 	public static String parseJSON(String receivedJSON, Type type)
 	{
 		JSONParser parser = new JSONParser();
-		
-		try 
+
+		try
 		{
 			JSONObject jsonObject = (JSONObject) parser.parse(receivedJSON);
 			JSONObject resultList = (JSONObject) jsonObject.get("result");
@@ -58,42 +63,52 @@ public class UploadedFileLogger
 
 			}
 
-		} 
-		catch (ParseException e) 
+		}
+		catch (ParseException e)
 		{
 			Log.stackTrace(e.getStackTrace());
 			return null;
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Crea il file uploadedFileLog.json che contiene le informazioni dei file scaricati
+	 * Create the file uploadedFileLog.json that contain information on downloaded file
 	 */
 	@SuppressWarnings("unchecked")
 	public static void createLogFile()
 	{
 		JSONObject obj = new JSONObject();
-        JSONArray files = new JSONArray();
-        obj.put("Files", files);
-        try {
-        	FileWriter outFile = new FileWriter("uploadedFileLog.json");
-        	//outFile.write(obj.toJSONString());
+		JSONArray files = new JSONArray();
+		obj.put("Files", files);
+		try
+		{
+			FileWriter outFile = new FileWriter("uploadedFileLog.json");
+			//outFile.write(obj.toJSONString());
 			outFile.write(gson.toJson(obj));
-            Log.info("Creato file JSON");
-            outFile.flush();
-            outFile.close();
- 
-        } catch (IOException e) {
+			Log.info("Creato file JSON");
+			outFile.flush();
+			outFile.close();
+
+		}
+		catch (IOException e)
+		{
 			Log.stackTrace(e.getStackTrace());
-        }
+		}
 	}
-	
+
+	/**
+	 * Add file's information to uploadedFileLog.json
+	 *
+	 * @param filePath     File path
+	 * @param receivedJSON JSON received from telegram on file upload
+	 * @param type         File type
+	 */
 	@SuppressWarnings("unchecked")
 	public static void addToFileLog(String filePath, String receivedJSON, Type type)
 	{
 		File f = new File("uploadedFileLog.json");
-		if(!f.exists()) createLogFile();
+		if (!f.exists()) createLogFile();
 		String fileMD5 = calculateFileMD5(filePath);
 		String file_id = parseJSON(receivedJSON, type);
 		JSONParser parser = new JSONParser();
@@ -103,27 +118,28 @@ public class UploadedFileLogger
 			obj = (JSONObject) parser.parse(new FileReader("uploadedFileLog.json"));
 			JSONArray files = (JSONArray) obj.get("Files");
 			JSONObject file = new JSONObject();
-	        file.put("hash", fileMD5);
-	        file.put("file_id", file_id);
+			file.put("hash", fileMD5);
+			file.put("file_id", file_id);
 			file.put("fileName", filePath.split("/")[1]);
 			file.put("fileType", type.toString());
-	        files.add(file);
-	        
-        	FileWriter outFile = new FileWriter("uploadedFileLog.json");
+			files.add(file);
+
+			FileWriter outFile = new FileWriter("uploadedFileLog.json");
 			outFile.write(gson.toJson(obj));
-            outFile.flush();
-            outFile.close();
+			outFile.flush();
+			outFile.close();
 		}
 		catch (IOException | ParseException e)
 		{
 			Log.stackTrace(e.getStackTrace());
 		}
 	}
-	
+
 	/**
-	 * Calcola l'MD5 del file passato come parametro
-	 * @param path Percorso del file
-	 * @return String hash MD5 del file
+	 * Calculate MD5 hash of the file passed as argument
+	 *
+	 * @param path File's path
+	 * @return String file's MD5 hash
 	 */
 	public static String calculateFileMD5(String path)
 	{
@@ -140,17 +156,19 @@ public class UploadedFileLogger
 			return null;
 		}
 	}
-	
-	@SuppressWarnings("unchecked")
+
+
 	/**
-	 * Restituisce il file_id del file al percorso passato come parametro
-	 * @param path Percorso del file
-	 * @return String file_id - oppure null se il file non è presente nel log
+	 * Return the file_id of the file passed as parameter
+	 *
+	 * @param path File's path
+	 * @return String file_id - null if isn't present
 	 */
+	@SuppressWarnings("unchecked")
 	public static String getFileId(String path)
 	{
 		File f = new File("uploadedFileLog.json");
-		if(!f.exists()) createLogFile();
+		if (!f.exists()) createLogFile();
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		String fileMD5 = calculateFileMD5(path);
@@ -158,16 +176,16 @@ public class UploadedFileLogger
 		{
 			obj = (JSONObject) parser.parse(new FileReader("uploadedFileLog.json"));
 			JSONArray files = (JSONArray) obj.get("Files");
-			
+
 			Iterator<JSONObject> iterator = files.iterator();
-			while(iterator.hasNext())
+			while (iterator.hasNext())
 			{
-            	Object objI = iterator.next();
-            	JSONObject jsonObjectResult = (JSONObject) objI;
-            	if(jsonObjectResult.get("hash").equals(fileMD5))
-            	{
-            		return (String) jsonObjectResult.get("file_id");
-            	}
+				Object objI = iterator.next();
+				JSONObject jsonObjectResult = (JSONObject) objI;
+				if (jsonObjectResult.get("hash").equals(fileMD5))
+				{
+					return (String) jsonObjectResult.get("file_id");
+				}
 			}
 			return null;
 		}

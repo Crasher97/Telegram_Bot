@@ -9,27 +9,33 @@ public class SimSimi
 {
 	private static final String SIMSIMI_URL = "http://www.simsimi.com/requestChat?lc=it&ft=1.0&req="; //Change the "it" in the url to the correct language
 
+	/**
+	 * Send to SimSimi the string passed as parameter
+	 *
+	 * @param message Message to send
+	 * @return Reply form simsimi
+	 */
 	public static String toSimSimi(String message)
 	{
 		String simSimiJSONReply = "";
 		String simSimiReply = "";
 		JSONParser parser = new JSONParser();
-		if(message != null)
-			{
+		if (message != null)
+		{
 			try
-				{
-					Document doc = Jsoup.connect(SIMSIMI_URL + message).ignoreContentType(true).get();
-					simSimiJSONReply = doc.text();
-					JSONObject jsonObject = (JSONObject) parser.parse(simSimiJSONReply);
-					simSimiReply = jsonObject.get("res").toString();
-					return simSimiReply;
-				}
-			catch (Exception e)
-				{
-					Log.stackTrace(e.getStackTrace());
-					return null;
-				}
+			{
+				Document doc = Jsoup.connect(SIMSIMI_URL + message).ignoreContentType(true).get();
+				simSimiJSONReply = doc.text();
+				JSONObject jsonObject = (JSONObject) parser.parse(simSimiJSONReply);
+				simSimiReply = jsonObject.get("res").toString();
+				return simSimiReply;
 			}
+			catch (Exception e)
+			{
+				Log.stackTrace(e.getStackTrace());
+				return null;
+			}
+		}
 		return null;
 	}
 }
