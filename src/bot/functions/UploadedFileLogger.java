@@ -20,7 +20,7 @@ import org.json.simple.parser.ParseException;
 public class UploadedFileLogger
 {
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	public enum Type {PHOTO, VIDEO, DOCUMENT};
+	public enum Type {PHOTO, VIDEO, DOCUMENT, AUDIO};
 
 	/**
 	 * Estrae il file_id dal JSON passato come parametro
@@ -55,7 +55,12 @@ public class UploadedFileLogger
 					JSONObject document = (JSONObject) resultList.get("document");
 					return (String) document.get("file_id");
 				}
-
+				
+				case AUDIO:
+				{
+					JSONObject document = (JSONObject) resultList.get("voice");
+					return (String) document.get("file_id");
+				}
 			}
 
 		} 
