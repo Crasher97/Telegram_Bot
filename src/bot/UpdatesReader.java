@@ -76,15 +76,7 @@ public class UpdatesReader
 					Message message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text);
 					Messages.addMessage(message);
 					Jsoup.connect(Main.getUrl() + "/getUpdates?offset=" + (update_id + 1)).ignoreContentType(true).post();
-
-					boolean owner = Main.getOwner().equals(String.valueOf(message.getSender_id()));
-					if (owner && text != null)
-						if (text.equals("/stop")) System.exit(0);
-
-					if (isCommand(message) != null)
-					{
-						messages.add(message);
-					}
+					messages.add(message);
 				}
 				catch (IOException err)
 				{
@@ -109,7 +101,7 @@ public class UpdatesReader
 	 * @param msg
 	 * @return commandName
 	 */
-	public static String isCommand(Message msg)
+	public static boolean isCommand(Message msg)
 	{
 		if (msg.getText() != null && msg.getText().charAt(0) == '/')
 		{
@@ -117,13 +109,13 @@ public class UpdatesReader
 			command = command.substring(1).split(" ")[0];
 			if (Commands.commandExist(command))
 			{
-				return command;
+				return true;
 			}
 			else
 			{
 				Log.warn("Comando non riconosciuto ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 				Sender.sendMessage(msg.getSender_id(), "Comando non riconosciuto");
-				return null;
+				return false;
 			}
 		}
 		else
@@ -131,7 +123,7 @@ public class UpdatesReader
 
 			Log.info("Messaggio ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 			Sender.sendMessage(msg.getSender_id(), SimSimi.toSimSimi(msg.getText()));
-			return null;
+			return false;
 		}
 	}
 }

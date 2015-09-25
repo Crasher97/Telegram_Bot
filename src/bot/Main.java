@@ -18,8 +18,8 @@ public class Main
 	/**
 	 * Main method
 	 *
-	 * @param botId   - get it from bot Father
-	 * @param ownerId - your telegram id
+	 * @param args botId   - get it from bot Father
+	 * @param args ownerId - your telegram id
 	 */
 	public static void main(String[] args)
 	{
@@ -99,20 +99,13 @@ public class Main
 			if (tmp != null)
 			{
 				update = tmp;
-				ArrayList<Message> updates = UpdatesReader.parseJSON(update);
-				if (updates.size() > 0)
+				ArrayList<Message> updates;
+				updates = UpdatesReader.parseJSON(update);
+				if (updates != null && updates.size() > 0)
 				{
 					for (Message msg : updates)
 					{
-						Thread updateThread = new Thread(new Runnable()
-						{
-							public void run()
-							{
-								Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
-							}
-						});
-						updateThread.start();
-						//Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+						updateThread(msg);
 					}
 				}
 			}
@@ -170,6 +163,19 @@ public class Main
 		thread.start();
 	}
 
+	public static void updateThread(Message msg)
+	{
+		Thread updateThread = new Thread(new Runnable()
+		{
+			public void run()
+			{
+				if(UpdatesReader.isCommand(msg))
+				Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+			}
+		});
+		updateThread.start();
+	}
+
 	/**
 	 * Return bot idCode
 	 *
@@ -193,14 +199,14 @@ public class Main
 	/**
 	 * Change bot ID
 	 *
-	 * @param botId
+	 * @param botIdTmp
 	 * @return true if it has been changed
 	 */
-	public static boolean setBotId(String botIdP)
+	public static boolean setBotId(String botIdTmp)
 	{
 		if (botId != null)
 		{
-			botId = botIdP;
+			botId = botIdTmp;
 			return true;
 		}
 		return false;
@@ -219,14 +225,14 @@ public class Main
 	/**
 	 * Change owner ID
 	 *
-	 * @param ownerId
+	 * @param ownerIdTmp
 	 * @return true if it has been changed
 	 */
-	public static boolean setOwnerId(String ownerIdP)
+	public static boolean setOwnerId(String ownerIdTmp)
 	{
 		if (botId != null)
 		{
-			owner = ownerIdP;
+			owner = ownerIdTmp;
 			return true;
 		}
 		return false;
@@ -240,5 +246,25 @@ public class Main
 	public static String getLastUpdate()
 	{
 		return update;
+	}
+
+	/**
+	 * Check if user is bot'owner
+	 * @param ownerId
+	 * @return True if is the owner
+	 */
+	public static boolean isOwner(long ownerId)
+	{
+		return getOwner().equals(String.valueOf(ownerId));
+	}
+
+	/**
+	 * Check if user is bot'owner
+	 * @param ownerId
+	 * @return True if is the owner
+	 */
+	public static boolean isOwner(String ownerId)
+	{
+		return getOwner().equals(ownerId);
 	}
 }
