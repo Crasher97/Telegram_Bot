@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import addons.Commands;
 import addons.Help;
 import addons.JarFileLoader;
+import bot.functions.DownloadedFileLogger;
 
 public class Main
 {
@@ -54,6 +55,8 @@ public class Main
 		Console.loadCommand();
 		Console.openConsole();
 
+		//CREATE SETTING FILE
+		Setting.createSettingFile();
 
 		//START THREADS
 		shutDownThread();
@@ -109,7 +112,7 @@ public class Main
 							}
 						});
 						updateThread.start();
-						Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+						//Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 					}
 				}
 			}
@@ -148,6 +151,7 @@ public class Main
 								{
 									if (file.delete())
 									{
+										DownloadedFileLogger.deleteFile(file.getName());
 										IO.writeOUT("DeleteLog", "File " + file.getName() + " DELETED");
 										Log.info("File Deleted");
 									}

@@ -1,5 +1,6 @@
 package bot;
 
+import bot.functions.DownloadedFileLogger;
 import bot.functions.FileDownloader;
 import bot.functions.Keyboard;
 import bot.webServer.Server;
@@ -156,6 +157,7 @@ public class Console
 			{
 			}
 		});
+
 	}
 
 	public interface ConsoleCommandCode extends Runnable

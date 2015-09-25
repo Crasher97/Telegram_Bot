@@ -57,6 +57,7 @@ public class FileDownloader
 			user = new YouTubeMPGParser();
 			VGet v = new VGet(new URL(url), new File("tmp/"));
 			v.download(user);
+			DownloadedFileLogger.addYoutubeLink(url, "tmp/" + v.getTarget().getName());
 			return v.getTarget().getName();
 		}
 		catch (Exception e)
