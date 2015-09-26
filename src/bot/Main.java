@@ -23,7 +23,7 @@ public class Main
 	 */
 	public static void main(String[] args)
 	{
-		if (args.length == 2)
+		if (args != null && args.length > 0 && args[0].equals("-server"))
 		{
 			server(args);
 		}
@@ -38,9 +38,11 @@ public class Main
 	 */
 	public static void server(String[] args)
 	{
-		botId = args[0];
-		owner = args[1];
-		url = "https://api.telegram.org/bot" + botId;
+
+		//CREATE SETTING FILE
+		Setting.createSettingFile();
+
+		serverSetup(args);
 
 		//LOAD EXTERNAL ADDONS
 		JarFileLoader.loadJarFile();
@@ -55,8 +57,6 @@ public class Main
 		Console.loadCommand();
 		Console.openConsole();
 
-		//CREATE SETTING FILE
-		Setting.createSettingFile();
 
 		//START THREADS
 		shutDownThread();
@@ -87,6 +87,42 @@ public class Main
 			}
 		});
 	}
+
+	/**
+	 *	Start server
+	 */
+	public static boolean serverSetup(String[] args)
+	{
+		setArgsAsFields(args);
+		if(botId.equals("") && owner.equals(""))
+		{
+			args = Setting.readLastSettings();
+			setArgsAsFields(args);
+			if(botId.equals("") && owner.equals(""))return false;
+			saveConfiguration();
+			return true;
+		}
+		else
+		{
+			saveConfiguration();
+			return true;
+		}
+	}
+
+	/**
+	 * Set args as botId && ownerId
+	 * @param args [0] must be botId
+ 	 */
+	public static void setArgsAsFields(String[] args)
+	{
+		if (args.length == 3 && args[1] != null && args[2] != null)
+		{
+			botId = args[1];
+			owner = args[2];
+			url = "https://api.telegram.org/bot" + botId;
+		}
+	}
+
 
 	/**
 	 * CHECK FOR NEW UPDATES, STARTS NEW THREAD FOR EVERY UPDATE
@@ -266,5 +302,15 @@ public class Main
 	public static boolean isOwner(String ownerId)
 	{
 		return getOwner().equals(ownerId);
+	}
+
+	/**
+	 * Save actual configuration
+	 */
+	public static void saveConfiguration()
+	{
+
+		Setting.editSetting("Bot_ID", botId, "Main");
+		Setting.editSetting("Owner_ID", owner, "Main");
 	}
 }

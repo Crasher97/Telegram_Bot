@@ -137,9 +137,9 @@ public class Gui implements ActionListener
 								{
 									if(botId.getText() != null && ownerId.getText() != null)
 									{
-										String[] args = { botId.getText(), ownerId.getText()};
-										saveConfiguration(botId.getText(), ownerId.getText());
-										bot.Main.main(args);
+										String[] args = {"-server", botId.getText(), ownerId.getText()};
+										bot.Main.saveConfiguration();
+										bot.Main.server(args);
 									}
 								}
 						});
@@ -179,6 +179,7 @@ public class Gui implements ActionListener
 		 * Save confuguration for next start
 		 * @param botUrl
 		 * @param ownerId
+		 * @deprecated
 		 */
 		public void saveConfiguration(String botUrl, String ownerId)
 		{
