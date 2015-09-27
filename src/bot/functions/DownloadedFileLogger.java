@@ -47,7 +47,7 @@ public class DownloadedFileLogger
 	/**
 	 * Add file's information to the log
 	 *
-	 * @param filePath     File path
+	 * @param filePath File path
 	 */
 	@SuppressWarnings("unchecked")
 	public static void addYoutubeLink(String url, String filePath)
@@ -79,10 +79,16 @@ public class DownloadedFileLogger
 		}
 	}
 
+	/**
+	 * Delete a file from the log
+	 *
+	 * @param filePath File path
+	 * @return True if the file was deleted, else false
+	 */
 	public static boolean deleteFile(String filePath)
 	{
 		File f = new File(fileName);
-		if (!f.exists())return false;
+		if (!f.exists()) return false;
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		try
@@ -91,13 +97,12 @@ public class DownloadedFileLogger
 			JSONArray files = (JSONArray) obj.getOrDefault("Files", new JSONArray());
 			for (int i = 0; i < files.size(); i++)
 			{
-				JSONObject file = (JSONObject)files.get(i);
+				JSONObject file = (JSONObject) files.get(i);
 				if (file.get("fileName").equals(filePath))
 				{
 					files.remove(file);
 				}
 			}
-
 
 
 			FileWriter outFile = new FileWriter(f);
@@ -136,7 +141,10 @@ public class DownloadedFileLogger
 	}
 
 	/**
+	 * Get the path of a youtube video already downloaded
 	 *
+	 * @param youtubeUrl Url of the video
+	 * @return File path
 	 */
 	public static String getFileNameFromYoutube(String youtubeUrl)
 	{

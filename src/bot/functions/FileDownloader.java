@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import bot.Main;
 import org.apache.commons.io.FileUtils;
 
 import com.github.axet.vget.VGet;
@@ -11,6 +12,11 @@ import com.github.axet.vget.info.VGetParser;
 import com.github.axet.vget.vhs.YouTubeMPGParser;
 
 import bot.Log;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 public class FileDownloader
 {
@@ -68,13 +74,38 @@ public class FileDownloader
 	}
 
 	/**
-	 * Metodo da realizzare quando le API verranno aggiornate e lo permetteranno TODO download from telegram
+	 * Download a file form telegram with the given fileId
 	 *
-	 * @param fileId
-	 * @return
+	 * @param fileId file to download
+	 * @return File name
 	 */
 	public static String downloadFileFormTelegram(String fileId)
 	{
+		return downloadFile(Main.getUrl() + "/" + getDownloadLink(fileId));
+	}
+
+	/**
+	 * Get the download link for a telegram file to download
+	 *
+	 * @param fileId file id
+	 * @return file_path
+	 */
+	public static String getDownloadLink(String fileId)
+	{
+		String receivedJSON = "";
+		JSONParser jsonParser = new JSONParser();
+		try
+		{
+			Document doc = Jsoup.connect(Main.getUrl() + "/getFile" + "?file_id=" + fileId).ignoreContentType(true).post();
+			receivedJSON = doc.text();
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(receivedJSON);
+			return jsonObject.get("file_path").toString();
+		}
+		catch (Exception e)
+		{
+			Log.stackTrace(e.getStackTrace());
+		}
+
 		return null;
 	}
 
