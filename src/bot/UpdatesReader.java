@@ -109,11 +109,12 @@ public class UpdatesReader
 			command = command.substring(1).split(" ")[0];
 			if (Commands.commandExist(command))
 			{
+				Log.info("Comando riconosciuto ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 				return true;
 			}
 			else
 			{
-				Log.warn("Comando non riconosciuto ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
+				Log.warn("Comando NON riconosciuto ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 				Sender.sendMessage(msg.getSender_id(), "Comando non riconosciuto");
 				return false;
 			}

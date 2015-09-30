@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Log
 {
-	private static SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
 	private static File logFile = null;
 
 	/**
@@ -20,7 +20,7 @@ public class Log
 	/**
 	 * Return current time
 	 *
-	 * @return actual time HH:mm:ss
+	 * @return actual time yyyy-MM-dd'T'HH:mm:ss
 	 */
 	private static String getTime()
 	{
@@ -119,7 +119,6 @@ public class Log
 	 */
 	public static void createLogFile()
 	{
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy_HH.mm.ss");
 		File logFolder = new File("log");
 		if (logFolder.exists() && !logFolder.isDirectory())
 		{
@@ -128,7 +127,7 @@ public class Log
 		}
 		if (!logFolder.exists()) logFolder.mkdir();
 
-		logFile = new File("log/" + dateFormat.format(new Date()) + ".log");
+		logFile = new File("log/" + getTime() + ".log");
 		BufferedWriter outputWriter;
 		try
 		{
