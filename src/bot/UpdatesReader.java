@@ -28,11 +28,10 @@ public class UpdatesReader
 			doc = Jsoup.connect(Main.getUrl() + "/getUpdates").ignoreContentType(true).get();
 			receivedJSON = doc.text();
 			return receivedJSON;
-			//aggiungere metodo che chiama l'oggetto identifier, per identificare il comando etc
 		}
 		catch (IOException e)
 		{
-			Log.stackTrace(e.getStackTrace());
+			Log.error("CONNECTION ERROR");
 			return null;
 		}
 	}

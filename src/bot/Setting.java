@@ -1,5 +1,6 @@
 package bot;
 
+import bot.webServer.Server;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.simple.JSONObject;
@@ -50,9 +51,11 @@ public class Setting
 		addSetting("Update_Frequence", "1000", "Main");
 
 		//Webhook setting
+		addSetting("WebHook_Usage", "false", "WebHook");
 		addSetting("WebHook_Url", "", "WebHook");
-		addSetting("WebHook_Local", "webhook", "WebHook");
+		addSetting("WebHook_Method", "method", "WebHook");
 		addSetting("WebHook_Port", "8443", "WebHook");
+
 	}
 
 	/**
@@ -183,17 +186,58 @@ public class Setting
 	 *
 	 * @return an array[2], where in [0] there is bot ID & in [1] there is the owner ID
 	 */
-	public static String[] readLastSettings()
+	public static String[] readSettings()
 	{
 		String idCode = Setting.readSetting("Bot_ID", "Main");
 		String owner = Setting.readSetting("Owner_ID", "Main");
+		String webhook = Setting.readSetting("WebHook_Usage", "WebHook");
+		String webhookPort = Setting.readSetting("WebHook_Port", "WebHook");
+		String webhookMethod = Setting.readSetting("WebHook_Method", "WebHook");
+
 		if (idCode != null && owner != null)
 		{
-			String[] tmp = new String[2];
+			String[] tmp = new String[5];
 			tmp[0] = idCode;
 			tmp[1] = owner;
+			tmp[2] = webhook;
+			tmp[3] = webhookPort;
+			tmp[4] = webhookMethod;
 			return tmp;
 		}
 		return null;
+	}
+
+	/**
+	 * Setup server from settings.json
+	 * @return true if server has been configurated. (If data in settings.json is wrong, server is configured wrong)
+	 */
+	public static boolean serverSetup()
+	{
+		String[] configuration = Setting.readSettings();
+
+		if(configuration != null)
+		{
+			Main.setFields(configuration);
+			Main.saveConfiguration();
+			if(configuration[2].equals("true"))
+			{
+				Main.setWebhook(true);
+			}
+			if(configuration[3] != null && configuration[4] != null)
+			{
+				Server.setWebhookPort(Integer.parseInt(configuration[3]));
+				Server.setWebhookMethod(configuration[4]);
+			}
+			if(!Main.getIdCode().equals("") && !Main.getOwner().equals(""))
+			{
+				return true;
+			}
+		}
+		else
+		{
+
+			return false;
+		}
+		return false;
 	}
 }

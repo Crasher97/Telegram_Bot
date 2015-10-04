@@ -7,6 +7,7 @@ import addons.Commands;
 import addons.Help;
 import addons.JarFileLoader;
 import bot.functions.DownloadedFileLogger;
+import bot.webServer.Server;
 
 public class Main
 {
@@ -14,6 +15,7 @@ public class Main
 	private static String owner = "";
 	private static String url = "";
 	private static String update = "";
+	private static boolean webhook = false;
 
 	/**
 	 * Main method
@@ -23,6 +25,13 @@ public class Main
 	 */
 	public static void main(String[] args)
 	{
+		Setting.createSettingFile();
+
+		if(!Setting.serverSetup())
+		{
+			Log.error("WRONG CONFIGURATION");
+			System.exit(1);
+		}
 		if (args != null && args.length > 0 && args[0].equals("-server"))
 		{
 			server(args);
@@ -38,11 +47,6 @@ public class Main
 	 */
 	public static void server(String[] args)
 	{
-
-		//CREATE SETTING FILE
-		Setting.createSettingFile();
-
-		serverSetup(args);
 
 		//LOAD EXTERNAL ADDONS
 		JarFileLoader.loadJarFile();
@@ -61,7 +65,14 @@ public class Main
 		//START THREADS
 		shutDownThread();
 		deletingThread();
-		update();
+		if(webhook==true)
+		{
+			Server.startWebServer();
+		}
+		else
+		{
+			update();
+		}
 	}
 
 	/**
@@ -71,6 +82,7 @@ public class Main
 	{
 		Runtime.getRuntime().addShutdownHook(new Thread()
 		{
+			@Override
 			public void run()
 			{
 				try
@@ -89,70 +101,57 @@ public class Main
 	}
 
 	/**
-	 *	Start server
-	 */
-	public static boolean serverSetup(String[] args)
-	{
-		setArgsAsFields(args);
-		if(botId.equals("") && owner.equals(""))
-		{
-			args = Setting.readLastSettings();
-			setArgsAsFields(args);
-			if(botId.equals("") && owner.equals(""))return false;
-			saveConfiguration();
-			return true;
-		}
-		else
-		{
-			saveConfiguration();
-			return true;
-		}
-	}
-
-	/**
 	 * Set args as botId && ownerId
-	 * @param args [0] must be botId
+	 * @param botEownerId [0] must be botId, [1] must be owner Id
  	 */
-	public static void setArgsAsFields(String[] args)
+	public static void setFields(String[] botEownerId)
 	{
-		if (args.length == 3 && args[1] != null && args[2] != null)
+		if (botEownerId.length > 1 && botEownerId[1] != null && botEownerId[2] != null)
 		{
-			botId = args[1];
-			owner = args[2];
+			botId = botEownerId[0];
+			owner = botEownerId[1];
 			url = "https://api.telegram.org/bot" + botId;
 		}
 	}
 
 
 	/**
-	 * CHECK FOR NEW UPDATES, STARTS NEW THREAD FOR EVERY UPDATE
+	 * CHECK FOR NEW UPDATES(getUpdates method), STARTS NEW THREAD FOR EVERY UPDATE
 	 */
-	public static void update() //TODO far in modo che questo metodo venga avviato alla ricezione di un webhook
+	public static void update()
 	{
 		while (true)
 		{
-			String tmp = UpdatesReader.getUpdate();
-			if (tmp != null)
-			{
-				update = tmp;
-				ArrayList<Message> updates;
-				updates = UpdatesReader.parseJSON(update);
-				if (updates != null && updates.size() > 0)
+				String tmp = UpdatesReader.getUpdate();
+				if (tmp != null)
 				{
-					for (Message msg : updates)
+					String update = tmp;
+					ArrayList<Message> updates;
+					updates = UpdatesReader.parseJSON(update);
+					if (updates != null && updates.size() > 0)
 					{
-						updateThread(msg);
+						for (Message msg : updates)
+						{
+							messageProcessThread(msg);
+							try
+							{
+								Thread.sleep(20);
+							}
+							catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+						}
 					}
 				}
-			}
-			try
-			{
-				Thread.sleep(1000);
-			}
-			catch (InterruptedException e)
-			{
-				Log.stackTrace(e.getStackTrace());
-			}
+				try
+				{
+					Thread.sleep(1000);
+				}
+				catch (InterruptedException e)
+				{
+					Log.stackTrace(e.getStackTrace());
+				}
 		}
 	}
 
@@ -199,7 +198,7 @@ public class Main
 		thread.start();
 	}
 
-	public static void updateThread(Message msg)
+	public static void messageProcessThread(Message msg)
 	{
 		Thread updateThread = new Thread(new Runnable()
 		{
@@ -285,6 +284,14 @@ public class Main
 	}
 
 	/**
+	 * Set last received update
+	 */
+	public static void setLastUpdate(String lastUpdate)
+	{
+		update = lastUpdate;
+	}
+
+	/**
 	 * Check if user is bot'owner
 	 * @param ownerId
 	 * @return True if is the owner
@@ -309,8 +316,16 @@ public class Main
 	 */
 	public static void saveConfiguration()
 	{
-
 		Setting.editSetting("Bot_ID", botId, "Main");
 		Setting.editSetting("Owner_ID", owner, "Main");
+	}
+
+	/**
+	 * Set webhook as method to update
+	 * @param use: true to use webhook, false to use getUpdate
+	 */
+	public static void setWebhook(boolean use)
+	{
+		webhook = use;
 	}
 }

@@ -41,7 +41,7 @@ public class Gui implements ActionListener
 		 */
 		public static void startGui()
 		{
-			String[] settings = Setting.readLastSettings();
+			String[] settings = Setting.readSettings();
 			if(settings.length >= 2 && settings[0] != null && settings[1] != null)
 				{
 					Main.setBotId(settings[0]);
