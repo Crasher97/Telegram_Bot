@@ -34,6 +34,7 @@ public class Main
 		}
 		if (args != null && args.length > 0 && args[0].equals("-server"))
 		{
+			Log.info("NO GUI");
 			server(args);
 		}
 		else
@@ -106,7 +107,7 @@ public class Main
  	 */
 	public static void setFields(String[] botEownerId)
 	{
-		if (botEownerId.length > 1 && botEownerId[1] != null && botEownerId[2] != null)
+		if (botEownerId.length >= 1 && botEownerId[0] != null && botEownerId[1] != null)
 		{
 			botId = botEownerId[0];
 			owner = botEownerId[1];
