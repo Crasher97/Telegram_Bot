@@ -56,11 +56,15 @@
   <!-- Project Libraries -->
   
   <path id="library.lib.classpath">
-    <pathelement location="${basedir}/lib/*.jar"/>
+    <fileset dir="lib">
+      <include name="**/*.jar" />
+    </fileset>
   </path>
   
   <path id="library.libvget.classpath">
-    <pathelement location="${basedir}/lib/libvget/*.jar"/>
+    <fileset dir="libvget">
+      <include name="**/*.jar" />
+    </fileset>
   </path>
   
   <!-- Modules -->
