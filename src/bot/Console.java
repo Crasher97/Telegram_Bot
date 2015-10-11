@@ -119,7 +119,7 @@ public class Console
 			public void run(String[] args)
 			{
 				WebHook.setWebHook();
-				Server.startWebServer();
+				Server.startServer();
 			}
 
 			@Override
@@ -134,6 +134,7 @@ public class Console
 			public void run(String[] args)
 			{
 				WebHook.unsetWebHook();
+				Server.stopServer();
 			}
 
 			@Override

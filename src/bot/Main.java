@@ -8,6 +8,7 @@ import addons.Help;
 import addons.JarFileLoader;
 import bot.functions.DownloadedFileLogger;
 import bot.webServer.Server;
+import bot.webServer.WebHook;
 
 public class Main
 {
@@ -15,7 +16,7 @@ public class Main
 	private static String owner = "";
 	private static String url = "";
 	private static String update = "";
-	private static boolean webhook = false;
+	private static boolean webhook = true;
 
 	/**
 	 * Main method
@@ -66,12 +67,14 @@ public class Main
 		//START THREADS
 		shutDownThread();
 		deletingThread();
-		if(webhook==true)
+		if(Setting.readSetting("WebHook_Active","WebHook") == "true")
 		{
-			Server.startWebServer();
+			WebHook.setWebHook();
+			Server.startServer();
 		}
 		else
 		{
+			WebHook.unsetWebHook();
 			update();
 		}
 	}

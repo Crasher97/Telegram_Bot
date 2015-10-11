@@ -51,11 +51,14 @@ public class Setting
 		addSetting("Update_Frequence", "1000", "Main");
 
 		//Webhook setting
-		addSetting("WebHook_Usage", "false", "WebHook");
+		addSetting("WebHook_Active", "false", "WebHook");
 		addSetting("WebHook_Url", "", "WebHook");
-		addSetting("WebHook_Method", "method", "WebHook");
 		addSetting("WebHook_Port", "8443", "WebHook");
 
+		//Https server setting
+		addSetting("Certificate", "server.crt", "WebHookServer");
+		addSetting("Private_Key", "server.key", "WebHookServer");
+		addSetting("Certificate_Password", "passwd", "WebHookServer");
 	}
 
 	/**
