@@ -56,30 +56,11 @@
   <!-- Project Libraries -->
   
   <path id="library.lib.classpath">
-    <pathelement location="${basedir}/lib/commons-codec-1.9.jar"/>
-    <pathelement location="${basedir}/lib/commons-io-2.4-sources.jar"/>
-    <pathelement location="${basedir}/lib/commons-io-2.4.jar"/>
-    <pathelement location="${basedir}/lib/commons-logging-1.2.jar"/>
-    <pathelement location="${basedir}/lib/gson-2.3.1.jar"/>
-    <pathelement location="${basedir}/lib/httpclient-4.5.jar"/>
-    <pathelement location="${basedir}/lib/httpclient-win-4.5.jar"/>
-    <pathelement location="${basedir}/lib/httpcore-4.4.1.jar"/>
-    <pathelement location="${basedir}/lib/httpmime-4.5.jar"/>
-    <pathelement location="${basedir}/lib/jave-1.0.2.jar"/>
-    <pathelement location="${basedir}/lib/json_simple-1.1.jar"/>
-    <pathelement location="${basedir}/lib/jsoup-1.8.2.jar"/>
-    <pathelement location="${basedir}/lib/vget.jar"/>
+    <pathelement location="${basedir}/lib/*.jar"/>
   </path>
   
   <path id="library.libvget.classpath">
-    <pathelement location="${basedir}/lib/libvget/commons-codec-1.4.jar"/>
-    <pathelement location="${basedir}/lib/libvget/commons-lang3-3.1.jar"/>
-    <pathelement location="${basedir}/lib/libvget/gson-2.2.4.jar"/>
-    <pathelement location="${basedir}/lib/libvget/threads-0.0.2.jar"/>
-    <pathelement location="${basedir}/lib/libvget/wget-1.2.11.jar"/>
-    <pathelement location="${basedir}/lib/libvget/xmlpull-1.1.3.1.jar"/>
-    <pathelement location="${basedir}/lib/libvget/xpp3_min-1.1.4c.jar"/>
-    <pathelement location="${basedir}/lib/libvget/xstream-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/libvget/*.jar"/>
   </path>
   
   <!-- Modules -->
