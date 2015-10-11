@@ -62,7 +62,7 @@
   </path>
   
   <path id="library.libvget.classpath">
-    <fileset dir="libvget">
+    <fileset dir="lib/libvget">
       <include name="**/*.jar" />
     </fileset>
   </path>
