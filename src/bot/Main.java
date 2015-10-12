@@ -16,7 +16,7 @@ public class Main
 	private static String owner = "";
 	private static String url = "";
 	private static String update = "";
-	private static boolean webhook = true;
+	private static boolean webhook = true; //TODO never used
 
 	/**
 	 * Main method
@@ -28,7 +28,7 @@ public class Main
 	{
 		Setting.createSettingFile();
 
-		if(!Setting.serverSetup())
+		if(!Setting.setBotAndOwnerFromSittings())
 		{
 			Log.error("WRONG CONFIGURATION");
 			System.exit(1);
@@ -67,7 +67,7 @@ public class Main
 		//START THREADS
 		shutDownThread();
 		deletingThread();
-		if(Setting.readSetting("WebHook_Active","WebHook") == "true")
+		if(Setting.readSetting("WebHook_Active","WebHook").equals("true"))
 		{
 			WebHook.setWebHook();
 			Server.startServer();

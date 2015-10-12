@@ -1,6 +1,7 @@
 package bot;
 
 import bot.webServer.Server;
+import bot.webServer.WebHook;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.simple.JSONObject;
@@ -193,18 +194,12 @@ public class Setting
 	{
 		String idCode = Setting.readSetting("Bot_ID", "Main");
 		String owner = Setting.readSetting("Owner_ID", "Main");
-		//String webhook = Setting.readSetting("WebHook_Usage", "WebHook"); TODO
-		//String webhookPort = Setting.readSetting("WebHook_Port", "WebHook");
-		//String webhookMethod = Setting.readSetting("WebHook_Method", "WebHook");
 
 		if (idCode != null && owner != null)
 		{
 			String[] tmp = new String[5];
 			tmp[0] = idCode;
 			tmp[1] = owner;
-		//	tmp[2] = webhook;
-		//	tmp[3] = webhookPort;
-		//	tmp[4] = webhookMethod;
 			return tmp;
 		}
 		return null;
@@ -214,32 +209,17 @@ public class Setting
 	 * Setup server from settings.json
 	 * @return true if server has been configurated. (If data in settings.json is wrong, server is configured wrong)
 	 */
-	public static boolean serverSetup()
+	public static boolean setBotAndOwnerFromSittings()
 	{
 		String[] configuration = Setting.readSettings();
 
-		if(configuration != null)
+		if (configuration != null)
 		{
 			Main.setFields(configuration);
-			//Main.saveConfiguration();
-			//if(configuration[2].equals("true"))
-			{
-				// Main.setWebhook(true);
-			}
-			//if(configuration[3] != null && configuration[4] != null)
-			{
-				//Server.setWebhookPort(Integer.parseInt(configuration[3]));
-				//Server.setWebhookMethod(configuration[4]);
-			}
-			if(!Main.getIdCode().equals("") && !Main.getOwner().equals(""))
+			if (!Main.getIdCode().equals("") && !Main.getOwner().equals(""))
 			{
 				return true;
 			}
-		}
-		else
-		{
-
-			return false;
 		}
 		return false;
 	}
