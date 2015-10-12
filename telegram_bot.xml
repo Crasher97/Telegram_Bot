@@ -168,8 +168,8 @@
        >
     <zipgroupfileset dir="${basedir}/lib" includes="**/*.jar" />
     <zipgroupfileset dir="${basedir}/lib/libvget" includes="**/*.jar" />
-    <zipfileset excludes="META-INF/**/*" src="${basedir}/lib/*"></zipfileset>
-    <zipfileset excludes="META-INF/**/*" src="${basedir}/libvget/*"></zipfileset>
+    <zipfileset excludes="META-INF/**/*" src="${basedir}/lib/" includes="**/*.jar"></zipfileset>
+    <zipfileset excludes="META-INF/**/*" src="${basedir}/libvget/" includes="**/*.jar"></zipfileset>
 
     <manifest>
       <attribute name="Main" value="main"/>
