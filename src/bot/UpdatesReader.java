@@ -192,12 +192,12 @@ public class UpdatesReader
 			command = command.substring(1).split(" ")[0];
 			if (Commands.commandExist(command))
 			{
-				Log.info("Comando riconosciuto ricevuto da [" + msg.getSender_id()+"] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
+				Log.info("Comando riconosciuto ricevuto da [" + msg.getSender_id()+"] " + msg.getFirst_name() + " " + msg.getLast_name() + "[group" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
 				return true;
 			}
 			else
 			{
-				Log.warn("Comando NON riconosciuto ricevuto da [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
+				Log.warn("Comando NON riconosciuto ricevuto da [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name()  + "[group" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
 				Sender.sendMessage(msg.getChat().getId(), "Comando non riconosciuto", msg.getMessage_id());
 				return false;
 			}
@@ -205,7 +205,7 @@ public class UpdatesReader
 		else
 		{
 
-			Log.info("Messaggio ricevuto da [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
+			Log.info("Messaggio ricevuto da [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + "[group" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
 			Sender.sendMessage(msg.getChat().getId(), SimSimi.toSimSimi(msg.getText()), msg.getMessage_id());
 			return false;
 		}
