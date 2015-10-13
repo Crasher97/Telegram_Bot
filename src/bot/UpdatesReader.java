@@ -159,6 +159,13 @@ public class UpdatesReader
 			JSONObject jsonObject = (JSONObject) parser.parse(receivedJSON);
 			Chat chat = getChatInfo(jsonObject);
 			Message msg = getMessageInfo(jsonObject, chat);
+			Messages.addMessage(msg);
+
+			//AGGIUNGE L'UTENTE
+			if(!Users.userExist(msg.getUser()))
+			{
+				Users.addUser(msg.getUser());
+			}
 			return msg;
 		}
 		catch (ParseException e)
