@@ -98,10 +98,18 @@ public class Server extends NanoHTTPD
 		if (update != null)
 		{
 
-			Message message = UpdatesReader.webhookParseJSON(update);
-			if (message != null)
+			ArrayList<Message> message = UpdatesReader.parseJSON(update);
+			for (Message msg : message)
 			{
-				Main.messageProcessThread(message);
+				Main.messageProcessThread(msg);
+				try
+				{
+					Thread.sleep(20);
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
 			}
 		}
 
