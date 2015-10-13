@@ -1,11 +1,14 @@
 package bot;
 
+import bot.telegramType.Chat;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Message
 {
+	private Chat chat;
 	private long update_id;
 	private long message_id;
 	private User user;
@@ -24,13 +27,14 @@ public class Message
 	 * @param date
 	 * @param text
 	 */
-	public Message(long update_id, long message_id, long sender_id, String first_name, String last_name, Date date, String text)
+	public Message(long update_id, long message_id, long sender_id, String first_name, String last_name, Date date, String text, Chat chat)
 	{
 		this.update_id = update_id;
 		this.message_id = message_id;
 		user = new User(sender_id, first_name, last_name);
 		this.date = date;
 		this.text = text;
+		this.chat = chat;
 	}
 
 	/**
@@ -120,6 +124,24 @@ public class Message
 	public User getUser()
 	{
 		return user;
+	}
+
+	/**
+	 * Return chat where message has been sent
+	 * @return chat
+	 */
+	public Chat getChat()
+	{
+		return chat;
+	}
+
+	/**
+	 * Set chat where message has been sent.
+	 * @param chat
+	 */
+	public void setChat(Chat chat)
+	{
+		this.chat = chat;
 	}
 
 	/**

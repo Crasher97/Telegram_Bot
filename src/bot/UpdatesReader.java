@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
+import bot.telegramType.Chat;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -61,26 +62,26 @@ public class UpdatesReader
 				{
 					Object obj = iterator.next();
 					JSONObject jsonObjectResult = (JSONObject) obj;
-					long update_id = (long) jsonObjectResult.get("update_id");
-					JSONObject jsonObjectMessage = (JSONObject) jsonObjectResult.get("message");
-					JSONObject jsonObjectChat = (JSONObject) jsonObjectMessage.get("from");
 
-					long message_id = (long) jsonObjectMessage.get("message_id");
-					long sender_id = (long) jsonObjectChat.get("id");
-					String first_name = (String) jsonObjectChat.get("first_name");
-					String last_name = (String) jsonObjectChat.get("last_name");
-					Date date = new Date((long) jsonObjectMessage.get("date") * 1000);
-					String text = (String) jsonObjectMessage.get("text");
 
-					Message message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text);
+					//INFORMAZIONI SULLA CHAT DI PROVENIENZA
+					Chat chat = getChatInfo(jsonObjectResult);
 
+					//INFORMAZIONI SUL MITTENTE & INFO SUL MESSAGGIO
+					Message message = getMessageInfo(jsonObjectResult, chat);
+
+
+					//AGGIUNGE IL MESSAGGIO ALLA RACCOLTA
 					Messages.addMessage(message);
+
+					//AGGIUNGE L'UTENTE
 					if(!Users.userExist(message.getUser()))
 					{
 						Users.addUser(message.getUser());
 					}
 
-					Jsoup.connect(Main.getUrl() + "/getUpdates?offset=" + (update_id + 1)).ignoreContentType(true).post();
+					//CANCELLA I MESSAGGI
+					Jsoup.connect(Main.getUrl() + "/getUpdates?offset=" + (message.getUpdate_id() + 1)).ignoreContentType(true).post();
 					messages.add(message);
 				}
 				catch (IOException err)
@@ -99,6 +100,48 @@ public class UpdatesReader
 		}
 
 	}
+
+	/**
+	 * Return informaticn about chat where message has been sent.
+	 * @param jsonObjectResult result passed by telegram
+	 * @return information about chat
+	 */
+	public static Chat getChatInfo(JSONObject jsonObjectResult)
+	{
+		JSONObject jsonObjectMessage = (JSONObject) jsonObjectResult.get("message");
+		JSONObject jsonObjectChat = (JSONObject) jsonObjectMessage.get("chat");
+		long chat_id = (long) jsonObjectChat.get("id");
+		String title = (String) jsonObjectChat.get("title");
+		String type = (String) jsonObjectChat.get("type");
+		String username = (String) jsonObjectChat.get("username");
+		String first_name = (String) jsonObjectChat.get("first_name");
+		String last_name = (String) jsonObjectChat.get("last_name");
+
+		return new Chat(chat_id, type, title, username, first_name, last_name);
+	}
+
+	/**
+	 * Return informaticn about sender.
+	 * @param jsonObjectResult result passed by telegram
+	 * @return information about sender
+	 */
+	public static Message getMessageInfo(JSONObject jsonObjectResult, Chat chat)
+	{
+		long update_id = (long) jsonObjectResult.get("update_id");
+		JSONObject jsonObjectMessage = (JSONObject) jsonObjectResult.get("message");
+		JSONObject jsonObjectFrom = (JSONObject) jsonObjectMessage.get("from");
+		String first_name = (String) jsonObjectFrom.get("first_name");
+		String last_name = (String) jsonObjectFrom.get("last_name");
+		long sender_id = (long) jsonObjectFrom.get("id");
+		long message_id = (long) jsonObjectMessage.get("message_id");
+		Date date = new Date((long) jsonObjectMessage.get("date") * 1000);
+		String text = (String) jsonObjectMessage.get("text");
+
+
+		return new Message(update_id, message_id, sender_id, first_name, last_name, date, text, chat);
+
+	}
+
 
 	/**
 	 * Parse the JSON received with WebHook and return the message
@@ -123,7 +166,7 @@ public class UpdatesReader
 			String last_name = (String) jsonObjectChat.get("last_name");
 			Date date = new Date((long) jsonObjectMessage.get("date") * 1000);
 			String text = (String) jsonObjectMessage.get("text");
-			Message message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text);
+			Message message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text, null);
 			return message;
 		}
 		catch (ParseException e)
@@ -155,7 +198,7 @@ public class UpdatesReader
 			else
 			{
 				Log.warn("Comando NON riconosciuto ricevuto da [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
-				Sender.sendMessage(msg.getSender_id(), "Comando non riconosciuto");
+				Sender.sendMessage(msg.getChat().getId(), "Comando non riconosciuto", msg.getMessage_id());
 				return false;
 			}
 		}
@@ -163,7 +206,7 @@ public class UpdatesReader
 		{
 
 			Log.info("Messaggio ricevuto da [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
-			Sender.sendMessage(msg.getSender_id(), SimSimi.toSimSimi(msg.getText()));
+			Sender.sendMessage(msg.getChat().getId(), SimSimi.toSimSimi(msg.getText()), msg.getMessage_id());
 			return false;
 		}
 	}
@@ -179,7 +222,7 @@ public class UpdatesReader
 		if(utente.isBan() || utente == null)
 		{
 			Log.warn("BANNED USER [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
-			Sender.sendMessage(msg.getSender_id(),"YOU ARE BANNED FROM THIS BOT");
+			Sender.sendMessage(msg.getChat().getId(),"YOU ARE BANNED FROM THIS BOT", msg.getMessage_id());
 			return true;
 		}
 		return false;

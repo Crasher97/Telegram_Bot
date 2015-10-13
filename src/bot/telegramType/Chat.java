@@ -2,14 +2,14 @@ package bot.telegramType;
 
 public class Chat
 {
-	private int id;
+	private long id;
 	private String type; //“private”, or “group”, or “channel”
 	private String title;
 	private String username;
 	private String first_name;
 	private String last_name;
 
-	public Chat(int id, String type, String title, String username, String first_name, String last_name)
+	public Chat(long id, String type, String title, String username, String first_name, String last_name)
 	{
 		this.id = id;
 		this.type = type;
@@ -19,7 +19,7 @@ public class Chat
 		this.last_name = last_name;
 	}
 
-	public int getId()
+	public long getId()
 	{
 		return id;
 	}
