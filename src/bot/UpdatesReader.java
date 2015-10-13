@@ -211,7 +211,7 @@ public class UpdatesReader
 	public static boolean isBanned(Message msg)
 	{
 		User utente = Users.getUser(msg.getSender_id());
-		if(utente.isBan() || utente == null)
+		if(utente == null || utente.isBan())
 		{
 			Log.warn("BANNED USER [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 			Sender.sendMessage(msg.getChat().getId(),"YOU ARE BANNED FROM THIS BOT", msg.getMessage_id());
