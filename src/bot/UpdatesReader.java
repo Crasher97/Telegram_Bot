@@ -157,17 +157,9 @@ public class UpdatesReader
 		try
 		{
 			JSONObject jsonObject = (JSONObject) parser.parse(receivedJSON);
-			long update_id = (long) jsonObject.get("update_id");
-			JSONObject jsonObjectMessage = (JSONObject) jsonObject.get("message");
-			JSONObject jsonObjectChat = (JSONObject) jsonObjectMessage.get("chat");
-			long message_id = (long) jsonObjectMessage.get("message_id");
-			long sender_id = (long) jsonObjectChat.get("id");
-			String first_name = (String) jsonObjectChat.get("first_name");
-			String last_name = (String) jsonObjectChat.get("last_name");
-			Date date = new Date((long) jsonObjectMessage.get("date") * 1000);
-			String text = (String) jsonObjectMessage.get("text");
-			Message message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text, null);
-			return message;
+			Chat chat = getChatInfo(jsonObject);
+			Message msg = getMessageInfo(jsonObject, chat);
+			return msg;
 		}
 		catch (ParseException e)
 		{
