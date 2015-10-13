@@ -64,8 +64,8 @@ public class Message
 	 */
 	public long getSender_id()
 	{
-		return user.getSenderId();
-	}
+		return chat.getId();
+	} //TODO APPLICATA MODIFICA TEMPORANEA PRIMA: user.getSenderId();
 
 	/**
 	 * Ritorna il nome del mittente
