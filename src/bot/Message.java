@@ -8,9 +8,7 @@ public class Message
 {
 	private long update_id;
 	private long message_id;
-	private long sender_id;
-	private String first_name;
-	private String last_name;
+	private User user;
 	private Date date;
 	private String text;
 	private static DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -30,9 +28,7 @@ public class Message
 	{
 		this.update_id = update_id;
 		this.message_id = message_id;
-		this.sender_id = sender_id;
-		this.first_name = first_name;
-		this.last_name = last_name;
+		user = new User(sender_id, first_name, last_name);
 		this.date = date;
 		this.text = text;
 	}
@@ -64,7 +60,7 @@ public class Message
 	 */
 	public long getSender_id()
 	{
-		return sender_id;
+		return user.getSenderId();
 	}
 
 	/**
@@ -74,7 +70,7 @@ public class Message
 	 */
 	public String getFirst_name()
 	{
-		return first_name;
+		return user.getFirst_name();
 	}
 
 	/**
@@ -84,7 +80,7 @@ public class Message
 	 */
 	public String getLast_name()
 	{
-		return last_name;
+		return user.getLast_name();
 	}
 
 	/**
@@ -116,6 +112,14 @@ public class Message
 	public static String dataToString(Date date)
 	{
 		return formatoData.format(date);
+	}
+
+	/**
+	 * Ritorna le informazioni sull'utente del messaggio
+	 */
+	public User getUser()
+	{
+		return user;
 	}
 
 	/**

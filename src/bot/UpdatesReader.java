@@ -63,7 +63,7 @@ public class UpdatesReader
 					JSONObject jsonObjectResult = (JSONObject) obj;
 					long update_id = (long) jsonObjectResult.get("update_id");
 					JSONObject jsonObjectMessage = (JSONObject) jsonObjectResult.get("message");
-					JSONObject jsonObjectChat = (JSONObject) jsonObjectMessage.get("chat");
+					JSONObject jsonObjectChat = (JSONObject) jsonObjectMessage.get("from");
 
 					long message_id = (long) jsonObjectMessage.get("message_id");
 					long sender_id = (long) jsonObjectChat.get("id");
@@ -73,7 +73,13 @@ public class UpdatesReader
 					String text = (String) jsonObjectMessage.get("text");
 
 					Message message = new Message(update_id, message_id, sender_id, first_name, last_name, date, text);
+
 					Messages.addMessage(message);
+					if(!Users.userExist(message.getUser()))
+					{
+						Users.addUser(message.getUser());
+					}
+
 					Jsoup.connect(Main.getUrl() + "/getUpdates?offset=" + (update_id + 1)).ignoreContentType(true).post();
 					messages.add(message);
 				}
@@ -143,12 +149,12 @@ public class UpdatesReader
 			command = command.substring(1).split(" ")[0];
 			if (Commands.commandExist(command))
 			{
-				Log.info("Comando riconosciuto ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
+				Log.info("Comando riconosciuto ricevuto da [" + msg.getSender_id()+"] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 				return true;
 			}
 			else
 			{
-				Log.warn("Comando NON riconosciuto ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
+				Log.warn("Comando NON riconosciuto ricevuto da [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 				Sender.sendMessage(msg.getSender_id(), "Comando non riconosciuto");
 				return false;
 			}
@@ -156,9 +162,26 @@ public class UpdatesReader
 		else
 		{
 
-			Log.info("Messaggio ricevuto da " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
+			Log.info("Messaggio ricevuto da [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 			Sender.sendMessage(msg.getSender_id(), SimSimi.toSimSimi(msg.getText()));
 			return false;
 		}
+	}
+
+	/**
+	 * Check if user is banned from this bot
+	 * @param msg
+	 * @return
+	 */
+	public static boolean isBanned(Message msg)
+	{
+		User utente = Users.getUser(msg.getSender_id());
+		if(utente.isBan() || utente == null)
+		{
+			Log.warn("BANNED USER [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
+			Sender.sendMessage(msg.getSender_id(),"YOU ARE BANNED FROM THIS BOT");
+			return true;
+		}
+		return false;
 	}
 }

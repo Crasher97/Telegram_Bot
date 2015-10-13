@@ -159,6 +159,47 @@ public class Console
 			}
 		});
 
+		addCommand("ban", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
+			{
+				Users.getUser(Long.parseLong(args[0])).setBan(true);
+			}
+
+			@Override
+			public void run()
+			{
+			}
+		});
+
+		addCommand("unban", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
+			{
+				Users.getUser(Long.parseLong(args[0])).setBan(false);
+			}
+
+			@Override
+			public void run()
+			{
+			}
+		});
+
+		addCommand("alt", new ConsoleCommandCode()
+		{
+			@Override
+			public void run(String[] args)
+			{
+				Main.setMaintenance(!Main.isMaintenance());
+			}
+
+			@Override
+			public void run()
+			{
+			}
+		});
 	}
 
 	public interface ConsoleCommandCode extends Runnable

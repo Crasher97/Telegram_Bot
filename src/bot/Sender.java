@@ -10,29 +10,6 @@ import org.jsoup.nodes.Document;
 public class Sender
 {
 	/**
-	 * @param chatId  Chat id del destinatario
-	 * @param message Messaggio da inviare
-	 * @return true se l'invio è stato effettuato con successo, altrimenti false
-	 * @deprecated * Metodo per inviare messaggi
-	 */
-	public static boolean sendMessage(int chatId, String message)
-	{
-		return sendMessage((long) chatId, message);
-	}
-
-	/**
-	 * @param chatId
-	 * @param message
-	 * @param keyboard
-	 * @return
-	 * @deprecated
-	 */
-	public static boolean sendMessage(int chatId, String message, Keyboard keyboard)
-	{
-		return sendMessage((long) chatId, message + "&reply_markup=" + keyboard.toJSONString());
-	}
-
-	/**
 	 * Send message with customized keyboard
 	 *
 	 * @param chatId
@@ -42,21 +19,33 @@ public class Sender
 	 */
 	public static boolean sendMessage(long chatId, String message, Keyboard keyboard)
 	{
-		return sendMessage((long) chatId, message + "&reply_markup=" + keyboard.toJSONString());
+		return sendMessage(chatId, message + "&reply_markup=" + keyboard.toJSONString(), 0);
 	}
+
+	public static boolean sendMessage(long chatId, String message)
+	{
+		return sendMessage(chatId, message, 0);
+	}
+
 
 	/**
 	 * Metodo per inviare messaggi
 	 *
-	 * @param chatId  Chat id del destinatario
-	 * @param message Messaggio da inviare
-	 * @return true se l'invio è stato effettuato con successo, altrimenti false
+	 * @param chatId  Chat id to send message
+	 * @param message Messagge to send
+	 * @param reply, message id to reply. Pass 0 for no reply
+	 * @return true if it has been sent
 	 */
-	public static boolean sendMessage(long chatId, String message)
+	public static boolean sendMessage(long chatId, String message, long reply)
 	{
 		try
 		{
-			Document doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&text=" + message).ignoreContentType(true).post();
+			Document doc;
+			if(reply!=0)
+				doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&reply_to_message_id=" + reply + "&text=" + message).ignoreContentType(true).post();
+			else
+				doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&text=" + message).ignoreContentType(true).post();
+
 			if (doc.text().contains("\"ok\":true"))
 			{
 				if (message != null)
@@ -76,5 +65,6 @@ public class Sender
 			Log.error("Messaggio non inviato");
 			return false;
 		}
+
 	}
 }

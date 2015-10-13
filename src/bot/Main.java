@@ -18,6 +18,8 @@ public class Main
 	private static String update = "";
 	private static boolean webhook = true; //TODO never used
 
+	private static boolean maintenance = false;
+
 	/**
 	 * Main method
 	 *
@@ -27,8 +29,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		Setting.createSettingFile();
-
-		if(!Setting.setBotAndOwnerFromSittings())
+		if (!Setting.setBotAndOwnerFromSittings())
 		{
 			Log.error("WRONG CONFIGURATION");
 			System.exit(1);
@@ -56,6 +57,9 @@ public class Main
 		//LOAD INTERNAL COMMANDS
 		Help.load();
 
+		//LOAD USERS
+		Users.loadUsers();
+
 		//PRINT LIST OF LOADED COMMANDS
 		Log.info(Commands.getCommands().keySet().toString());
 
@@ -67,7 +71,7 @@ public class Main
 		//START THREADS
 		shutDownThread();
 		deletingThread();
-		if(Setting.readSetting("WebHook_Active","WebHook").equals("true"))
+		if (Setting.readSetting("WebHook_Active", "WebHook").equals("true"))
 		{
 			WebHook.setWebHook();
 			Server.startServer();
@@ -93,6 +97,7 @@ public class Main
 				{
 					//Saves messages into log
 					Messages.printLog();
+					Users.saveUsers();
 					Log.info("Terminated");
 
 				}
@@ -106,8 +111,9 @@ public class Main
 
 	/**
 	 * Set args as botId && ownerId
+	 *
 	 * @param botEownerId [0] must be botId, [1] must be owner Id
- 	 */
+	 */
 	public static void setFields(String[] botEownerId)
 	{
 		if (botEownerId.length >= 1 && botEownerId[0] != null && botEownerId[1] != null)
@@ -126,42 +132,42 @@ public class Main
 	{
 		while (true)
 		{
-				String tmp = UpdatesReader.getUpdate();
-				if (tmp != null)
+			String tmp = UpdatesReader.getUpdate();
+			if (tmp != null)
+			{
+				String update = tmp;
+				ArrayList<Message> updates;
+				updates = UpdatesReader.parseJSON(update);
+				if (updates != null && updates.size() > 0)
 				{
-					String update = tmp;
-					ArrayList<Message> updates;
-					updates = UpdatesReader.parseJSON(update);
-					if (updates != null && updates.size() > 0)
+					for (Message msg : updates)
 					{
-						for (Message msg : updates)
+						messageProcessThread(msg);
+						try
 						{
-							messageProcessThread(msg);
-							try
-							{
-								Thread.sleep(20);
-							}
-							catch (InterruptedException e)
-							{
-								e.printStackTrace();
-							}
+							Thread.sleep(20);
+						}
+						catch (InterruptedException e)
+						{
+							e.printStackTrace();
 						}
 					}
 				}
-				try
-				{
-					Thread.sleep(1000);
-				}
-				catch (InterruptedException e)
-				{
-					Log.stackTrace(e.getStackTrace());
-				}
+			}
+			try
+			{
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException e)
+			{
+				Log.stackTrace(e.getStackTrace());
+			}
 		}
 	}
 
 
 	/**
-	 * Start thread that delete files older than 3 days, every 12 hours
+	 * Start thread that delete files older than ~2 days, every ~6 hours
 	 */
 	private static void deletingThread()
 	{
@@ -179,7 +185,7 @@ public class Main
 						{
 							for (File file : directoryListing)
 							{
-								if ((System.currentTimeMillis() - file.lastModified()) > 259200000)
+								if ((System.currentTimeMillis() - file.lastModified()) > 159200000)
 								{
 									if (file.delete())
 									{
@@ -190,7 +196,7 @@ public class Main
 								}
 							}
 						}
-						Thread.sleep(43200000);
+						Thread.sleep(23200000);
 					}
 					catch (Exception e)
 					{
@@ -206,10 +212,11 @@ public class Main
 	{
 		Thread updateThread = new Thread(new Runnable()
 		{
-			public void run()
+		public void run()
 			{
-				if(UpdatesReader.isCommand(msg))
-				Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+				if(isMaintenance())Sender.sendMessage(msg.getSender_id(), "BOT IS IN MAINTENANCE");
+				else if (!UpdatesReader.isBanned(msg) && UpdatesReader.isCommand(msg))
+					Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 			}
 		});
 		updateThread.start();
@@ -297,6 +304,7 @@ public class Main
 
 	/**
 	 * Check if user is bot'owner
+	 *
 	 * @param ownerId
 	 * @return True if is the owner
 	 */
@@ -307,6 +315,7 @@ public class Main
 
 	/**
 	 * Check if user is bot'owner
+	 *
 	 * @param ownerId
 	 * @return True if is the owner
 	 */
@@ -326,10 +335,21 @@ public class Main
 
 	/**
 	 * Set webhook as method to update
+	 *
 	 * @param use: true to use webhook, false to use getUpdate
 	 */
 	public static void setWebhook(boolean use)
 	{
 		webhook = use;
+	}
+
+	public static boolean isMaintenance()
+	{
+		return maintenance;
+	}
+
+	public static void setMaintenance(boolean maintenance)
+	{
+		Main.maintenance = maintenance;
 	}
 }
