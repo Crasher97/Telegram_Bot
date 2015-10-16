@@ -30,11 +30,11 @@ public class FileUploader
 	 * Send files
 	 *
 	 * @param fileName
-	 * @param senderId
+	 * @param chatId where file has to be sent.
 	 * @param fileType {PHOTO, AUDIO, VIDEO, DOCUMENT}
 	 * @return true if file has been sent
 	 */
-	public static boolean uploadFile(String fileName, long senderId, FileType fileType)
+	public static boolean uploadFile(String fileName, long chatId, FileType fileType)
 	{
 		String urlMethod = "";
 		String urlParameter = "";
@@ -72,7 +72,7 @@ public class FileUploader
 		if (file_id == null)
 		{
 			HttpClient httpclient = HttpClientBuilder.create().build();
-			HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + urlMethod + "?chat_id=" + senderId);
+			HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + urlMethod + "?chat_id=" + chatId);
 
 			File file = new File("tmp/" + fileName);
 			FileBody uploadFilePart = new FileBody(file);
@@ -99,7 +99,7 @@ public class FileUploader
 		{
 			try
 			{
-				Jsoup.connect(Main.getUrl() + urlMethod + "?chat_id=" + senderId + "&" + urlParameter + "=" + file_id).ignoreContentType(true).post();
+				Jsoup.connect(Main.getUrl() + urlMethod + "?chat_id=" + chatId + "&" + urlParameter + "=" + file_id).ignoreContentType(true).post();
 				return true;
 			}
 			catch (IOException e)

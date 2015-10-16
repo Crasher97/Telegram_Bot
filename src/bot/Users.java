@@ -58,7 +58,7 @@ public class Users
 			Log.info("Creato file Users");
 			outFile.flush();
 			outFile.close();
-
+			addUserTofile(new User(0,"prova","prova"));
 		}
 		catch (IOException e)
 		{
@@ -97,6 +97,7 @@ public class Users
 
 	public static boolean loadUsers()
 	{
+		if (!usersFile.exists()) createUserFile();
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		try
