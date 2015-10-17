@@ -1,28 +1,32 @@
 package bot.telegramType;
 
+/**
+ * Created by Paolo on 13/10/2015.
+ */
 public class User
 {
-	private int id;
+	private long senderId;
 	private String first_name;
 	private String last_name;
 	private String username;
+	private boolean ban = false;
 
-	public User(int id, String first_name, String last_name, String username)
+	/**
+	 *	Create new user
+	 * @param senderId
+	 * @param first_name
+	 * @param last_name
+	 */
+	public User(long senderId, String first_name, String last_name)
 	{
-		this.id = id;
+		this.senderId = senderId;
 		this.first_name = first_name;
 		this.last_name = last_name;
-		this.username = username;
 	}
 
-	public int getId()
+	public long getSenderId()
 	{
-		return id;
-	}
-
-	public void setId(int id)
-	{
-		this.id = id;
+		return senderId;
 	}
 
 	public String getFirst_name()
@@ -30,19 +34,19 @@ public class User
 		return first_name;
 	}
 
-	public void setFirst_name(String first_name)
-	{
-		this.first_name = first_name;
-	}
-
 	public String getLast_name()
 	{
 		return last_name;
 	}
 
-	public void setLast_name(String last_name)
+	public boolean isBan()
 	{
-		this.last_name = last_name;
+		return ban;
+	}
+
+	public void setBan(boolean ban)
+	{
+		this.ban = ban;
 	}
 
 	public String getUsername()

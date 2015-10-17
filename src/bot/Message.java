@@ -1,6 +1,7 @@
 package bot;
 
 import bot.telegramType.Chat;
+import bot.telegramType.User;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

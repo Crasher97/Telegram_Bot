@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import bot.telegramType.Chat;
+import bot.telegramType.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
