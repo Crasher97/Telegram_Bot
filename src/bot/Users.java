@@ -1,5 +1,7 @@
 package bot;
 
+import addons.Command;
+import addons.Commands;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.simple.JSONObject;
@@ -12,7 +14,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 /**
  * Created by Paolo on 13/10/2015.
@@ -26,6 +27,7 @@ public class Users
 
 	/**
 	 * Add User to users list
+	 *
 	 * @param usr
 	 * @return true if it has been added
 	 */
@@ -36,6 +38,7 @@ public class Users
 
 	/**
 	 * Return user from userList
+	 *
 	 * @param senderId, unique id for sender
 	 * @return User if it has been found
 	 */
@@ -58,7 +61,7 @@ public class Users
 			Log.info("Creato file Users");
 			outFile.flush();
 			outFile.close();
-			addUserTofile(new User(0,"prova","prova"));
+			addUserTofile(new User(0, "prova", "prova"));
 		}
 		catch (IOException e)
 		{
@@ -66,6 +69,11 @@ public class Users
 		}
 	}
 
+	/**
+	 * Add user to external file
+	 *
+	 * @param usr
+	 */
 	public static void addUserTofile(User usr)
 	{
 		if (!usersFile.exists()) createUserFile();
@@ -94,7 +102,11 @@ public class Users
 		return users.containsKey(usr.getSenderId());
 	}
 
-
+	/**
+	 * Load users from saved file
+	 *
+	 * @return true if users have been loaded
+	 */
 	public static boolean loadUsers()
 	{
 		if (!usersFile.exists()) createUserFile();
@@ -105,11 +117,11 @@ public class Users
 			obj = (JSONObject) parser.parse(new FileReader(usersFile));
 			JSONObject usersInJson = (JSONObject) obj.get("Users");
 			ArrayList<String> keyList = new ArrayList<String>(usersInJson.keySet());
-			for(int i = 0; i < keyList.size(); i++)
+			for (int i = 0; i < keyList.size(); i++)
 			{
 				String usr = (String) usersInJson.get(keyList.get(i));
 				String[] usrInfo = usr.split("__");
-				User newUser = new User(Long.parseLong(keyList.get(i)),usrInfo[0],usrInfo[1]);
+				User newUser = new User(Long.parseLong(keyList.get(i)), usrInfo[0], usrInfo[1]);
 				newUser.setBan(usrInfo[2].equals("true"));
 				addUser(newUser);
 			}
@@ -117,10 +129,14 @@ public class Users
 		catch (IOException | ParseException e)
 		{
 			Log.stackTrace(e.getStackTrace());
+			return false;
 		}
 		return true;
 	}
 
+	/**
+	 * Save users in external file (File in field)
+	 */
 	public static void saveUsers()
 	{
 		JSONObject obj = new JSONObject();
@@ -133,7 +149,7 @@ public class Users
 			outFile.close();
 
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
 			Log.error("Saving users before quit");
 		}
@@ -143,6 +159,50 @@ public class Users
 			addUserTofile(users.get(keyList.get(i)));
 		}
 
-		Log.info("Utenti salvati");
+		Log.info("Users saved");
+	}
+
+	/**
+	 * Load some commands for users management
+	 */
+	public static void loadUsersCommand()
+	{
+		Commands.addCommand(new Command("ban", "bot.Users", "banUser"));
+	}
+
+	public static void banUser(Message msg)
+	{
+		if (msg.getText() != null && msg.getSender_id() == Long.parseLong(Main.getOwner()))
+		{
+			String[] text = msg.getText().split(" ");
+			if (text.length >= 2)
+			{
+				User usr = getUser(Long.parseLong(text[1]));
+				if (usr != null)
+				{
+					usr.setBan(!usr.isBan());
+				}
+				else if (msg.getChat().getType().equals("group"))
+				{
+					Sender.sendMessage(msg.getChat().getId(), "User doesn't exist", msg.getMessage_id());
+				}
+				else
+				{
+					Sender.sendMessage(msg.getChat().getId(), "User doesn't exist");
+				}
+			}
+			else
+			{
+				if (msg.getChat().getType().equals("group"))
+				{
+					Sender.sendMessage(msg.getChat().getId(), "Bad parameter", msg.getMessage_id());
+				}
+				else
+				{
+					Sender.sendMessage(msg.getChat().getId(), "Bad parameter");
+				}
+			}
+
+		}
 	}
 }

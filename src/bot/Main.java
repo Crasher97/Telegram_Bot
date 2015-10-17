@@ -59,6 +59,7 @@ public class Main
 
 		//LOAD USERS
 		Users.loadUsers();
+		Users.loadUsersCommand();
 
 		//PRINT LIST OF LOADED COMMANDS
 		Log.info(Commands.getCommands().keySet().toString());

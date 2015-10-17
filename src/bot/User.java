@@ -11,7 +11,7 @@ public class User
 	private boolean ban = false;
 
 	/**
-	 *
+	 *	Create new user
 	 * @param senderId
 	 * @param first_name
 	 * @param last_name

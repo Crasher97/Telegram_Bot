@@ -145,7 +145,6 @@ public class UpdatesReader
 
 	/**
 	 * Parse the JSON received with WebHook and return the message
-	 *
 	 * @param receivedJSON Received JSON
 	 * @return messages
 	 */
@@ -179,8 +178,7 @@ public class UpdatesReader
 
 	/**
 	 * Check if text is command, if it is, return command without /, else if command is null or doesn't exist return null
-	 *
-	 * @param msg
+	 * @param msg message received from bot
 	 * @return commandName
 	 */
 	public static boolean isCommand(Message msg)
@@ -191,21 +189,35 @@ public class UpdatesReader
 			command = command.substring(1).split(" ")[0];
 			if (Commands.commandExist(command))
 			{
-				Log.info("Comando riconosciuto ricevuto da [" + msg.getSender_id()+"] " + msg.getFirst_name() + " " + msg.getLast_name() + "[group" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
+				Log.info("Command from [" + msg.getSender_id()+"] " + msg.getFirst_name() + " " + msg.getLast_name() + " [group" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
 				return true;
 			}
 			else
 			{
-				Log.warn("Comando NON riconosciuto ricevuto da [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name()  + "[group" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
-				Sender.sendMessage(msg.getChat().getId(), "Comando non riconosciuto", msg.getMessage_id());
+				Log.warn("Command NOT recognized from [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name()  + " [group" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
+				if(msg.getChat().getType().equals("group"))
+				{
+					Sender.sendMessage(msg.getChat().getId(), "Unknown command", msg.getMessage_id());
+				}
+				else
+				{
+					Sender.sendMessage(msg.getChat().getId(), "Unknown command", msg.getMessage_id());
+				}
 				return false;
 			}
 		}
 		else
 		{
 
-			Log.info("Messaggio ricevuto da [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + "[group" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
-			Sender.sendMessage(msg.getChat().getId(), SimSimi.toSimSimi(msg.getText()), msg.getMessage_id());
+			Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " [group" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
+			if(msg.getChat().getType().equals("group"))
+			{
+				Sender.sendMessage(msg.getChat().getId(), SimSimi.toSimSimi(msg.getText()), msg.getMessage_id());
+			}
+			else
+			{
+				Sender.sendMessage(msg.getChat().getId(), SimSimi.toSimSimi(msg.getText()));
+			}
 			return false;
 		}
 	}
@@ -220,8 +232,15 @@ public class UpdatesReader
 		User utente = Users.getUser(msg.getSender_id());
 		if(utente == null || utente.isBan())
 		{
-			Log.warn("BANNED USER [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
-			Sender.sendMessage(msg.getChat().getId(),"YOU ARE BANNED FROM THIS BOT", msg.getMessage_id());
+			Log.warn("BANNED USER [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
+			if(msg.getChat().getType().equals("group"))
+			{
+				Sender.sendMessage(msg.getChat().getId(), "YOU ARE BANNED FROM THIS BOT", msg.getMessage_id());
+			}
+			else
+			{
+				Sender.sendMessage(msg.getChat().getId(), "YOU ARE BANNED FROM THIS BOT");
+			}
 			return true;
 		}
 		return false;
