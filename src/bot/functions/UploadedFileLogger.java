@@ -45,7 +45,7 @@ public class UploadedFileLogger
 				case PHOTO:
 				{
 					JSONArray photos = (JSONArray) resultList.get("photo");
-					JSONObject photo = (JSONObject) photos.get(2);
+					JSONObject photo = (JSONObject) photos.get(photos.size() - 1);
 					return (String) photo.get("file_id");
 				}
 
