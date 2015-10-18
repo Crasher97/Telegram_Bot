@@ -159,7 +159,7 @@ public class Log
 		}
 		catch (IOException e)
 		{
-			stackTrace(e.getStackTrace());
+			e.printStackTrace();
 		}
 	}
 }
