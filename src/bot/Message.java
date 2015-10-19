@@ -28,11 +28,11 @@ public class Message
 	 * @param date
 	 * @param text
 	 */
-	public Message(long update_id, long message_id, long sender_id, String first_name, String last_name, Date date, String text, Chat chat)
+	public Message(long update_id, long message_id, long sender_id, String first_name, String last_name, String username ,Date date, String text, Chat chat)
 	{
 		this.update_id = update_id;
 		this.message_id = message_id;
-		user = new User(sender_id, first_name, last_name);
+		user = new User(sender_id, first_name, last_name, username);
 		this.date = date;
 		this.text = text;
 		this.chat = chat;

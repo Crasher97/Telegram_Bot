@@ -76,9 +76,9 @@ public class UpdatesReader
 					Messages.addMessage(message);
 
 					//AGGIUNGE L'UTENTE
-					if(!Users.userExist(message.getUser()))
+					if(!checkUserExist(message))
 					{
-						Users.addUser(message.getUser());
+						Log.info("New user has connected");
 					}
 
 					//CANCELLA I MESSAGGI
@@ -133,13 +133,14 @@ public class UpdatesReader
 		JSONObject jsonObjectFrom = (JSONObject) jsonObjectMessage.get("from");
 		String first_name = (String) jsonObjectFrom.get("first_name");
 		String last_name = (String) jsonObjectFrom.get("last_name");
+		String username = (String) jsonObjectFrom.get("username");
 		long sender_id = (long) jsonObjectFrom.get("id");
 		long message_id = (long) jsonObjectMessage.get("message_id");
 		Date date = new Date((long) jsonObjectMessage.get("date") * 1000);
 		String text = (String) jsonObjectMessage.get("text");
 
 
-		return new Message(update_id, message_id, sender_id, first_name, last_name, date, text, chat);
+		return new Message(update_id, message_id, sender_id, first_name, last_name, username, date, text, chat);
 
 	}
 
@@ -158,15 +159,15 @@ public class UpdatesReader
 		{
 			JSONObject jsonObject = (JSONObject) parser.parse(receivedJSON);
 			Chat chat = getChatInfo(jsonObject);
-			Message msg = getMessageInfo(jsonObject, chat);
-			Messages.addMessage(msg);
+			Message message = getMessageInfo(jsonObject, chat);
+			Messages.addMessage(message);
 
 			//AGGIUNGE L'UTENTE
-			if(!Users.userExist(msg.getUser()))
+			if(!checkUserExist(message))
 			{
-				Users.addUser(msg.getUser());
+				Log.info("New user has connected");
 			}
-			return msg;
+			return message;
 		}
 		catch (ParseException e)
 		{
@@ -246,4 +247,21 @@ public class UpdatesReader
 		}
 		return false;
 	}
+
+	/**
+	 * Check if user exist. if not, user is added to users file and field
+	 * @param msg
+	 * @return true if user is already in users
+	 */
+	public static boolean checkUserExist(Message msg)
+	{
+		if(!Users.userExist(msg.getUser()))
+		{
+			Users.addUserToFile(msg.getUser()); // NON INVERTIRE
+			Users.addUser(msg.getUser());
+			return false;
+		}
+		return true;
+	}
+
 }

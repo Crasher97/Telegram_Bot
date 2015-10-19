@@ -62,7 +62,6 @@ public class Users
 			Log.info("Creato file Users");
 			outFile.flush();
 			outFile.close();
-			addUserTofile(new User(0, "prova", "prova"));
 		}
 		catch (IOException e)
 		{
@@ -75,17 +74,21 @@ public class Users
 	 *
 	 * @param usr
 	 */
-	public static void addUserTofile(User usr)
+	public static void addUserToFile(User usr)
 	{
 		if (!usersFile.exists()) createUserFile();
+		if (userExist(usr)) return;
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		try
 		{
 			obj = (JSONObject) parser.parse(new FileReader(usersFile));
-			JSONObject user = (JSONObject) obj.getOrDefault("Users", new JSONObject());
-			user.put(usr.getSenderId(), usr.getFirst_name() + "__" + usr.getLast_name() + "__" + usr.isBan());
-			obj.put("Users", user);
+			JSONObject users = (JSONObject) obj.getOrDefault(usr.getSenderId(), new JSONObject());
+			users.put("First_Name", usr.getFirst_name());
+			users.put("Last_Name", usr.getLast_name());
+			users.put("Username", usr.getUsername());
+			users.put("Ban", usr.isBan());
+			obj.put(usr.getSenderId(), users);
 
 			FileWriter outFile = new FileWriter(usersFile);
 			outFile.write(gson.toJson(obj));
@@ -116,14 +119,16 @@ public class Users
 		try
 		{
 			obj = (JSONObject) parser.parse(new FileReader(usersFile));
-			JSONObject usersInJson = (JSONObject) obj.get("Users");
-			ArrayList<String> keyList = new ArrayList<String>(usersInJson.keySet());
+			ArrayList<String> keyList = new ArrayList<String>(obj.keySet());
 			for (int i = 0; i < keyList.size(); i++)
 			{
-				String usr = (String) usersInJson.get(keyList.get(i));
-				String[] usrInfo = usr.split("__");
-				User newUser = new User(Long.parseLong(keyList.get(i)), usrInfo[0], usrInfo[1]);
-				newUser.setBan(usrInfo[2].equals("true"));
+				JSONObject user = (JSONObject) obj.get(keyList.get(i));
+				String firstName = (String) user.get("First_Name");
+				String lastName = (String) user.get("Last_Name");
+				String username = (String) user.get("Username");
+				boolean ban = (Boolean) user.get("Ban");
+				User newUser = new User(Long.parseLong(keyList.get(i)),firstName,lastName,username);
+				newUser.setBan(ban);
 				addUser(newUser);
 			}
 		}
@@ -136,34 +141,6 @@ public class Users
 	}
 
 	/**
-	 * Save users in external file (File in field)
-	 */
-	public static void saveUsers()
-	{
-		JSONObject obj = new JSONObject();
-		try
-		{
-			usersFile.delete();
-			FileWriter outFile = new FileWriter(usersFile);
-			outFile.write(gson.toJson(obj));
-			outFile.flush();
-			outFile.close();
-
-		}
-		catch (IOException e)
-		{
-			Log.error("Saving users before quit");
-		}
-		ArrayList<Long> keyList = new ArrayList<Long>(users.keySet());
-		for (int i = 0; i < keyList.size(); i++)
-		{
-			addUserTofile(users.get(keyList.get(i)));
-		}
-
-		Log.info("Users saved");
-	}
-
-	/**
 	 * Load some commands for users management
 	 */
 	public static void loadUsersCommand()
@@ -171,6 +148,10 @@ public class Users
 		Commands.addCommand(new Command("ban", "bot.Users", "banUser"));
 	}
 
+	/**
+	 * Ban user from this bot
+	 * @param msg in field text of message, there should be the sender id of the user to ban.
+	 */
 	public static void banUser(Message msg)
 	{
 		if (msg.getText() != null && msg.getSender_id() == Long.parseLong(Main.getOwner()))

@@ -18,7 +18,6 @@ public class Help
 	{
 		Commands.addCommand(new Command("help", "addons.Help", "helpRequest"));
 		addHelp("help", "Do you need some help?");
-
 		Commands.addCommand(new Command("start", "addons.Help", "startRequest"));
 	}
 
@@ -68,11 +67,10 @@ public class Help
 
 	/**
 	 * It starts when people start chat with the bot
-	 *
 	 * @param message
 	 */
 	public static void startRequest(Message message)
 	{
-		Sender.sendMessage(message.getSender_id(), "This bot is in development, please stand by");
+		Sender.sendMessage(message.getSender_id(), "Faggots. faggots everywere. Try /help to list commands. Try /help +command for help about command");
 	}
 }

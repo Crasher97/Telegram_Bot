@@ -3,6 +3,7 @@ package bot;
 import java.io.File;
 import java.util.ArrayList;
 
+import addons.Command;
 import addons.Commands;
 import addons.Help;
 import addons.JarFileLoader;
@@ -55,6 +56,7 @@ public class Main
 		JarFileLoader.loadJarFile();
 
 		//LOAD INTERNAL COMMANDS
+		loadBasicCommands();
 		Help.load();
 
 		//LOAD USERS
@@ -96,9 +98,7 @@ public class Main
 			{
 				try
 				{
-					//Saves messages into log
 					Messages.printLog();
-					Users.saveUsers();
 					Log.info("Terminated");
 
 				}
@@ -215,9 +215,14 @@ public class Main
 		{
 		public void run()
 			{
-				if(isMaintenance())Sender.sendMessage(msg.getSender_id(), "BOT IS IN MAINTENANCE");
+				if(isMaintenance() && !isOwner(msg.getSender_id()))
+				{
+					Sender.sendMessage(msg.getSender_id(), "BOT IS IN MAINTENANCE");
+				}
 				else if (!UpdatesReader.isBanned(msg) && UpdatesReader.isCommand(msg))
+				{
 					Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+				}
 			}
 		});
 		updateThread.start();
@@ -353,4 +358,41 @@ public class Main
 	{
 		Main.maintenance = maintenance;
 	}
+
+	/**
+	 * Command stop. Stop the bot
+	 * @param msg
+	 */
+	public static void commandStop(Message msg)
+	{
+		if(String.valueOf(msg.getSender_id()).equals(owner))
+		{
+			System.exit(0);
+		}
+	}
+
+	/**
+	 * Command alt. Set bot in maintenance. Owner can write to bot for testing.
+	 * @param msg
+	 */
+	public static void commandAlt(Message msg)
+	{
+		if(String.valueOf(msg.getSender_id()).equals(owner))
+		{
+			setMaintenance(!isMaintenance());
+		}
+	}
+
+	/**
+	 * Load basic commands for bot(through message)
+	 * Command alt
+	 * Command stop
+	 * Only owner can use these commands
+	 */
+	public static void loadBasicCommands()
+	{
+		Commands.addCommand(new Command("alt", "bot.Main", "commandAlt"));
+		Commands.addCommand(new Command("stop", "bot.Main", "commandStop"));
+	}
+
 }

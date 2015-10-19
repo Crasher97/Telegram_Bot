@@ -188,7 +188,7 @@ public class Setting
 	/**
 	 * Return last launching configuration
 	 *
-	 * @return an array[2], where in [0] there is bot ID & in [1] there is the owner ID
+	 * @return an array[2], where in [0] there is bot ID & in [1] there is the owner ID (saved in settings)
 	 */
 	public static String[] readSettings()
 	{
