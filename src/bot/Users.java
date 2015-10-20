@@ -22,7 +22,7 @@ import java.util.HashMap;
  */
 public class Users
 {
-	private static File usersFile = new File("users.json");
+	private static File usersFile = new File("config/users.json");
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private static HashMap<Long, User> users = new HashMap<>();
 

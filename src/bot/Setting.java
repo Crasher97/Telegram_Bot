@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class Setting
 {
-	private static File settingFile = new File("setting.json");
+	private static File settingFile = new File("config/setting.json");
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 	/**

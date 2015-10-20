@@ -29,18 +29,10 @@ public class Main
 		Setting.createSettingFile();
 		if (!Setting.settingExist("Bot_ID", "Main") || Setting.readSetting("Bot_ID", "Main").equals(""))
 		{
-			Log.error("WRONG CONFIGURATION");
+			Log.error("WRONG CONFIGURATION: you can configure your bot in file setting inside folder config");
 			System.exit(1);
 		}
-		if (args != null && args.length > 0 && args[0].equals("-server"))
-		{
-			Log.info("NO GUI");
-			server(args);
-		}
-		else
-		{
-			GUI.Gui.startGui();
-		}
+		server(args);
 	}
 
 	/**

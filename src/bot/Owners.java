@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class Owners
 {
-	private static File ownersFile = new File("owners.json");
+	private static File ownersFile = new File("config/owners.json");
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 	/**
