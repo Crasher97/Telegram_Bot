@@ -14,10 +14,7 @@ import bot.webServer.WebHook;
 public class Main
 {
 	private static String botId = "";
-	private static String owner = "";
-	private static String url = "";
-	private static String update = "";
-	private static boolean webhook = true; //TODO never used
+	private static String url = "https://api.telegram.org/bot";
 
 	private static boolean maintenance = false;
 
@@ -30,7 +27,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		Setting.createSettingFile();
-		if (!Setting.setBotAndOwnerFromSittings())
+		if (!Setting.settingExist("Bot_ID", "Main") || Setting.readSetting("Bot_ID", "Main").equals(""))
 		{
 			Log.error("WRONG CONFIGURATION");
 			System.exit(1);
@@ -74,6 +71,10 @@ public class Main
 		//START THREADS
 		shutDownThread();
 		deletingThread();
+
+		Owners.createOwnersFile();
+		url += Setting.readSetting("Bot_ID", "Main");
+
 		if (Setting.readSetting("WebHook_Active", "WebHook").equals("true"))
 		{
 			WebHook.setWebHook();
@@ -109,22 +110,6 @@ public class Main
 			}
 		});
 	}
-
-	/**
-	 * Set args as botId && ownerId
-	 *
-	 * @param botEownerId [0] must be botId, [1] must be owner Id
-	 */
-	public static void setFields(String[] botEownerId)
-	{
-		if (botEownerId.length >= 1 && botEownerId[0] != null && botEownerId[1] != null)
-		{
-			botId = botEownerId[0];
-			owner = botEownerId[1];
-			url = "https://api.telegram.org/bot" + botId;
-		}
-	}
-
 
 	/**
 	 * CHECK FOR NEW UPDATES(getUpdates method), STARTS NEW THREAD FOR EVERY UPDATE
@@ -215,7 +200,7 @@ public class Main
 		{
 		public void run()
 			{
-				if(isMaintenance() && !isOwner(msg.getSender_id()))
+				if(isMaintenance() && !Owners.isOwner(String.valueOf(msg.getSender_id())))
 				{
 					Sender.sendMessage(msg.getSender_id(), "BOT IS IN MAINTENANCE");
 				}
@@ -265,88 +250,11 @@ public class Main
 	}
 
 	/**
-	 * Return owner's id code.
-	 *
-	 * @return owner
-	 */
-	public static String getOwner()
-	{
-		return owner;
-	}
-
-	/**
-	 * Change owner ID
-	 *
-	 * @param ownerIdTmp
-	 * @return true if it has been changed
-	 */
-	public static boolean setOwnerId(String ownerIdTmp)
-	{
-		if (botId != null)
-		{
-			owner = ownerIdTmp;
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Return last received update
-	 *
-	 * @return lastUpdate - JSON format
-	 */
-	public static String getLastUpdate()
-	{
-		return update;
-	}
-
-	/**
-	 * Set last received update
-	 */
-	public static void setLastUpdate(String lastUpdate)
-	{
-		update = lastUpdate;
-	}
-
-	/**
-	 * Check if user is bot'owner
-	 *
-	 * @param ownerId
-	 * @return True if is the owner
-	 */
-	public static boolean isOwner(long ownerId)
-	{
-		return getOwner().equals(String.valueOf(ownerId));
-	}
-
-	/**
-	 * Check if user is bot'owner
-	 *
-	 * @param ownerId
-	 * @return True if is the owner
-	 */
-	public static boolean isOwner(String ownerId)
-	{
-		return getOwner().equals(ownerId);
-	}
-
-	/**
 	 * Save actual configuration
 	 */
 	public static void saveConfiguration()
 	{
 		Setting.editSetting("Bot_ID", botId, "Main");
-		Setting.editSetting("Owner_ID", owner, "Main");
-	}
-
-	/**
-	 * Set webhook as method to update
-	 *
-	 * @param use: true to use webhook, false to use getUpdate
-	 */
-	public static void setWebhook(boolean use)
-	{
-		webhook = use;
 	}
 
 	public static boolean isMaintenance()
@@ -365,7 +273,7 @@ public class Main
 	 */
 	public static void commandStop(Message msg)
 	{
-		if(String.valueOf(msg.getSender_id()).equals(owner))
+		if(Owners.isOwner(String.valueOf(msg.getSender_id())))
 		{
 			System.exit(0);
 		}
@@ -377,7 +285,7 @@ public class Main
 	 */
 	public static void commandAlt(Message msg)
 	{
-		if(String.valueOf(msg.getSender_id()).equals(owner))
+		if (Owners.isOwner(String.valueOf(msg.getSender_id())))
 		{
 			setMaintenance(!isMaintenance());
 		}

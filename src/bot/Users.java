@@ -154,7 +154,7 @@ public class Users
 	 */
 	public static void banUser(Message msg)
 	{
-		if (msg.getText() != null && msg.getSender_id() == Long.parseLong(Main.getOwner()))
+		if (msg.getText() != null && Owners.isOwner(String.valueOf(msg.getSender_id())))
 		{
 			String[] text = msg.getText().split(" ");
 			if (text.length >= 2)

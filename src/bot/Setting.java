@@ -48,7 +48,6 @@ public class Setting
 	{
 		//Main Setting
 		addSetting("Bot_ID", "", "Main");
-		addSetting("Owner_ID", "", "Main");
 		addSetting("Update_Frequence", "1000", "Main");
 
 		//Webhook setting
@@ -193,34 +192,15 @@ public class Setting
 	public static String[] readSettings()
 	{
 		String idCode = Setting.readSetting("Bot_ID", "Main");
-		String owner = Setting.readSetting("Owner_ID", "Main");
 
-		if (idCode != null && owner != null)
+		if (idCode != null)
 		{
 			String[] tmp = new String[5];
 			tmp[0] = idCode;
-			tmp[1] = owner;
 			return tmp;
 		}
 		return null;
 	}
 
-	/**
-	 * Setup server from settings.json
-	 * @return true if server has been configurated. (If data in settings.json is wrong, server is configured wrong)
-	 */
-	public static boolean setBotAndOwnerFromSittings()
-	{
-		String[] configuration = Setting.readSettings();
 
-		if (configuration != null)
-		{
-			Main.setFields(configuration);
-			if (!Main.getIdCode().equals("") && !Main.getOwner().equals(""))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
 }

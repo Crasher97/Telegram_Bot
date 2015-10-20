@@ -45,7 +45,7 @@ public class Gui implements ActionListener
 			if(settings.length >= 2 && settings[0] != null && settings[1] != null)
 				{
 					Main.setBotId(settings[0]);
-					Main.setOwnerId(settings[1]);
+					//Main.setOwnerId(settings[1]);
 					Log.warn("idCode & ownerId are loaded from setting file");
 				}
 			gui = new Gui();
@@ -97,7 +97,7 @@ public class Gui implements ActionListener
 				addjLabel("Bot Owner ID :");
 				ownerId.setEditable(true);
 				panel.add(ownerId);
-				ownerId.setText(bot.Main.getOwner());
+				//ownerId.setText(bot.Main.getOwner()); TODO fix for the new owners system
 				
 				
 				addjLabel("CONSOLE :");
