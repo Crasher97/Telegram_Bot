@@ -41,7 +41,7 @@ public class Owners
 	}
 
 
-	public static void addOwner(String userId)
+	public static void addOwner(Long userId)
 	{
 		if (isOwner(userId)) return;
 		JSONParser parser = new JSONParser();
@@ -85,7 +85,7 @@ public class Owners
 		}
 	}
 
-	public static boolean isOwner(String userId)
+	public static boolean isOwner(Long userId)
 	{
 		JSONParser parser = new JSONParser();
 		JSONObject obj;

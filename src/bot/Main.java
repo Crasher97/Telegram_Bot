@@ -130,8 +130,8 @@ public class Main
 							e.printStackTrace();
 						}
 					}
-				}
 			}
+		}
 			try
 			{
 				Thread.sleep(1000);
@@ -188,11 +188,11 @@ public class Main
 
 	public static void messageProcessThread(Message msg)
 	{
-		Thread updateThread = new Thread(new Runnable()
-		{
-		public void run()
-			{
-				if(isMaintenance() && !Owners.isOwner(String.valueOf(msg.getSender_id())))
+		//Thread updateThread = new Thread(new Runnable()
+		//{
+		//public void run()
+		//	{
+				if(isMaintenance() && !Owners.isOwner(msg.getSender_id()))
 				{
 					Sender.sendMessage(msg.getSender_id(), "BOT IS IN MAINTENANCE");
 				}
@@ -200,9 +200,9 @@ public class Main
 				{
 					Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 				}
-			}
-		});
-		updateThread.start();
+		//	}
+	//	});
+		//updateThread.start();
 	}
 
 	/**
@@ -265,7 +265,7 @@ public class Main
 	 */
 	public static void commandStop(Message msg)
 	{
-		if(Owners.isOwner(String.valueOf(msg.getSender_id())))
+		if(Owners.isOwner(msg.getSender_id()))
 		{
 			System.exit(0);
 		}
@@ -277,7 +277,7 @@ public class Main
 	 */
 	public static void commandAlt(Message msg)
 	{
-		if (Owners.isOwner(String.valueOf(msg.getSender_id())))
+		if (Owners.isOwner(msg.getSender_id()))
 		{
 			setMaintenance(!isMaintenance());
 		}
