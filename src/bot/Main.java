@@ -19,7 +19,7 @@ public class Main
 	private static boolean maintenance = false;
 
 	/**
-	 * Main method
+	 * Main method program starts here
 	 *
 	 * @param args botId   - get it from bot Father
 	 * @param args ownerId - your telegram id
