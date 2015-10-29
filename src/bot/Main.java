@@ -188,10 +188,10 @@ public class Main
 
 	public static void messageProcessThread(Message msg)
 	{
-		Thread updateThread = new Thread(new Runnable()
-		{
-			public void run()
-			{
+		//Thread updateThread = new Thread(new Runnable()
+		//{
+			//public void run()
+			//{
 				if (!UpdatesReader.checkUserExist(msg))
 				{
 					Log.info("New user has connected");
@@ -206,9 +206,9 @@ public class Main
 					Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 				}
 			}
-		});
-		updateThread.start();
-	}
+	//	});
+	//	updateThread.start();
+	//}
 
 	/**
 	 * Return bot idCode

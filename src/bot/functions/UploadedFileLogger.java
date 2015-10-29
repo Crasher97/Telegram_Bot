@@ -89,7 +89,7 @@ public class UploadedFileLogger
 		obj.put("Files", files);
 		try
 		{
-			FileWriter outFile = new FileWriter("uploadedFileLog.json");
+			FileWriter outFile = new FileWriter("log/uploadedFileLog.json");
 			//outFile.write(obj.toJSONString());
 			outFile.write(gson.toJson(obj));
 			Log.info("Creato file JSON");
