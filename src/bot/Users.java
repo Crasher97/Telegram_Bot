@@ -145,7 +145,9 @@ public class Users
 	 */
 	public static void loadUsersCommand()
 	{
-		Commands.addCommand(new Command("ban", "bot.Users", "banUser"));
+		Command ban = new Command("ban", "bot.Users", "banUser");
+		ban.setHidden(true);
+		Commands.addCommand(ban);
 	}
 
 	/**

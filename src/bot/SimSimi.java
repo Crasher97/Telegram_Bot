@@ -26,8 +26,8 @@ public class SimSimi
 			{
 				Document doc = Jsoup.connect(SIMSIMI_URL + message).ignoreContentType(true).get();
 				simSimiJSONReply = doc.text();
-				JSONObject jsonObject = (JSONObject) parser.parse(simSimiJSONReply);
-				simSimiReply = jsonObject.get("res").toString();
+				JSONObject jsonObject = (JSONObject) ((JSONObject) parser.parse(simSimiJSONReply)).get("res");
+				simSimiReply = jsonObject.get("msg").toString();
 				return simSimiReply;
 			}
 			catch (Exception e)

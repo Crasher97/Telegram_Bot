@@ -1,6 +1,9 @@
 package addons;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import bot.Log;
 import bot.Message;
@@ -35,18 +38,29 @@ public class Help
 	/**
 	 * Handle a request and reply with the content, if only "help" is called it make a list of the existing command
 	 *
-	 * @param message Message received
+	 * @param msg Message received
 	 */
-	public static void helpRequest(Message message)
+	public static void helpRequest(Message msg)
 	{
-		String args[] = message.getText().split(" ");
+		String args[] = msg.getText().split(" ");
 		if (args.length == 2)
 		{
-			Sender.sendMessage(message.getSender_id(), helps.get(args[1]));
+			Sender.sendMessage(msg.getSender_id(), helps.get(args[1]));
 		}
 		else
 		{
-			Sender.sendMessage(message.getSender_id(), Commands.getCommands().keySet().toString());
+			HashMap<String,Command> commandList = Commands.getCommands();
+			Iterator<String> commands = commandList.keySet().iterator();
+			String message = "Get help for a command. write one of line below.%0A";
+			while(commands.hasNext())
+			{
+				Command command = commandList.get(commands.next());
+				if(!command.isHidden())
+				{
+					message += "/help " + command.getCommandName() + "%0A";
+				}
+			}
+			Sender.sendMessage(msg.getSender_id(), message);
 		}
 	}
 
@@ -71,6 +85,6 @@ public class Help
 	 */
 	public static void startRequest(Message message)
 	{
-		Sender.sendMessage(message.getSender_id(), "Faggots. faggots everywere. Try /help to list commands. Try /help +command for help about command");
+		Sender.sendMessage(message.getSender_id(), "Faggots. faggots everywere. Try /help to list commands. Try /help %2Bcommand for help about command");
 	}
 }

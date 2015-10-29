@@ -130,8 +130,8 @@ public class Main
 							e.printStackTrace();
 						}
 					}
+				}
 			}
-		}
 			try
 			{
 				Thread.sleep(1000);
@@ -188,21 +188,26 @@ public class Main
 
 	public static void messageProcessThread(Message msg)
 	{
-		//Thread updateThread = new Thread(new Runnable()
-		//{
-		//public void run()
-		//	{
-				if(isMaintenance() && !Owners.isOwner(msg.getSender_id()))
+		Thread updateThread = new Thread(new Runnable()
+		{
+			public void run()
+			{
+				if (!UpdatesReader.checkUserExist(msg))
 				{
+					Log.info("New user has connected");
+				}
+				if (isMaintenance() && !Owners.isOwner(msg.getSender_id()))
+				{
+					Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " [group" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
 					Sender.sendMessage(msg.getSender_id(), "BOT IS IN MAINTENANCE");
 				}
 				else if (!UpdatesReader.isBanned(msg) && UpdatesReader.isCommand(msg))
 				{
 					Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 				}
-		//	}
-	//	});
-		//updateThread.start();
+			}
+		});
+		updateThread.start();
 	}
 
 	/**
@@ -261,11 +266,12 @@ public class Main
 
 	/**
 	 * Command stop. Stop the bot
+	 *
 	 * @param msg
 	 */
 	public static void commandStop(Message msg)
 	{
-		if(Owners.isOwner(msg.getSender_id()))
+		if (Owners.isOwner(msg.getSender_id()))
 		{
 			System.exit(0);
 		}
@@ -273,6 +279,7 @@ public class Main
 
 	/**
 	 * Command alt. Set bot in maintenance. Owner can write to bot for testing.
+	 *
 	 * @param msg
 	 */
 	public static void commandAlt(Message msg)
@@ -291,8 +298,12 @@ public class Main
 	 */
 	public static void loadBasicCommands()
 	{
-		Commands.addCommand(new Command("alt", "bot.Main", "commandAlt"));
-		Commands.addCommand(new Command("stop", "bot.Main", "commandStop"));
+		Command alt = new Command("alt", "bot.Main", "commandAlt");
+		Command stop = new Command("stop", "bot.Main", "commandStop");
+		alt.setHidden(true);
+		stop.setHidden(true);
+		Commands.addCommand(alt);
+		Commands.addCommand(stop);
 	}
 
 }

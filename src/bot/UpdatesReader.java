@@ -75,12 +75,6 @@ public class UpdatesReader
 					//AGGIUNGE IL MESSAGGIO ALLA RACCOLTA
 					Messages.addMessage(message);
 
-					//AGGIUNGE L'UTENTE
-					if(!checkUserExist(message))
-					{
-						Log.info("New user has connected");
-					}
-
 					//CANCELLA I MESSAGGI
 					Jsoup.connect(Main.getUrl() + "/getUpdates?offset=" + (message.getUpdate_id() + 1)).ignoreContentType(true).post();
 					messages.add(message);
@@ -162,11 +156,7 @@ public class UpdatesReader
 			Message message = getMessageInfo(jsonObject, chat);
 			Messages.addMessage(message);
 
-			//AGGIUNGE L'UTENTE
-			if(!checkUserExist(message))
-			{
-				Log.info("New user has connected");
-			}
+
 			return message;
 		}
 		catch (ParseException e)

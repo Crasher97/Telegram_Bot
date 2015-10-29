@@ -7,6 +7,7 @@ public class Command
 	private String className;
 	private String methodName;
 	private boolean external;
+	private boolean hidden = false;
 
 	/**
 	 * Constructor for the command added by external addons
@@ -90,4 +91,21 @@ public class Command
 		return external;
 	}
 
+	/**
+	 * Set if command is hidden
+	 * @param hide
+	 */
+	public void setHidden(boolean hide)
+	{
+		hidden = hide;
+	}
+
+	/**
+	 * Return command's hidden status
+	 * @return true if command is hidden
+	 */
+	public boolean isHidden()
+	{
+		return hidden;
+	}
 }
