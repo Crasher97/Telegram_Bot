@@ -113,7 +113,7 @@ public class UploadedFileLogger
 	@SuppressWarnings("unchecked")
 	public static void addToFileLog(String filePath, String receivedJSON, Type type)
 	{
-		File f = new File("uploadedFileLog.json");
+		File f = new File("log/uploadedFileLog.json");
 		if (!f.exists()) createLogFile();
 		String fileMD5 = calculateFileMD5(filePath);
 		String file_id = parseJSON(receivedJSON, type);
@@ -121,7 +121,7 @@ public class UploadedFileLogger
 		JSONObject obj;
 		try
 		{
-			obj = (JSONObject) parser.parse(new FileReader("uploadedFileLog.json"));
+			obj = (JSONObject) parser.parse(new FileReader("log/uploadedFileLog.json"));
 			JSONArray files = (JSONArray) obj.get("Files");
 			JSONObject file = new JSONObject();
 			file.put("hash", fileMD5);
@@ -130,7 +130,7 @@ public class UploadedFileLogger
 			file.put("fileType", type.toString());
 			files.add(file);
 
-			FileWriter outFile = new FileWriter("uploadedFileLog.json");
+			FileWriter outFile = new FileWriter("log/uploadedFileLog.json");
 			outFile.write(gson.toJson(obj));
 			outFile.flush();
 			outFile.close();
@@ -173,14 +173,14 @@ public class UploadedFileLogger
 	@SuppressWarnings("unchecked")
 	public static String getFileId(String path)
 	{
-		File f = new File("uploadedFileLog.json");
+		File f = new File("log/uploadedFileLog.json");
 		if (!f.exists()) createLogFile();
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		String fileMD5 = calculateFileMD5(path);
 		try
 		{
-			obj = (JSONObject) parser.parse(new FileReader("uploadedFileLog.json"));
+			obj = (JSONObject) parser.parse(new FileReader("log/uploadedFileLog.json"));
 			JSONArray files = (JSONArray) obj.get("Files");
 
 			Iterator<JSONObject> iterator = files.iterator();
