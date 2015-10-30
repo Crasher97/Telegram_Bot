@@ -189,17 +189,24 @@ public class Main
 
 	public static void messageProcessThread(Message msg)
 	{
-		//Thread updateThread = new Thread(new Runnable()
-		//{
-			//public void run()
-			//{
+		Thread updateThread = new Thread(new Runnable()
+		{
+			public void run()
+			{
+				if(msg.getText() == null)
+				{
+					Log.warn("Message empty received from " + msg.getSender_id() + " group[" + msg.getChat().getTitle()+ "]");
+					Sender.sendMessage(msg.getChat().getId(), "Error. Empty text", msg.getMessage_id());
+					return;
+				}
 				if (!UpdatesReader.checkUserExist(msg))
 				{
 					Log.info("New user has connected");
 				}
+
 				if (isMaintenance() && !Owners.isOwner(msg.getSender_id()))
 				{
-					Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " [group" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
+					Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
 					Sender.sendMessage(msg.getSender_id(), "BOT IS IN MAINTENANCE");
 				}
 				else if (!UpdatesReader.isBanned(msg) && UpdatesReader.isCommand(msg))
@@ -207,9 +214,9 @@ public class Main
 					Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 				}
 			}
-	//	});
-	//	updateThread.start();
-	//}
+		});
+		updateThread.start();
+	}
 
 	/**
 	 * Return bot idCode

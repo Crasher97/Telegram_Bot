@@ -181,12 +181,12 @@ public class UpdatesReader
 			command = command.substring(1).split(" ")[0];
 			if (Commands.commandExist(command))
 			{
-				Log.info("Command from [" + msg.getSender_id()+"] " + msg.getFirst_name() + " " + msg.getLast_name() + " [group" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
+				Log.info("Command from [" + msg.getSender_id()+"] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
 				return true;
 			}
 			else
 			{
-				Log.warn("Command NOT recognized from [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name()  + " [group" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
+				Log.warn("Command NOT recognized from [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name()  + " group[" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
 				if(msg.getChat().getType().equals("group"))
 				{
 					Sender.sendMessage(msg.getChat().getId(), "Unknown command", msg.getMessage_id());
@@ -201,7 +201,7 @@ public class UpdatesReader
 		else
 		{
 
-			Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " [group" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
+			Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
 			if(msg.getChat().getType().equals("group"))
 			{
 				Sender.sendMessage(msg.getChat().getId(), SimSimi.toSimSimi(msg.getText()), msg.getMessage_id());
@@ -227,11 +227,11 @@ public class UpdatesReader
 			Log.warn("BANNED USER [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + ": " + msg.getText());
 			if(msg.getChat().getType().equals("group"))
 			{
-				Sender.sendMessage(msg.getChat().getId(), "YOU ARE BANNED FROM THIS BOT", msg.getMessage_id());
+				Sender.sendMessage(msg.getChat().getId(), "%E2%80%A0YOU ARE BANNED FROM THIS BOT%E2%80%A0", msg.getMessage_id());
 			}
 			else
 			{
-				Sender.sendMessage(msg.getChat().getId(), "YOU ARE BANNED FROM THIS BOT");
+				Sender.sendMessage(msg.getChat().getId(), "%E2%80%A0YOU ARE BANNED FROM THIS BOT%E2%80%A0");
 			}
 			return true;
 		}
