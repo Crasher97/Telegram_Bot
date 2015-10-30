@@ -65,6 +65,7 @@ public class Main
 		deletingThread();
 
 		Owners.createOwnersFile();
+		botId = Setting.readSetting("Bot_ID", "Main");
 		url += Setting.readSetting("Bot_ID", "Main");
 
 		if (Setting.readSetting("WebHook_Active", "WebHook").equals("true"))

@@ -38,7 +38,6 @@ public class UploadedFileLogger
 
 		try
 		{
-			Log.debug(receivedJSON);
 			JSONObject jsonObject = (JSONObject) parser.parse(receivedJSON);
 			JSONObject resultList = (JSONObject) jsonObject.get("result");
 			switch (type)
