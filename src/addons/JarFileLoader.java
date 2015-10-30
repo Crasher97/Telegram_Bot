@@ -27,6 +27,7 @@ public class JarFileLoader extends ClassLoader
 	 */
 	public static void invokeClassMethod(String classBinName, String methodName)
 	{
+		int addonsNumber = 0;
 		File dir = new File("addons/");
 		File[] directoryListing = dir.listFiles();
 		if (directoryListing != null)
@@ -58,8 +59,9 @@ public class JarFileLoader extends ClassLoader
 						{
 							Method method = loadedMyClass.getMethod(methodName);
 							//System.out.println("Invoked method name: " + method.getName());
-							Log.info("Addons " + file.getName() + " Caricato con successo");
+							Log.config("Addons " + file.getName() + " Caricato con successo");
 							method.invoke(myClassObject);
+							addonsNumber++;
 						}
 						catch (NoSuchMethodException em)
 						{
@@ -79,7 +81,7 @@ public class JarFileLoader extends ClassLoader
 					Log.stackTrace(e.getStackTrace());
 				}
 			}
-
+			Log.info(addonsNumber + " addons have been loaded");
 		}
 
 	}

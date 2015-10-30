@@ -68,7 +68,7 @@ public class Main
 		botId = Setting.readSetting("Bot_ID", "Main");
 		url += Setting.readSetting("Bot_ID", "Main");
 
-		if (Setting.readSetting("WebHook_Active", "WebHook").equals("true"))
+		if(Setting.readSetting("WebHook_Active", "WebHook").equals("true"))
 		{
 			WebHook.setWebHook();
 			Server.startServer();
@@ -288,6 +288,7 @@ public class Main
 		if (Owners.isOwner(msg.getSender_id()))
 		{
 			setMaintenance(!isMaintenance());
+			Log.config("Maintenance mode: " + isMaintenance());
 		}
 	}
 

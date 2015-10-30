@@ -118,9 +118,10 @@ public class Users
 		JSONObject obj;
 		try
 		{
+			int i = 0;
 			obj = (JSONObject) parser.parse(new FileReader(usersFile));
 			ArrayList<String> keyList = new ArrayList<String>(obj.keySet());
-			for (int i = 0; i < keyList.size(); i++)
+			for (; i < keyList.size(); i++)
 			{
 				JSONObject user = (JSONObject) obj.get(keyList.get(i));
 				String firstName = (String) user.get("First_Name");
@@ -131,6 +132,7 @@ public class Users
 				newUser.setBan(ban);
 				addUser(newUser);
 			}
+			Log.info("Users[" + i + "] have been loaded");
 		}
 		catch (IOException | ParseException e)
 		{
@@ -165,6 +167,7 @@ public class Users
 				if (usr != null)
 				{
 					usr.setBan(!usr.isBan());
+					Log.info("User has been banned: " + usr.getSenderId());
 				}
 				else if (msg.getChat().getType().equals("group"))
 				{

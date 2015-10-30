@@ -18,7 +18,7 @@ public class Commands
 	 */
 	public static void addCommand(Command command)
 	{
-		Log.info("Command Added: " + command.getCommandName());
+		Log.config("Command Added: " + command.getCommandName());
 		commands.put(command.getCommandName(), command);
 	}
 
