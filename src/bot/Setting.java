@@ -22,8 +22,13 @@ public class Setting extends LogFileManager
 	 */
 	public static void createSettingFile()
 	{
+		createFolder(new File("config"));
 		if(!file.exists())
-		LogFileManager.createLogFile(file, "Main");
+		{
+			LogFileManager.createSettingsFile(file);
+			writeDefaultSettings();
+		}
+
 	}
 
 	/**

@@ -31,7 +31,6 @@ public class Main
 		Setting.createSettingFile();
 		if (!Setting.settingExist("Bot_ID", "Main") || Setting.readSetting("Bot_ID", "Main").equals(""))
 		{
-			Setting.writeDefaultSettings();
 			Log.error("WRONG CONFIGURATION: you can configure your bot in file setting inside folder config");
 			System.exit(1);
 		}

@@ -19,9 +19,10 @@ public class LogFileManager
 	 */
 	public static void createLogFile(File file, String startingCategory)
 	{
+
 		JSONObject obj = new JSONObject();
 		JSONArray files = new JSONArray();
-		obj.put("Files", files);
+		obj.put(startingCategory, files);
 		try
 		{
 			FileWriter outFile = new FileWriter(file);
@@ -35,5 +36,59 @@ public class LogFileManager
 		{
 			Log.stackTrace(e.getStackTrace());
 		}
+	}
+
+	/**
+	 * Create the file
+	 * @param file, file to be created
+	 */
+	public static void createSettingsFile(File file)
+	{
+		JSONObject obj = new JSONObject();
+		try
+		{
+			FileWriter outFile = new FileWriter(file);
+			outFile.write(gson.toJson(obj));
+			Log.config("Created file: " + file.getName());
+			outFile.flush();
+			outFile.close();
+
+		}
+		catch (IOException e)
+		{
+			Log.stackTrace(e.getStackTrace());
+		}
+	}
+
+
+	/**
+	 * Create a new file
+	 * @param file to be created
+	 */
+	public static void createLogFile(File file)
+	{
+		try
+		{
+			FileWriter outFile = new FileWriter(file);
+			outFile.write("");
+			Log.config("Created file: " + file.getName());
+			outFile.flush();
+			outFile.close();
+
+		}
+		catch (IOException e)
+		{
+			Log.stackTrace(e.getStackTrace());
+		}
+	}
+
+	public static void createFolder(File folder)
+	{
+		if (folder.exists() && !folder.isDirectory())
+		{
+			Log.error("Error creating log folder, delete file that name is log");
+			return;
+		}
+		if (!folder.exists()) folder.mkdir();
 	}
 }

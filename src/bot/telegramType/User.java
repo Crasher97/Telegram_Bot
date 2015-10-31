@@ -11,6 +11,8 @@ public class User
 	private String username;
 	private boolean ban = false;
 
+	private boolean register = false;
+
 	/**
 	 *	Create new user
 	 * @param senderId
@@ -58,5 +60,15 @@ public class User
 	public void setUsername(String username)
 	{
 		this.username = username;
+	}
+
+	public boolean isRegister()
+	{
+		return register;
+	}
+
+	public void setRegister()
+	{
+		register = !register;
 	}
 }
