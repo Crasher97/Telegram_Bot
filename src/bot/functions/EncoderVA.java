@@ -2,7 +2,7 @@ package bot.functions;
 
 import java.io.File;
 
-import bot.Log;
+import bot.log.Log;
 import it.sauronsoftware.jave.AudioAttributes;
 import it.sauronsoftware.jave.EncodingAttributes;
 import it.sauronsoftware.jave.Encoder;

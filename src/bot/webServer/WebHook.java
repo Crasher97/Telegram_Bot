@@ -1,9 +1,8 @@
 package bot.webServer;
 
-import bot.Log;
+import bot.log.Log;
 import bot.Main;
 import bot.Setting;
-import bot.functions.UploadedFileLogger;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

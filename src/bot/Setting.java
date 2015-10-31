@@ -1,21 +1,20 @@
 package bot;
 
-import bot.webServer.Server;
-import bot.webServer.WebHook;
+import bot.log.Log;
+import bot.log.LogFileManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Setting
+public class Setting extends LogFileManager
 {
-	private static File settingFile = new File("config/setting.json");
+	private static File file = new File("config/setting.json");
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 	/**
@@ -23,22 +22,8 @@ public class Setting
 	 */
 	public static void createSettingFile()
 	{
-		if (settingFile.exists()) return;
-		JSONObject obj = new JSONObject();
-		try
-		{
-			FileWriter outFile = new FileWriter(settingFile);
-			outFile.write(gson.toJson(obj));
-			Log.info("Creato file Setting");
-			outFile.flush();
-			outFile.close();
-			writeDefaultSettings();
-
-		}
-		catch (IOException e)
-		{
-			Log.stackTrace(e.getStackTrace());
-		}
+		if(!file.exists())
+		LogFileManager.createLogFile(file, "Main");
 	}
 
 	/**
@@ -71,18 +56,18 @@ public class Setting
 	@SuppressWarnings("unchecked")
 	public static void addSetting(String key, String value, String category)
 	{
-		if (!settingFile.exists()) createSettingFile();
+		if (!file.exists()) createSettingFile();
 		if (settingExist(key, category)) return;
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		try
 		{
-			obj = (JSONObject) parser.parse(new FileReader(settingFile));
+			obj = (JSONObject) parser.parse(new FileReader(file));
 			JSONObject setting = (JSONObject) obj.getOrDefault(category, new JSONObject());
 			setting.put(key, value);
 			obj.put(category, setting);
 
-			FileWriter outFile = new FileWriter(settingFile);
+			FileWriter outFile = new FileWriter(file);
 			outFile.write(gson.toJson(obj));
 			outFile.flush();
 			outFile.close();
@@ -107,7 +92,7 @@ public class Setting
 		String readingResult = "";
 		try
 		{
-			obj = (JSONObject) parser.parse(new FileReader(settingFile));
+			obj = (JSONObject) parser.parse(new FileReader(file));
 			JSONObject setting = (JSONObject) obj.get(category);
 			readingResult = setting.get(key).toString();
 
@@ -135,12 +120,12 @@ public class Setting
 		JSONObject obj;
 		try
 		{
-			obj = (JSONObject) parser.parse(new FileReader(settingFile));
+			obj = (JSONObject) parser.parse(new FileReader(file));
 			JSONObject setting = (JSONObject) obj.getOrDefault(category, new JSONObject());
 			setting.put(key, value);
 			obj.put(category, setting);
 
-			FileWriter outFile = new FileWriter(settingFile);
+			FileWriter outFile = new FileWriter(file);
 			outFile.write(gson.toJson(obj));
 			outFile.flush();
 			outFile.close();
@@ -167,7 +152,7 @@ public class Setting
 		JSONObject obj;
 		try
 		{
-			obj = (JSONObject) parser.parse(new FileReader(settingFile));
+			obj = (JSONObject) parser.parse(new FileReader(file));
 			JSONObject setting = (JSONObject) obj.get(category);
 			if (setting == null) return false;
 			if (setting.get(key) == null) return false;
@@ -182,24 +167,6 @@ public class Setting
 			Log.stackTrace(e.getStackTrace());
 		}
 		return false;
-	}
-
-	/**
-	 * Return last launching configuration
-	 *
-	 * @return an array[2], where in [0] there is bot ID & in [1] there is the owner ID (saved in settings)
-	 */
-	public static String[] readSettings()
-	{
-		String idCode = Setting.readSetting("Bot_ID", "Main");
-
-		if (idCode != null)
-		{
-			String[] tmp = new String[5];
-			tmp[0] = idCode;
-			return tmp;
-		}
-		return null;
 	}
 
 

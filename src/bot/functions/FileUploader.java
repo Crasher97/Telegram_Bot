@@ -1,5 +1,6 @@
 package bot.functions;
 
+import bot.log.UploadedFileLogger;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -10,7 +11,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 
-import bot.Log;
+import bot.log.Log;
 import bot.Main;
 
 import java.io.File;

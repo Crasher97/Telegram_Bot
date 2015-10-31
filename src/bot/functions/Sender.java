@@ -1,8 +1,9 @@
-package bot;
+package bot.functions;
 
 import java.io.IOException;
 
-import bot.functions.Keyboard;
+import bot.log.Log;
+import bot.Main;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 

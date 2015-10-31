@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import bot.log.DownloadedFileLogger;
 import bot.Main;
 import org.apache.commons.io.FileUtils;
 
@@ -11,10 +12,9 @@ import com.github.axet.vget.VGet;
 import com.github.axet.vget.info.VGetParser;
 import com.github.axet.vget.vhs.YouTubeMPGParser;
 
-import bot.Log;
+import bot.log.Log;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 

@@ -7,7 +7,9 @@ import addons.Command;
 import addons.Commands;
 import addons.Help;
 import addons.JarFileLoader;
-import bot.functions.DownloadedFileLogger;
+import bot.log.Log;
+import bot.log.DownloadedFileLogger;
+import bot.functions.Sender;
 import bot.webServer.Server;
 import bot.webServer.WebHook;
 
@@ -29,6 +31,7 @@ public class Main
 		Setting.createSettingFile();
 		if (!Setting.settingExist("Bot_ID", "Main") || Setting.readSetting("Bot_ID", "Main").equals(""))
 		{
+			Setting.writeDefaultSettings();
 			Log.error("WRONG CONFIGURATION: you can configure your bot in file setting inside folder config");
 			System.exit(1);
 		}

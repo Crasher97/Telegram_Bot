@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import bot.Log;
+import bot.log.Log;
 import bot.Message;
 
 public class JarFileLoader extends ClassLoader

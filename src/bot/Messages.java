@@ -1,5 +1,7 @@
 package bot;
 
+import bot.log.Log;
+
 import java.io.IOException;
 import java.util.ArrayList;
 

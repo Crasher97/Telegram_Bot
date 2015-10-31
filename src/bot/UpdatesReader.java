@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
+import bot.log.Log;
+import bot.functions.Sender;
 import bot.telegramType.Chat;
 import bot.telegramType.User;
 import org.json.simple.JSONArray;

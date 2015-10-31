@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-import bot.Log;
+import bot.log.Log;
 import bot.Message;
 
 public class Commands

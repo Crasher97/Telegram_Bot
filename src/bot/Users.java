@@ -2,6 +2,8 @@ package bot;
 
 import addons.Command;
 import addons.Commands;
+import bot.log.Log;
+import bot.functions.Sender;
 import bot.telegramType.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

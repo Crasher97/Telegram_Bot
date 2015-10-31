@@ -1,6 +1,7 @@
 package bot.webServer;
 
 import bot.*;
+import bot.log.Log;
 import fi.iki.elonen.NanoHTTPD;
 import org.apache.commons.ssl.KeyMaterial;
 import org.apache.commons.ssl.SSLServer;
@@ -8,7 +9,6 @@ import org.apache.commons.ssl.TrustMaterial;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

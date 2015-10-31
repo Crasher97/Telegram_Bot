@@ -2,12 +2,10 @@ package addons;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
-import bot.Log;
+import bot.log.Log;
 import bot.Message;
-import bot.Sender;
+import bot.functions.Sender;
 
 public class Help
 {

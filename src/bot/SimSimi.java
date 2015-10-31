@@ -1,5 +1,6 @@
 package bot;
 
+import bot.log.Log;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.jsoup.Jsoup;
