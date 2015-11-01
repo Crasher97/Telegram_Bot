@@ -14,9 +14,10 @@ public class Message
 	private long message_id;
 	private User user;
 	private Date date;
-	private String text;
-	private static DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
+	private String text;
+
+	private static DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	/**
 	 * Constructor of Message
 	 *
@@ -36,6 +37,15 @@ public class Message
 		this.date = date;
 		this.text = text;
 		this.chat = chat;
+	}
+
+	/**
+	 * Set text
+	 * @param text
+	 */
+	public void setText(String text)
+	{
+		this.text = text;
 	}
 
 	/**

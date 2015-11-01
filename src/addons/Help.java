@@ -58,7 +58,14 @@ public class Help
 					message += "/help " + command.getCommandName() + "%0A";
 				}
 			}
-			Sender.sendMessage(msg.getSender_id(), message);
+			if(msg.getChat().getType().equals("group"))
+			{
+				Sender.sendMessage(msg.getChat().getId(), message, msg.getMessage_id());
+			}
+			else
+			{
+				Sender.sendMessage(msg.getChat().getId(), message);
+			}
 		}
 	}
 

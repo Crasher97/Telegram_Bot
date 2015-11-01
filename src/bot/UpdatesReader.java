@@ -183,6 +183,11 @@ public class UpdatesReader
 		if (msg.getText() != null && msg.getText().charAt(0) == '/')
 		{
 			String command = msg.getText();
+			if(!command.equals(msg.getText().split("@")));
+			{
+				command = msg.getText().split("@")[0];
+				msg.setText(command);
+			}
 			command = command.substring(1).split(" ")[0];
 			if (Commands.commandExist(command))
 			{
