@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import bot.functions.JsonManager;
 
 import java.io.*;
 import java.util.Iterator;
@@ -40,8 +40,8 @@ public class DownloadedFileLogger extends LogFileManager
 		JSONObject obj;
 		try
 		{
-			obj = (JSONObject) parser.parse(new FileReader(file));
-			JSONArray files = (JSONArray) obj.get("Files");
+			obj = JsonManager.readJsonFromFile(file);
+			JSONArray files = JsonManager.getArrayFromJson(obj, "Files");
 			JSONObject jsonFile = new JSONObject();
 			jsonFile.put("youtubeID", url.replace("https://www.youtube.com/watch?v=", ""));
 			jsonFile.put("fileName", filePath.split("/")[1]);
@@ -54,7 +54,7 @@ public class DownloadedFileLogger extends LogFileManager
 			outFile.flush();
 			outFile.close();
 		}
-		catch (IOException | ParseException e)
+		catch (IOException e)
 		{
 			Log.stackTrace(e.getStackTrace());
 		}
@@ -73,8 +73,8 @@ public class DownloadedFileLogger extends LogFileManager
 		JSONObject obj;
 		try
 		{
-			obj = (JSONObject) parser.parse(new FileReader(file));
-			JSONArray filesInJson = (JSONArray) obj.getOrDefault("Files", new JSONArray());
+			obj = JsonManager.readJsonFromFile(file);
+			JSONArray filesInJson = JsonManager.getArrayFromJson(obj, "Files");
 			for (int i = 0; i < filesInJson.size(); i++)
 			{
 				JSONObject file = (JSONObject) filesInJson.get(i);
@@ -91,7 +91,7 @@ public class DownloadedFileLogger extends LogFileManager
 			outFile.close();
 			return true;
 		}
-		catch (IOException | ParseException e)
+		catch (IOException e)
 		{
 			Log.stackTrace(e.getStackTrace());
 		}
@@ -131,26 +131,18 @@ public class DownloadedFileLogger extends LogFileManager
 		if (!file.exists()) createLogFile();
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
-		try
-		{
-			obj = (JSONObject) parser.parse(new FileReader(file));
-			JSONArray files = (JSONArray) obj.get("Files");
+		obj = JsonManager.readJsonFromFile(file);
+		JSONArray files = JsonManager.getArrayFromJson(obj, "Files");
 
-			Iterator<JSONObject> iterator = files.iterator();
-			while (iterator.hasNext())
-			{
-				Object objI = iterator.next();
-				JSONObject jsonObjectResult = (JSONObject) objI;
-				if (jsonObjectResult.get("youtubeID").equals(youtubeUrl.replace("https://www.youtube.com/watch?v=", "")))
-				{
-					return (String) jsonObjectResult.get("fileName");
-				}
-			}
-			return null;
-		}
-		catch (IOException | ParseException e)
+		Iterator<JSONObject> iterator = files.iterator();
+		while (iterator.hasNext())
 		{
-			Log.stackTrace(e.getStackTrace());
+			Object objI = iterator.next();
+			JSONObject jsonObjectResult = (JSONObject) objI;
+			if (jsonObjectResult.get("youtubeID").equals(youtubeUrl.replace("https://www.youtube.com/watch?v=", "")))
+			{
+				return (String) jsonObjectResult.get("fileName");
+			}
 		}
 		return null;
 	}

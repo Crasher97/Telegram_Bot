@@ -2,11 +2,12 @@ package bot.log;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 
+import bot.functions.FileManager;
+import bot.functions.JsonManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -30,7 +31,7 @@ public class UploadedFileLogger extends LogFileManager
 	 */
 	public static void createLogFile()
 	{
-		LogFileManager.createLogFile(file, "Files" );
+		LogFileManager.createLogFile(file, "Files");
 	}
 
 	/**
@@ -96,30 +97,21 @@ public class UploadedFileLogger extends LogFileManager
 	public static void addToFileLog(String filePath, String receivedJSON, Type type)
 	{
 		if (!file.exists()) createLogFile();
+
 		String fileMD5 = calculateFileMD5(filePath);
 		String file_id = parseJSON(receivedJSON, type);
-		JSONParser parser = new JSONParser();
-		JSONObject obj;
-		try
-		{
-			obj = (JSONObject) parser.parse(new FileReader(file));
-			JSONArray files = (JSONArray) obj.get("Files");
-			JSONObject jsonFile = new JSONObject();
-			jsonFile.put("hash", fileMD5);
-			jsonFile.put("file_id", file_id);
-			jsonFile.put("fileName", filePath.split("/")[1]);
-			jsonFile.put("fileType", type.toString());
-			files.add(jsonFile);
 
-			FileWriter outFile = new FileWriter(file);
-			outFile.write(gson.toJson(obj));
-			outFile.flush();
-			outFile.close();
-		}
-		catch (IOException | ParseException e)
-		{
-			Log.stackTrace(e.getStackTrace());
-		}
+		JSONObject obj = JsonManager.readJsonFromFile(file);
+		JSONArray files = (JSONArray) obj.get("Files");
+
+		JSONObject jsonFile = new JSONObject();
+		jsonFile.put("hash", fileMD5);
+		jsonFile.put("file_id", file_id);
+		jsonFile.put("fileName", filePath.split("/")[1]);
+		jsonFile.put("fileType", type.toString());
+		files.add(jsonFile);
+
+		FileManager.writeFile(file, gson.toJson(obj), false, true);
 	}
 
 	/**
@@ -155,29 +147,20 @@ public class UploadedFileLogger extends LogFileManager
 	public static String getFileId(String path)
 	{
 		if (!file.exists()) createLogFile();
-		JSONParser parser = new JSONParser();
-		JSONObject obj;
 		String fileMD5 = calculateFileMD5(path);
-		try
-		{
-			obj = (JSONObject) parser.parse(new FileReader(file));
-			JSONArray files = (JSONArray) obj.get("Files");
 
-			Iterator<JSONObject> iterator = files.iterator();
-			while (iterator.hasNext())
-			{
-				Object objI = iterator.next();
-				JSONObject jsonObjectResult = (JSONObject) objI;
-				if (jsonObjectResult.get("hash").equals(fileMD5))
-				{
-					return (String) jsonObjectResult.get("file_id");
-				}
-			}
-			return null;
-		}
-		catch (IOException | ParseException e)
+		JSONObject obj = JsonManager.readJsonFromFile(file);
+		JSONArray files = (JSONArray) obj.get("Files");
+
+		Iterator<JSONObject> iterator = files.iterator();
+		while (iterator.hasNext())
 		{
-			Log.stackTrace(e.getStackTrace());
+			Object objI = iterator.next();
+			JSONObject jsonObjectResult = (JSONObject) objI;
+			if (jsonObjectResult.get("hash").equals(fileMD5))
+			{
+				return (String) jsonObjectResult.get("file_id");
+			}
 		}
 		return null;
 	}

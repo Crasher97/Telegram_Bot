@@ -1,0 +1,10 @@
+{
+  "EN": [
+    {
+      "MESSAGE_RECEIVED": " Message received ",
+      "FROM": " from ",
+      "NEW_USER": " New user ",
+      "HAS_CONNECTED": " has connected "
+    }
+  ]
+}

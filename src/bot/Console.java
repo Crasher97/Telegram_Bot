@@ -1,11 +1,11 @@
 package bot;
 
+import bot.collections.Users;
 import bot.functions.FileDownloader;
 import bot.functions.Keyboard;
 import bot.functions.Sender;
 import bot.webServer.Server;
 import bot.webServer.WebHook;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;

@@ -1,5 +1,7 @@
 package bot.log;
 
+import bot.functions.FileManager;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.Date;
 public class Log
 {
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
-	private static File logFile = null;
+	private static File logFile = new File("log/" + getTime() + ".log");
 
 	/**
 	 * Enum contains all printline message tipes
@@ -119,26 +121,15 @@ public class Log
 	 */
 	public static void createLogFile()
 	{
+
 		File logFolder = new File("log");
+		LogFileManager.createLogFolder(logFolder);
 		if (logFolder.exists() && !logFolder.isDirectory())
 		{
 			System.err.println("Log.createLogFile, error creating log folder, delete file that name is log");
 			return;
 		}
-		if (!logFolder.exists()) logFolder.mkdir();
-
-		logFile = new File("log/" + getTime() + ".log");
-		BufferedWriter outputWriter;
-		try
-		{
-			outputWriter = new BufferedWriter(new FileWriter(logFile, true));
-			outputWriter.flush();
-			outputWriter.close();
-		}
-		catch (IOException e)
-		{
-			stackTrace(e.getStackTrace());
-		}
+		FileManager.writeFile(logFile, "",true, true);
 	}
 
 	/**
@@ -146,20 +137,8 @@ public class Log
 	 *
 	 * @param x
 	 */
-	public static void addToLog(String x)
+	public static boolean addToLog(String x)
 	{
-		BufferedWriter outputWriter;
-		try
-		{
-			outputWriter = new BufferedWriter(new FileWriter(logFile, true));
-			outputWriter.write(x);
-			outputWriter.newLine();
-			outputWriter.flush();
-			outputWriter.close();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		return FileManager.writeFile(logFile,x,true,false);
 	}
 }

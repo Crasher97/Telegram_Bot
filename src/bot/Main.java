@@ -3,10 +3,15 @@ package bot;
 import java.io.File;
 import java.util.ArrayList;
 
+import bot.translation.Sentences;
+import bot.translation.SentencesLoader;
 import addons.Command;
 import addons.Commands;
 import addons.Help;
 import addons.JarFileLoader;
+import bot.collections.Messages;
+import bot.collections.Owners;
+import bot.collections.Users;
 import bot.log.Log;
 import bot.log.DownloadedFileLogger;
 import bot.functions.Sender;
@@ -61,6 +66,8 @@ public class Main
 		Console.loadCommand();
 		Console.openConsole();
 
+		//LOAD LENGUAGE
+		SentencesLoader.loadSentences();
 
 		//START THREADS
 		shutDownThread();
@@ -203,7 +210,7 @@ public class Main
 				}
 				if (!UpdatesReader.checkUserExist(msg))
 				{
-					Log.info("New user has connected");
+					Log.info(Sentences.NEW_USER.getSentence()+" "+Sentences.HAS_CONNECTED.getSentence());
 				}
 
 				if (isMaintenance() && !Owners.isOwner(msg.getSender_id()))

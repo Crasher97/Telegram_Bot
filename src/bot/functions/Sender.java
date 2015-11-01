@@ -41,6 +41,11 @@ public class Sender
 	{
 		try
 		{
+			if (message == null)
+			{
+				Log.warn("Message not sent, text is empty");
+				return false;
+			}
 			Document doc;
 			if(reply!=0)
 				doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + chatId + "&reply_to_message_id=" + reply + "&text=" + message).ignoreContentType(true).post();
@@ -49,15 +54,12 @@ public class Sender
 
 			if (doc.text().contains("\"ok\":true"))
 			{
-				if (message != null)
-					Log.info("Messaggio inviato: " + message.split("&")[0]);
-				else
-					Log.warn("Message not sent, text is empty");
+				Log.info("Messaggio inviato: " + message.split("&")[0]);
 				return true;
 			}
 			else
 			{
-				Log.error("Messaggio non inviato");
+				Log.error("Messaggio non inviato: " + doc.text());
 				return false;
 			}
 		}
@@ -67,5 +69,34 @@ public class Sender
 			return false;
 		}
 
+	}
+
+	/**
+	 * Send bot condition to be accepted by user
+	 * @return true if message has been sent
+	 */
+	public static boolean sendConditions(long privateChatId)
+	{
+		Document doc;
+		String message = "";
+		try
+		{
+			doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + privateChatId + "&text=" + message).ignoreContentType(true).post();
+			if (doc.text().contains("\"ok\":true"))
+			{
+				Log.info("Messaggio inviato: " + message.split("&")[0]);
+				return true;
+			}
+			else
+			{
+				Log.error("Messaggio non inviato: " + doc.text());
+				return false;
+			}
+		}
+		catch (IOException e)
+		{
+			Log.error("Condizioni non inviate");
+			return false;
+		}
 	}
 }

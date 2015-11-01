@@ -1,4 +1,4 @@
-package bot;
+package bot.collections;
 
 import bot.log.Log;
 import com.google.gson.Gson;

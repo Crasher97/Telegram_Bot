@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
+import bot.collections.Messages;
+import bot.collections.Users;
 import bot.log.Log;
 import bot.functions.Sender;
 import bot.telegramType.Chat;
 import bot.telegramType.User;
+import bot.translation.Sentences;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -183,19 +186,19 @@ public class UpdatesReader
 			command = command.substring(1).split(" ")[0];
 			if (Commands.commandExist(command))
 			{
-				Log.info("Command from [" + msg.getSender_id()+"] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
+				Log.info("Command "+Sentences.FROM.getSentence()+" [" + msg.getSender_id()+"] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
 				return true;
 			}
 			else
 			{
-				Log.warn("Command NOT recognized from [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name()  + " group[" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
+				Log.warn("Command NOT recognized "+Sentences.FROM.getSentence()+" [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name()  + " group[" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
 				if(msg.getChat().getType().equals("group"))
 				{
 					Sender.sendMessage(msg.getChat().getId(), "Unknown command", msg.getMessage_id());
 				}
 				else
 				{
-					Sender.sendMessage(msg.getChat().getId(), "Unknown command", msg.getMessage_id());
+					Sender.sendMessage(msg.getChat().getId(), "Unknown command");
 				}
 				return false;
 			}
@@ -203,7 +206,7 @@ public class UpdatesReader
 		else
 		{
 
-			Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
+			Log.info(Sentences.MESSAGE_RECEIVED.getSentence()+" "+Sentences.FROM.getSentence()+" [" + msg.getSender_id()+"] "+ msg.getFirst_name()+" "+msg.getLast_name() +" group[" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
 			if(msg.getChat().getType().equals("group"))
 			{
 				Sender.sendMessage(msg.getChat().getId(), SimSimi.toSimSimi(msg.getText()), msg.getMessage_id());

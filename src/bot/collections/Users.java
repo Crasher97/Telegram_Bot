@@ -1,7 +1,8 @@
-package bot;
+package bot.collections;
 
 import addons.Command;
 import addons.Commands;
+import bot.Message;
 import bot.log.Log;
 import bot.functions.Sender;
 import bot.telegramType.User;
@@ -149,7 +150,7 @@ public class Users
 	 */
 	public static void loadUsersCommand()
 	{
-		Command ban = new Command("ban", "bot.Users", "banUser");
+		Command ban = new Command("ban", "bot.collections.Users", "banUser");
 		ban.setHidden(true);
 		Commands.addCommand(ban);
 	}

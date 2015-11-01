@@ -1,12 +1,12 @@
 package bot.log;
 
+import bot.functions.FileManager;
+import bot.functions.FolderManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class LogFileManager
 {
@@ -14,81 +14,39 @@ public class LogFileManager
 
 	/**
 	 * Create the file
-	 * @param file, file to be created
-	 * @param startingCategory, first category of Json log file
+	 *
+	 * @param file,          file to be created
+	 * @param startingArray, first category of Json log file if you pass
 	 */
-	public static void createLogFile(File file, String startingCategory)
+	public static boolean createLogFile(File file, String startingArray)
 	{
 
 		JSONObject obj = new JSONObject();
-		JSONArray files = new JSONArray();
-		obj.put(startingCategory, files);
-		try
+		if (startingArray != null)
 		{
-			FileWriter outFile = new FileWriter(file);
-			outFile.write(gson.toJson(obj));
-			Log.config("Created file: " + file.getName());
-			outFile.flush();
-			outFile.close();
-
+			JSONArray files = new JSONArray();
+			obj.put(startingArray, files);
 		}
-		catch (IOException e)
-		{
-			Log.stackTrace(e.getStackTrace());
-		}
+		return FileManager.writeFile(file, gson.toJson(obj));
 	}
 
 	/**
-	 * Create the file
-	 * @param file, file to be created
-	 */
-	public static void createSettingsFile(File file)
-	{
-		JSONObject obj = new JSONObject();
-		try
-		{
-			FileWriter outFile = new FileWriter(file);
-			outFile.write(gson.toJson(obj));
-			Log.config("Created file: " + file.getName());
-			outFile.flush();
-			outFile.close();
-
-		}
-		catch (IOException e)
-		{
-			Log.stackTrace(e.getStackTrace());
-		}
-	}
-
-
-	/**
-	 * Create a new file
+	 * Create a new file, without create new json array inside file
+	 *
 	 * @param file to be created
 	 */
-	public static void createLogFile(File file)
+	public static boolean createLogFile(File file)
 	{
-		try
-		{
-			FileWriter outFile = new FileWriter(file);
-			outFile.write("");
-			Log.config("Created file: " + file.getName());
-			outFile.flush();
-			outFile.close();
-
-		}
-		catch (IOException e)
-		{
-			Log.stackTrace(e.getStackTrace());
-		}
+		return createLogFile(file, null);
 	}
 
-	public static void createFolder(File folder)
+	/**
+	 * Create new folder
+	 *
+	 * @param folder
+	 */
+	public static boolean createLogFolder(File folder)
 	{
-		if (folder.exists() && !folder.isDirectory())
-		{
-			Log.error("Error creating log folder, delete file that name is log");
-			return;
-		}
-		if (!folder.exists()) folder.mkdir();
+		return FolderManager.createFolder(folder);
 	}
 }

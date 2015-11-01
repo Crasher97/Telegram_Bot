@@ -9,8 +9,8 @@ public class User
 	private String first_name;
 	private String last_name;
 	private String username;
+	private int timeFromLastAdvice = -1;
 	private boolean ban = false;
-
 	private boolean register = false;
 
 	/**
@@ -19,6 +19,7 @@ public class User
 	 * @param first_name
 	 * @param last_name
 	 */
+
 	public User(long senderId, String first_name, String last_name, String username)
 	{
 		this.senderId = senderId;
@@ -60,6 +61,16 @@ public class User
 	public void setUsername(String username)
 	{
 		this.username = username;
+	}
+
+	public int getTimeFromLastAdvice()
+	{
+		return timeFromLastAdvice;
+	}
+
+	public void setTimeFromLastAdvice(int timeFromLastAdvice)
+	{
+		this.timeFromLastAdvice = timeFromLastAdvice;
 	}
 
 	public boolean isRegister()
