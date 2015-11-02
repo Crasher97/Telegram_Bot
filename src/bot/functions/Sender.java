@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bot.log.Log;
 import bot.Main;
+import bot.translation.Sentences;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -54,7 +55,7 @@ public class Sender
 
 			if (doc.text().contains("\"ok\":true"))
 			{
-				Log.info("Messaggio inviato: " + message.split("&")[0]);
+				Log.info("Messaggio inviato: " + message.split("&")[0].substring(0,20) + "...");
 				return true;
 			}
 			else
@@ -78,25 +79,17 @@ public class Sender
 	public static boolean sendConditions(long privateChatId)
 	{
 		Document doc;
-		String message = "";
-		try
+		String message = Sentences.CONDITIONS.getSentence();
+		if(Sender.sendMessage(privateChatId,message))
 		{
-			doc = Jsoup.connect(Main.getUrl() + "/sendMessage" + "?chat_id=" + privateChatId + "&text=" + message).ignoreContentType(true).post();
-			if (doc.text().contains("\"ok\":true"))
-			{
-				Log.info("Messaggio inviato: " + message.split("&")[0]);
-				return true;
-			}
-			else
-			{
-				Log.error("Messaggio non inviato: " + doc.text());
-				return false;
-			}
+			Log.info("Condizioni inviate");
+			return true;
 		}
-		catch (IOException e)
+		else
 		{
-			Log.error("Condizioni non inviate");
+			Log.info("Condizioni non inviate");
 			return false;
 		}
+
 	}
 }

@@ -46,7 +46,8 @@ public class Setting extends LogFileManager
 		addSetting("Private_Key", "server.key", "WebHookServer");
 		addSetting("Certificate_Password", "passwd", "WebHookServer");
 
-		addSetting("Country", "EN" , "Language");
+		addSetting("Region", "EN" , "Language");
+		addSetting("Language", "en" , "Language");
 	}
 
 	/**

@@ -6,31 +6,29 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-/**
- * Created by Paolo on 01/11/2015.
- */
+
 public class SentencesLoader
 {
 	private static File file = new File("config/translation.json");
 	public static boolean loadSentences()
 	{
-		ArrayList<String> sentences = Sentences.getSentences();
-		JSONObject object = JsonManager.readJsonFromFile(file);
-		if(object!=null)
+		Locale enLocale = new Locale(Setting.readSetting("Language", "Language"), Setting.readSetting("Region", "Language"));
+		ResourceBundle bundle = ResourceBundle.getBundle("bot.translation.language", enLocale);
+		Enumeration enumratore = bundle.getKeys();
+		HashMap<String, String> sentences = Sentences.getSentences();
+		if(!enumratore.hasMoreElements())
+			return false;
+		while (enumratore.hasMoreElements())
 		{
-			JSONArray language = JsonManager.getArrayFromJson(object, Setting.readSetting("Country", "Language"));
-			if(language != null && language.size() > 0)
-			{
-				JSONObject object2 = (JSONObject) language.get(0);
-				sentences.add("null");
-				sentences.add((String) object2.get("MESSAGE_RECEIVED"));
-				sentences.add((String) object2.get("FROM"));
-				sentences.add((String) object2.get("NEW_USER"));
-				sentences.add((String) object2.get("HAS_CONNECTED"));
-			}
+			String key = (String) enumratore.nextElement();
+			String value = bundle.getString(key);
+			sentences.put(key,value);
 		}
-		return false;
+		return true;
 	}
 }

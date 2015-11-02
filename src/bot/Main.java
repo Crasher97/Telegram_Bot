@@ -3,6 +3,7 @@ package bot;
 import java.io.File;
 import java.util.ArrayList;
 
+import bot.telegramType.User;
 import bot.translation.Sentences;
 import bot.translation.SentencesLoader;
 import addons.Command;
@@ -202,25 +203,37 @@ public class Main
 		{
 			public void run()
 			{
-				if(msg.getText() == null)
-				{
-					Log.warn("Message empty received from " + msg.getSender_id() + " group[" + msg.getChat().getTitle()+ "]");
-					Sender.sendMessage(msg.getChat().getId(), "Error. Empty text", msg.getMessage_id());
-					return;
-				}
 				if (!UpdatesReader.checkUserExist(msg))
 				{
-					Log.info(Sentences.NEW_USER.getSentence()+" "+Sentences.HAS_CONNECTED.getSentence());
+					Log.info(Sentences.NEW_USER.getSentence() + " " + Sentences.HAS_CONNECTED.getSentence());
 				}
+				else
+				{
+					msg.setUser(Users.getUser(msg.getSender_id()));
+				}
+				if(checkConditions(msg))
+				{
+					if (msg.getText() == null)
+					{
+						Log.warn("Message empty received from " + msg.getSender_id() + " group[" + msg.getChat().getTitle() + "]");
+						Sender.sendMessage(msg.getChat().getId(), "Error. Empty text", msg.getMessage_id());
+						return;
+					}
 
-				if (isMaintenance() && !Owners.isOwner(msg.getSender_id()))
-				{
-					Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
-					Sender.sendMessage(msg.getSender_id(), "BOT IS IN MAINTENANCE");
+
+					if (isMaintenance() && !Owners.isOwner(msg.getSender_id()))
+					{
+						Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
+						Sender.sendMessage(msg.getSender_id(), "BOT IS IN MAINTENANCE");
+					}
+					else if (!UpdatesReader.isBanned(msg) && UpdatesReader.isCommand(msg))
+					{
+						Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+					}
 				}
-				else if (!UpdatesReader.isBanned(msg) && UpdatesReader.isCommand(msg))
+				else
 				{
-					Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
+					Sender.sendMessage(msg.getChat().getId() ,Sentences.MESSAGE_NOT_SENT.getSentence() + ": " + Sentences.CONDITION_REQUEST.getSentence() ,msg.getMessage_id());
 				}
 			}
 		});
@@ -248,29 +261,9 @@ public class Main
 	}
 
 	/**
-	 * Change bot ID
-	 *
-	 * @param botIdTmp
-	 * @return true if it has been changed
+	 * check if bot is in maintenance
+	 * @return true if it is in maintenance
 	 */
-	public static boolean setBotId(String botIdTmp)
-	{
-		if (botId != null)
-		{
-			botId = botIdTmp;
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Save actual configuration
-	 */
-	public static void saveConfiguration()
-	{
-		Setting.editSetting("Bot_ID", botId, "Main");
-	}
-
 	public static boolean isMaintenance()
 	{
 		return maintenance;
@@ -279,6 +272,25 @@ public class Main
 	public static void setMaintenance(boolean maintenance)
 	{
 		Main.maintenance = maintenance;
+	}
+
+	public static boolean checkConditions(Message msg)
+	{
+		String command = msg.getText();
+		if(command!=null)
+		{
+			command = msg.getText().split(" ")[0];
+			if(command.equals("/accept") || command.equals("/conditions"))
+			{
+				return true;
+			}
+		}
+		long timeFromLastAdvice = System.currentTimeMillis() - msg.getUser().getTimeFromLastTerms();
+		if(timeFromLastAdvice < 604800000 && timeFromLastAdvice > 0)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -309,6 +321,30 @@ public class Main
 	}
 
 	/**
+	 * Command accept. Accept terms of use for users.
+	 * @param msg
+	 */
+	public static void commandAcceptTerms(Message msg)
+	{
+		User usr = Users.getUser(msg.getSender_id());
+		if(usr != null)
+		{
+			usr.setTimeFromLastTerms(System.currentTimeMillis());
+			Log.info(usr.getSenderId() + " Has accepted terms and conditions");
+			Sender.sendMessage(msg.getSender_id(),"Terms and conditions accepted.(7 days)");
+		}
+	}
+
+	/**
+	 * Command accept. Accept terms of use for users.
+	 * @param msg
+	 */
+	public static void commandSendTerms(Message msg)
+	{
+		Sender.sendConditions(msg.getSender_id());
+	}
+
+	/**
 	 * Load basic commands for bot(through message)
 	 * Command alt
 	 * Command stop
@@ -316,12 +352,16 @@ public class Main
 	 */
 	public static void loadBasicCommands()
 	{
+		Command accept = new Command("accept", "bot.Main", "commandAcceptTerms");
+		Command sendTerms  = new Command("conditions", "bot.Main", "commandSendTerms");
 		Command alt = new Command("alt", "bot.Main", "commandAlt");
 		Command stop = new Command("stop", "bot.Main", "commandStop");
 		alt.setHidden(true);
 		stop.setHidden(true);
 		Commands.addCommand(alt);
 		Commands.addCommand(stop);
+		Commands.addCommand(accept);
+		Commands.addCommand(sendTerms);
 	}
 
 }

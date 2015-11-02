@@ -138,6 +138,15 @@ public class Message
 	}
 
 	/**
+	 * Set user.
+	 * @param user
+	 */
+	public void setUser(User user)
+	{
+		this.user = user;
+	}
+
+	/**
 	 * Return chat where message has been sent
 	 * @return chat
 	 */

@@ -9,10 +9,9 @@ public class User
 	private String first_name;
 	private String last_name;
 	private String username;
-	private int timeFromLastAdvice = -1;
+	private long timeFromLastTerms = -1;
 	private boolean ban = false;
 	private boolean register = false;
-
 	/**
 	 *	Create new user
 	 * @param senderId
@@ -63,14 +62,14 @@ public class User
 		this.username = username;
 	}
 
-	public int getTimeFromLastAdvice()
+	public long getTimeFromLastTerms()
 	{
-		return timeFromLastAdvice;
+		return timeFromLastTerms;
 	}
 
-	public void setTimeFromLastAdvice(int timeFromLastAdvice)
+	public void setTimeFromLastTerms(long timeFromLastAdvice)
 	{
-		this.timeFromLastAdvice = timeFromLastAdvice;
+		this.timeFromLastTerms = timeFromLastAdvice;
 	}
 
 	public boolean isRegister()
