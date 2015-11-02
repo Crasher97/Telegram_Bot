@@ -277,6 +277,7 @@ public class Main
 
 	public static boolean checkConditions(Message msg)
 	{
+		if(Owners.isOwner(msg.getSender_id()))return true;
 		String command = msg.getText();
 		if(command!=null)
 		{
