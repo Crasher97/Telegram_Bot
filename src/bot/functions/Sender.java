@@ -55,7 +55,7 @@ public class Sender
 
 			if (doc.text().contains("\"ok\":true"))
 			{
-				Log.info("Messaggio inviato: " + message.split("&")[0].substring(0,20) + "...");
+				Log.info("Messaggio inviato: " + message.split("&")[0].substring(0,50) + "...");
 				return true;
 			}
 			else
