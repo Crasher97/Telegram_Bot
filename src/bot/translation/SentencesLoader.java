@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 
 public class SentencesLoader
 {
-	private static File file = new File("config/translation.json");
 	public static boolean loadSentences()
 	{
 		Locale enLocale = new Locale(Setting.readSetting("Language", "Language"), Setting.readSetting("Region", "Language"));

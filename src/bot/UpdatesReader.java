@@ -197,14 +197,14 @@ public class UpdatesReader
 			}
 			else
 			{
-				Log.warn("Command NOT recognized "+Sentences.FROM.getSentence()+" [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name()  + " group[" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
+				Log.warn(Sentences.UNKNOWN_COMMAND.getSentence()+" "+Sentences.FROM.getSentence()+" [" + msg.getSender_id()+ "] " + msg.getFirst_name() + " " + msg.getLast_name()  + " group[" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
 				if(msg.getChat().getType().equals("group"))
 				{
-					Sender.sendMessage(msg.getChat().getId(), "Unknown command", msg.getMessage_id());
+					Sender.sendMessage(msg.getChat().getId(), Sentences.UNKNOWN_COMMAND.getSentence(), msg.getMessage_id());
 				}
 				else
 				{
-					Sender.sendMessage(msg.getChat().getId(), "Unknown command");
+					Sender.sendMessage(msg.getChat().getId(), Sentences.UNKNOWN_COMMAND.getSentence());
 				}
 				return false;
 			}
@@ -212,7 +212,6 @@ public class UpdatesReader
 		else
 		{
 
-			Log.info(Sentences.MESSAGE_RECEIVED.getSentence()+" "+Sentences.FROM.getSentence()+" [" + msg.getSender_id()+"] "+ msg.getFirst_name()+" "+msg.getLast_name() +" group[" + msg.getChat().getTitle() + "]"+ ": " + msg.getText());
 			if(msg.getChat().getType().equals("group"))
 			{
 				Sender.sendMessage(msg.getChat().getId(), SimSimi.toSimSimi(msg.getText()), msg.getMessage_id());

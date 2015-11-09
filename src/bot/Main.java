@@ -176,7 +176,7 @@ public class Main
 									if (file.delete())
 									{
 										DownloadedFileLogger.deleteFile(file.getName());
-										FileManager.writeFile(new File("DeleteLog"),"File " + file.getName() + " DELETED",true);
+										FileManager.writeFile(new File("log/DeleteLog.log"),"File " + file.getName() + " DELETED \n",true);
 										Log.info("File Deleted: " + file.getName());
 									}
 								}
@@ -186,7 +186,7 @@ public class Main
 					}
 					catch (Exception e)
 					{
-						Log.error("Error deleting file: %0A" + e.getStackTrace());
+						Log.error("Error deleting file: " + e.getStackTrace());
 					}
 				}
 			}
@@ -200,6 +200,7 @@ public class Main
 		{
 			public void run()
 			{
+				Log.info(Sentences.MESSAGE_RECEIVED.getSentence()+ " " + Sentences.FROM.getSentence() + " [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
 				if (!UpdatesReader.checkUserExist(msg))
 				{
 					Log.info(Sentences.NEW_USER.getSentence() + " " + Sentences.HAS_CONNECTED.getSentence());
@@ -212,15 +213,14 @@ public class Main
 				{
 					if (msg.getText() == null)
 					{
-						Log.warn("Message empty received from " + msg.getSender_id() + " group[" + msg.getChat().getTitle() + "]");
+						Log.warn(Sentences.EMPTY_MESSAGE.getSentence()+ " " + Sentences.FROM.getSentence() + " "+msg.getSender_id() + " group[" + msg.getChat().getTitle() + "]");
 						return;
 					}
 
 
 					if (isMaintenance() && !Owners.isOwner(msg.getSender_id()))
 					{
-						Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
-						Sender.sendMessage(msg.getSender_id(), "BOT IS IN MAINTENANCE");
+						Sender.sendMessage(msg.getSender_id(), Sentences.BOT_IS_IN_MAINTENANCE.getSentence());
 					}
 					else if (!UpdatesReader.isBanned(msg) && UpdatesReader.isCommand(msg))
 					{
@@ -229,7 +229,6 @@ public class Main
 				}
 				else
 				{
-					Log.info("Message received from [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
 					Sender.sendMessage(msg.getChat().getId() ,Sentences.MESSAGE_NOT_SENT.getSentence() + ": " + Sentences.CONDITION_REQUEST.getSentence() ,msg.getMessage_id());
 				}
 			}
