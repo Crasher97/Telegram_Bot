@@ -24,7 +24,7 @@ public class FileManager
 		BufferedWriter outputWriter;
 		try
 		{
-			outputWriter = new BufferedWriter(new FileWriter(file, true));
+			outputWriter = new BufferedWriter(new FileWriter(file, append));
 			outputWriter.write(toWrite);
 			outputWriter.newLine();
 			outputWriter.flush();

@@ -2,7 +2,6 @@ package bot;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import bot.functions.FileManager;
 import bot.telegramType.User;
 import bot.translation.Sentences;
@@ -29,9 +28,6 @@ public class Main
 
 	/**
 	 * Main method program starts here
-	 *
-	 * @param args botId   - get it from bot Father
-	 * @param args ownerId - your telegram id
 	 */
 	public static void main(String[] args)
 	{
