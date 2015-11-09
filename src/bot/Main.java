@@ -3,6 +3,7 @@ package bot;
 import java.io.File;
 import java.util.ArrayList;
 
+import bot.functions.FileManager;
 import bot.telegramType.User;
 import bot.translation.Sentences;
 import bot.translation.SentencesLoader;
@@ -103,8 +104,8 @@ public class Main
 				try
 				{
 					Messages.printLog();
+					Users.saveUsers();
 					Log.info("Terminated");
-
 				}
 				catch (Exception e)
 				{
@@ -179,8 +180,8 @@ public class Main
 									if (file.delete())
 									{
 										DownloadedFileLogger.deleteFile(file.getName());
-										IO.writeOUT("DeleteLog", "File " + file.getName() + " DELETED");
-										Log.info("File Deleted");
+										FileManager.writeFile(new File("DeleteLog"),"File " + file.getName() + " DELETED",true);
+										Log.info("File Deleted: " + file.getName());
 									}
 								}
 							}

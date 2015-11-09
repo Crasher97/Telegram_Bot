@@ -111,7 +111,7 @@ public class UploadedFileLogger extends LogFileManager
 		jsonFile.put("fileType", type.toString());
 		files.add(jsonFile);
 
-		FileManager.writeFile(file, gson.toJson(obj), false, true);
+		FileManager.writeFile(file, gson.toJson(obj), false);
 	}
 
 	/**

@@ -1,11 +1,11 @@
 package bot.collections;
 
-import bot.IO;
 import bot.Message;
+import bot.functions.FileManager;
 import bot.log.Log;
+import bot.translation.Sentences;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.File;
 
 public class Messages
 {
@@ -43,21 +43,18 @@ public class Messages
 
 	public static boolean printLog()
 	{
-		try
+		String printMessages = "";
+		for (int tmpIndex = 0; tmpIndex < index; tmpIndex++)
 		{
-			ArrayList<Message> printMessages = new ArrayList<Message>();
-			for (int tmpIndex = 0; tmpIndex < index; tmpIndex++)
-			{
-				printMessages.add(messages[tmpIndex]);
-			}
-			IO.writeOUT("Messageslog", printMessages);
+			printMessages += messages[tmpIndex].toString() + "\n";
+		}
+		if(FileManager.writeFile(new File("log/MessageLog.log"), printMessages, true))
+		{
+			Log.info(Sentences.MESSAGES_SAVED.getSentence());
 			return true;
 		}
-		catch (IOException e)
-		{
-			Log.stackTrace(e.getStackTrace());
-			return false;
-		}
+		Log.error(Sentences.MESSAGES_NOT_SAVED.getSentence());
+		return false;
 	}
 
 }

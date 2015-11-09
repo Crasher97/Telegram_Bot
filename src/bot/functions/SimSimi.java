@@ -1,4 +1,4 @@
-package bot;
+package bot.functions;
 
 import bot.log.Log;
 import org.json.simple.JSONObject;

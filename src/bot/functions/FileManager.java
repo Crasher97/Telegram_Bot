@@ -2,6 +2,7 @@ package bot.functions;
 
 import bot.log.Log;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,15 +19,16 @@ public class FileManager
 	 * @param append, true if you want to append the text. Else text before is deleted
 	 * @return true if file has been written
 	 */
-	public static boolean writeFile(File file, String toWrite, boolean append, boolean ignoreNullString)
+	public static boolean writeFile(File file, String toWrite, boolean append)
 	{
-		FileWriter outFile;
+		BufferedWriter outputWriter;
 		try
 		{
-			outFile = new FileWriter(file, append);
-			outFile.write(toWrite);
-			outFile.flush();
-			outFile.close();
+			outputWriter = new BufferedWriter(new FileWriter(file, true));
+			outputWriter.write(toWrite);
+			outputWriter.newLine();
+			outputWriter.flush();
+			outputWriter.close();;
 			return true;
 		}
 		catch (IOException e)
@@ -36,6 +38,8 @@ public class FileManager
 		}
 	}
 
+
+
 	/**
 	 * Write text inside a file. N.B PREVIOUS TEXT IS DELETED. STRING MUST BE NOT NULL OR EMPTY
 	 * @param file file to be written
@@ -44,6 +48,6 @@ public class FileManager
 	 */
 	public static boolean writeFile(File file, String toWrite)
 	{
-		return writeFile(file, toWrite, false, false);
+		return writeFile(file, toWrite, false);
 	}
 }

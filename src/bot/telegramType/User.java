@@ -11,7 +11,7 @@ public class User
 	private String username;
 	private long timeFromLastTerms = -1;
 	private boolean ban = false;
-	private boolean register = false;
+	private boolean subscrived = false;
 	/**
 	 *	Create new user
 	 * @param senderId
@@ -72,13 +72,13 @@ public class User
 		this.timeFromLastTerms = timeFromLastAdvice;
 	}
 
-	public boolean isRegister()
+	public boolean isSubscrived()
 	{
-		return register;
+		return subscrived;
 	}
 
-	public void setRegister()
+	public void setSubscrived(boolean subscrived)
 	{
-		register = !register;
+		this.subscrived = subscrived;
 	}
 }

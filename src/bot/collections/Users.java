@@ -6,6 +6,7 @@ import bot.Message;
 import bot.log.Log;
 import bot.functions.Sender;
 import bot.telegramType.User;
+import bot.translation.Sentences;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.simple.JSONObject;
@@ -91,6 +92,8 @@ public class Users
 			users.put("Last_Name", usr.getLast_name());
 			users.put("Username", usr.getUsername());
 			users.put("Ban", usr.isBan());
+			users.put("Conditions", usr.getTimeFromLastTerms());
+			users.put("Subscribed", usr.isSubscrived());
 			obj.put(usr.getSenderId(), users);
 
 			FileWriter outFile = new FileWriter(usersFile);
@@ -130,9 +133,13 @@ public class Users
 				String firstName = (String) user.get("First_Name");
 				String lastName = (String) user.get("Last_Name");
 				String username = (String) user.get("Username");
+				Long conditions = (Long) user.get("Conditions");
 				boolean ban = (Boolean) user.get("Ban");
+				boolean subscribed = (Boolean) user.get("Subscribed");
 				User newUser = new User(Long.parseLong(keyList.get(i)),firstName,lastName,username);
 				newUser.setBan(ban);
+				newUser.setSubscrived(subscribed);
+				newUser.setTimeFromLastTerms(conditions);
 				addUser(newUser);
 			}
 			Log.info("Users[" + i + "] have been loaded");
@@ -143,6 +150,41 @@ public class Users
 			return false;
 		}
 		return true;
+	}
+
+
+	public static boolean saveUsers()
+	{
+		try
+		{
+			JSONObject obj = new JSONObject();
+			ArrayList<Long> keyList = new ArrayList<Long>(users.keySet());
+			for(int i=0; i<keyList.size();i++)
+			{
+				User usr = users.get(keyList.get(i));
+				JSONObject users = new JSONObject();
+				users.put("First_Name", usr.getFirst_name());
+				users.put("Last_Name", usr.getLast_name());
+				users.put("Username", usr.getUsername());
+				users.put("Ban", usr.isBan());
+				users.put("Conditions", usr.getTimeFromLastTerms());
+				users.put("Subscribed", usr.isSubscrived());
+				obj.put(usr.getSenderId(), users);
+			}
+
+			FileWriter outFile = new FileWriter(usersFile,false);
+			outFile.write(gson.toJson(obj));
+			outFile.flush();
+			outFile.close();
+			Log.info(Sentences.USERS_SAVED.getSentence());
+			return true;
+		}
+		catch (IOException e)
+		{
+			Log.stackTrace(e.getStackTrace());
+			Log.error(Sentences.USERS_NOT_SAVED.getSentence());
+			return false;
+		}
 	}
 
 	/**

@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import bot.collections.Messages;
 import bot.collections.Users;
+import bot.functions.SimSimi;
 import bot.log.Log;
 import bot.functions.Sender;
 import bot.telegramType.Chat;

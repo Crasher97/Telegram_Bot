@@ -17,7 +17,11 @@ public enum Sentences
 	HAS_CONNECTED("has_connected"),
 	CONDITIONS("conditions1"),
 	CONDITION_REQUEST("conditions_request"),
-	MESSAGE_NOT_SENT("message_not_sent");
+	MESSAGE_NOT_SENT("message_not_sent"),
+	USERS_NOT_SAVED("users_not_saved"),
+	MESSAGES_NOT_SAVED("messages_not_saved"),
+	USERS_SAVED("users_saved"),
+	MESSAGES_SAVED("messages_saved");
 
 	private String sentence = "";
 	private static HashMap<String, String> sentences = new HashMap<String, String>();

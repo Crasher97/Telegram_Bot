@@ -20,7 +20,6 @@ public class LogFileManager
 	 */
 	public static boolean createLogFile(File file, String startingArray)
 	{
-
 		JSONObject obj = new JSONObject();
 		if (startingArray != null)
 		{

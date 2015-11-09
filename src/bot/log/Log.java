@@ -129,7 +129,7 @@ public class Log
 			System.err.println("Log.createLogFile, error creating log folder, delete file that name is log");
 			return;
 		}
-		FileManager.writeFile(logFile, "",true, true);
+		FileManager.writeFile(logFile, "",true);
 	}
 
 	/**
@@ -139,6 +139,6 @@ public class Log
 	 */
 	public static boolean addToLog(String x)
 	{
-		return FileManager.writeFile(logFile,x,true,false);
+		return FileManager.writeFile(logFile,x,true);
 	}
 }
