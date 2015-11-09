@@ -217,7 +217,6 @@ public class Main
 					if (msg.getText() == null)
 					{
 						Log.warn("Message empty received from " + msg.getSender_id() + " group[" + msg.getChat().getTitle() + "]");
-						Sender.sendMessage(msg.getChat().getId(), "Error. Empty text", msg.getMessage_id());
 						return;
 					}
 
