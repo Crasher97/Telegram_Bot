@@ -2,6 +2,8 @@ package bot;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import bot.functions.FileDownloader;
 import bot.functions.FileManager;
 import bot.telegramType.User;
 import bot.translation.Sentences;

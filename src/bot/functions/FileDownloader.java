@@ -3,15 +3,12 @@ package bot.functions;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
 import bot.log.DownloadedFileLogger;
 import bot.Main;
 import org.apache.commons.io.FileUtils;
-
 import com.github.axet.vget.VGet;
 import com.github.axet.vget.info.VGetParser;
 import com.github.axet.vget.vhs.YouTubeMPGParser;
-
 import bot.log.Log;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -59,14 +56,13 @@ public class FileDownloader
 	{
 		try
 		{
-			VGetParser user = null;
-			user = new YouTubeMPGParser();
 			VGet v = new VGet(new URL(url), new File("tmp/"));
+			VGetParser user = new YouTubeMPGParser();
 			v.download(user);
 			DownloadedFileLogger.addYoutubeLink(url, "tmp/" + v.getTarget().getName());
 			return v.getTarget().getName();
 		}
-		catch (Exception e)
+		catch (Exception | NoClassDefFoundError e)
 		{
 			Log.stackTrace(e.getStackTrace());
 			return null;

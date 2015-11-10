@@ -66,6 +66,10 @@ public class UploadedFileLogger extends LogFileManager
 				case AUDIO:
 				{
 					JSONObject document = (JSONObject) resultList.get("audio");
+					if(document==null)
+					{
+						document = (JSONObject) resultList.get("voice");
+					}
 					return (String) document.get("file_id");
 				}
 

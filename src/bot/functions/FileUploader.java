@@ -87,7 +87,6 @@ public class FileUploader
 				HttpEntity entity = response.getEntity();
 				String content = EntityUtils.toString(entity);
 				UploadedFileLogger.addToFileLog("tmp/" + fileName, content, UploadedFileLogger.Type.valueOf(fileType.toString()));
-
 				return true;
 			}
 			catch (IOException e)
