@@ -9,11 +9,10 @@ public class User
 	private String first_name;
 	private String last_name;
 	private String username;
-	private long timeFromLastTerms = -1;
-	private boolean ban = false;
-	private boolean subscrived = false;
+
 	/**
-	 *	Create new user
+	 * Create new user
+	 *
 	 * @param senderId
 	 * @param first_name
 	 * @param last_name
@@ -42,16 +41,6 @@ public class User
 		return last_name;
 	}
 
-	public boolean isBan()
-	{
-		return ban;
-	}
-
-	public void setBan(boolean ban)
-	{
-		this.ban = ban;
-	}
-
 	public String getUsername()
 	{
 		return username;
@@ -60,25 +49,5 @@ public class User
 	public void setUsername(String username)
 	{
 		this.username = username;
-	}
-
-	public long getTimeFromLastTerms()
-	{
-		return timeFromLastTerms;
-	}
-
-	public void setTimeFromLastTerms(long timeFromLastAdvice)
-	{
-		this.timeFromLastTerms = timeFromLastAdvice;
-	}
-
-	public boolean isSubscrived()
-	{
-		return subscrived;
-	}
-
-	public void setSubscrived(boolean subscrived)
-	{
-		this.subscrived = subscrived;
 	}
 }

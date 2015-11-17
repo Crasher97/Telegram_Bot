@@ -1,10 +1,11 @@
-package addons;
+package bot.collections;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
+import bot.botType.Command;
 import bot.log.Log;
-import bot.Message;
+import bot.botType.Message;
 import bot.functions.Sender;
 
 public class Help
@@ -17,9 +18,9 @@ public class Help
 	 */
 	public static void load()
 	{
-		Commands.addCommand(new Command("help", "addons.Help", "helpRequest"));
+		Commands.addCommand(new Command("help", "bot.collections.Help", "helpRequest"));
 		addHelp("help", "Do you need some help?");
-		Commands.addCommand(new Command("start", "addons.Help", "startRequest"));
+		Commands.addCommand(new Command("start", "bot.collections.Help", "startRequest"));
 	}
 
 	/**
@@ -43,7 +44,7 @@ public class Help
 		String args[] = msg.getText().split(" ");
 		if (args.length == 2)
 		{
-			Sender.sendMessage(msg.getSender_id(), helps.get(args[1]));
+			Sender.sendMessage(msg.getUserFrom().getSenderId(), helps.get(args[1]));
 		}
 		else
 		{
@@ -60,7 +61,7 @@ public class Help
 			}
 			if(msg.getChat().getType().equals("group"))
 			{
-				Sender.sendMessage(msg.getChat().getId(), message, msg.getMessage_id());
+				Sender.sendMessage(msg.getChat().getId(), message, msg.getMessageId());
 			}
 			else
 			{
@@ -90,6 +91,6 @@ public class Help
 	 */
 	public static void startRequest(Message message)
 	{
-		Sender.sendMessage(message.getSender_id(), "Faggots. faggots everywere. Try /help to list commands. Try /help %2Bcommand for help about command");
+		Sender.sendMessage(message.getUserFrom().getSenderId(), "Faggots. faggots everywere. Try /help to list commands. Try /help %2Bcommand for help about command");
 	}
 }

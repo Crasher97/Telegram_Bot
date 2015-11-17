@@ -7,7 +7,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import bot.log.Log;
-import bot.Message;
+import bot.botType.Message;
 
 public class JarFileLoader extends ClassLoader
 {

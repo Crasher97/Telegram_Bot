@@ -1,6 +1,6 @@
 package bot.collections;
 
-import bot.Message;
+import bot.botType.Message;
 import bot.functions.FileManager;
 import bot.log.Log;
 import bot.translation.Sentences;

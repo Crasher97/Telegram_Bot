@@ -1,10 +1,10 @@
 package bot.functions;
 
+import bot.log.Log;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.json.simple.JSONObject;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.io.IOException;
 public class JsonManager
 {
 	/**
-	 * Read json from file
+	 * Read json from file then put it inside a JSONObject
 	 * @param file
 	 * @return the contenent of the file in JSONObject
 	 */
@@ -28,6 +28,26 @@ public class JsonManager
 		catch (ParseException | IOException e)
 		{
 			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Read json from String, then put it inside a JSONObject.
+	 * @param str , String to be converted to JSONObject
+	 * @return the contenent of the file in JSONObject
+	 */
+	public static JSONObject getJsonFromString(String str)
+	{
+		JSONParser parser = new JSONParser();
+		try
+		{
+			JSONObject obj = (JSONObject) parser.parse(str);
+			return obj;
+		}
+		catch (ParseException e)
+		{
+			Log.stackTrace(e.getStackTrace());
 			return null;
 		}
 	}

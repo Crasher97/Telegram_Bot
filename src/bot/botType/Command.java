@@ -1,4 +1,4 @@
-package addons;
+package bot.botType;
 
 public class Command
 {

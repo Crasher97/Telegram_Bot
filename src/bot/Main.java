@@ -2,15 +2,15 @@ package bot;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import bot.functions.FileDownloader;
+import bot.UpdateReader.UpdatesReader;
+import bot.UpdateReader.Validator;
+import bot.botType.Message;
 import bot.functions.FileManager;
-import bot.telegramType.User;
 import bot.translation.Sentences;
 import bot.translation.SentencesLoader;
-import addons.Command;
-import addons.Commands;
-import addons.Help;
+import bot.botType.Command;
+import bot.collections.Commands;
+import bot.collections.Help;
 import addons.JarFileLoader;
 import bot.collections.Messages;
 import bot.collections.Owners;
@@ -202,36 +202,34 @@ public class Main
 		{
 			public void run()
 			{
-				Log.info(Sentences.MESSAGE_RECEIVED.getSentence()+ " " + Sentences.FROM.getSentence() + " [" + msg.getSender_id() + "] " + msg.getFirst_name() + " " + msg.getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
-				if (!UpdatesReader.checkUserExist(msg))
+				Log.info(Sentences.MESSAGE_RECEIVED.getSentence()+ " " + Sentences.FROM.getSentence() + " [" + msg.getUserFrom().getSenderId() + "] " + msg.getUserFrom().getFirst_name() + " " + msg.getUserFrom().getLast_name() + " group[" + msg.getChat().getTitle() + "]" + ": " + msg.getText());
+
+				if (!Validator.checkUserExist(msg))
 				{
 					Log.info(Sentences.NEW_USER.getSentence() + " " + Sentences.HAS_CONNECTED.getSentence());
 				}
-				else
-				{
-					msg.setUser(Users.getUser(msg.getSender_id()));
-				}
+
 				if(checkConditions(msg))
 				{
 					if (msg.getText() == null)
 					{
-						Log.warn(Sentences.EMPTY_MESSAGE.getSentence()+ " " + Sentences.FROM.getSentence() + " "+msg.getSender_id() + " group[" + msg.getChat().getTitle() + "]");
+						Log.warn(Sentences.EMPTY_MESSAGE.getSentence()+ " " + Sentences.FROM.getSentence() + " "+msg.getUserFrom().getSenderId() + " group[" + msg.getChat().getTitle() + "]");
 						return;
 					}
 
 
-					if (isMaintenance() && !Owners.isOwner(msg.getSender_id()))
+					if (isMaintenance() && !Owners.isOwner(msg.getUserFrom().getSenderId()))
 					{
-						Sender.sendMessage(msg.getSender_id(), Sentences.BOT_IS_IN_MAINTENANCE.getSentence());
+						Sender.sendMessage(msg.getChat().getId(), Sentences.BOT_IS_IN_MAINTENANCE.getSentence());
 					}
-					else if (!UpdatesReader.isBanned(msg) && UpdatesReader.isCommand(msg))
+					else if (!Validator.isBanned(msg) && Validator.isCommand(msg))
 					{
 						Commands.exeCommand(msg.getText().substring(1).split(" ")[0], msg);
 					}
 				}
 				else
 				{
-					Sender.sendMessage(msg.getChat().getId() ,Sentences.MESSAGE_NOT_SENT.getSentence() + ": " + Sentences.CONDITION_REQUEST.getSentence() ,msg.getMessage_id());
+					Sender.sendMessage(msg.getChat().getId() ,Sentences.MESSAGE_NOT_SENT.getSentence() + ": " + Sentences.CONDITION_REQUEST.getSentence() ,msg.getMessageId());
 				}
 			}
 		});
@@ -274,7 +272,7 @@ public class Main
 
 	public static boolean checkConditions(Message msg)
 	{
-		if(Owners.isOwner(msg.getSender_id()))return true;
+		if(Owners.isOwner(msg.getUserFrom().getSenderId()))return true;
 		String command = msg.getText();
 		if(command!=null)
 		{
@@ -284,7 +282,7 @@ public class Main
 				return true;
 			}
 		}
-		long timeFromLastAdvice = System.currentTimeMillis() - msg.getUser().getTimeFromLastTerms();
+		long timeFromLastAdvice = System.currentTimeMillis() - Users.getUser(msg.getUserFrom().getSenderId()).getTimeFromLastTerms();
 		if(timeFromLastAdvice < 604800000 && timeFromLastAdvice > 0)
 		{
 			return true;
@@ -299,7 +297,7 @@ public class Main
 	 */
 	public static void commandStop(Message msg)
 	{
-		if (Owners.isOwner(msg.getSender_id()))
+		if (Owners.isOwner(msg.getUserFrom().getSenderId()))
 		{
 			System.exit(0);
 		}
@@ -312,7 +310,7 @@ public class Main
 	 */
 	public static void commandAlt(Message msg)
 	{
-		if (Owners.isOwner(msg.getSender_id()))
+		if (Owners.isOwner(msg.getUserFrom().getSenderId()))
 		{
 			setMaintenance(!isMaintenance());
 			Log.config("Maintenance mode: " + isMaintenance());
@@ -325,12 +323,12 @@ public class Main
 	 */
 	public static void commandAcceptTerms(Message msg)
 	{
-		User usr = Users.getUser(msg.getSender_id());
+		bot.botType.User usr = Users.getUser(msg.getUserFrom().getSenderId());
 		if(usr != null)
 		{
 			usr.setTimeFromLastTerms(System.currentTimeMillis());
 			Log.info(usr.getSenderId() + " Has accepted terms and conditions");
-			Sender.sendMessage(msg.getSender_id(),"Terms and conditions accepted.(7 days)");
+			Sender.sendMessage(msg.getUserFrom().getSenderId(),"Terms and conditions accepted.(7 days)");
 		}
 	}
 
@@ -340,7 +338,7 @@ public class Main
 	 */
 	public static void commandSendTerms(Message msg)
 	{
-		Sender.sendConditions(msg.getSender_id());
+		Sender.sendConditions(msg.getUserFrom().getSenderId());
 	}
 
 	/**

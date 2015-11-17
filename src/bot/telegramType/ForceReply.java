@@ -1,15 +1,15 @@
 package bot.telegramType;
 
 /**
- * Created by Utente on 13/10/2015.
+ * Created by Paolo on 15/11/2015.
  */
-public class ReplyKeyboardHide
+public class ForceReply
 {
 	private boolean selective = true;
 
-	public ReplyKeyboardHide(boolean selective)
+	public ForceReply(boolean selective)
 	{
-		 this.selective = selective;
+		this.selective = selective;
 	}
 
 	public boolean isSelective()
@@ -22,7 +22,7 @@ public class ReplyKeyboardHide
 		this.selective = selective;
 	}
 
-	public boolean isHIDEKEYBOARD()
+	public boolean isForceReply()
 	{
 		return true;
 	}

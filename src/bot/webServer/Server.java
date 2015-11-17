@@ -1,6 +1,8 @@
 package bot.webServer;
 
 import bot.*;
+import bot.UpdateReader.UpdatesReader;
+import bot.botType.Message;
 import bot.log.Log;
 import fi.iki.elonen.NanoHTTPD;
 import org.apache.commons.ssl.KeyMaterial;

@@ -1,11 +1,13 @@
-package addons;
+package bot.collections;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
+import bot.botType.Command;
+import addons.JarFileLoader;
 import bot.log.Log;
-import bot.Message;
+import bot.botType.Message;
 
 public class Commands
 {

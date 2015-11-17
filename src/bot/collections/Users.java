@@ -1,18 +1,16 @@
 package bot.collections;
 
-import addons.Command;
-import addons.Commands;
-import bot.Message;
+import bot.botType.Command;
+import bot.botType.Message;
 import bot.log.Log;
 import bot.functions.Sender;
-import bot.telegramType.User;
+import bot.botType.User;
 import bot.translation.Sentences;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -152,7 +150,10 @@ public class Users
 		return true;
 	}
 
-
+	/**
+	 * Save all users in file
+	 * @return true if users have been saved
+	 */
 	public static boolean saveUsers()
 	{
 		try
@@ -203,7 +204,7 @@ public class Users
 	 */
 	public static void banUser(Message msg)
 	{
-		if (msg.getText() != null && Owners.isOwner(msg.getSender_id()))
+		if (msg.getText() != null && Owners.isOwner(msg.getUserFrom().getSenderId()))
 		{
 			String[] text = msg.getText().split(" ");
 			if (text.length >= 2)
@@ -216,7 +217,7 @@ public class Users
 				}
 				else if (msg.getChat().getType().equals("group"))
 				{
-					Sender.sendMessage(msg.getChat().getId(), "User doesn't exist", msg.getMessage_id());
+					Sender.sendMessage(msg.getChat().getId(), "User doesn't exist", msg.getUserFrom().getSenderId());
 				}
 				else
 				{
@@ -227,7 +228,7 @@ public class Users
 			{
 				if (msg.getChat().getType().equals("group"))
 				{
-					Sender.sendMessage(msg.getChat().getId(), "Bad parameter", msg.getMessage_id());
+					Sender.sendMessage(msg.getChat().getId(), "Bad parameter", msg.getUserFrom().getSenderId());
 				}
 				else
 				{

@@ -1,6 +1,7 @@
 package bot;
 
-import addons.Commands;
+import bot.collections.Commands;
+import bot.botType.Message;
 import bot.collections.Users;
 import bot.functions.FileDownloader;
 import bot.functions.Keyboard;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import addons.Help;
+import bot.collections.Help;
 
 
 public class Console
@@ -196,34 +197,6 @@ public class Console
 			public void run(String[] args)
 			{
 				Main.setMaintenance(!Main.isMaintenance());
-			}
-
-			@Override
-			public void run()
-			{
-			}
-		});
-
-		addCommand("msg", new ConsoleCommandCode()
-		{
-			@Override
-			public void run(String[] args)
-			{
-				if (args.length > 1)
-				{
-					Message msg = new Message(0, 0, 84985065, "Paolo", "TEST", "pbono", new Date(), args[0] + " " + args[1], new Chat(84985065, null, null, null, null, null));
-					Commands.exeCommand(args[0], msg);
-				}
-				else if (args.length == 0)
-				{
-					return;
-				}
-				else
-				{
-					Message msg = new Message(0, 0, 84985065, "Paolo", "TEST", "pbono", new Date(), args[0], new Chat(84985065, null, null, null, null, null));
-					Commands.exeCommand(args[0], msg);
-				}
-
 			}
 
 			@Override
