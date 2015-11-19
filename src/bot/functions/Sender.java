@@ -76,6 +76,52 @@ public class Sender
 
 	}
 
+	public enum ChatAction
+	{
+		UPLOADING_PHOTO, UPLOADING_AUDIO, UPLOADING_VIDEO, UPLOADING_DOCUMENT
+	}
+
+	public static boolean sendChatAction(ChatAction chatAction, long chatId)
+	{
+
+		String action = "";
+		switch (chatAction)
+		{
+			case UPLOADING_PHOTO:
+			{
+				action = "upload_photo";
+			}
+			break;
+
+			case UPLOADING_AUDIO:
+			{
+				action = "upload_audio";
+			}
+			break;
+
+			case UPLOADING_VIDEO:
+			{
+				action = "upload_video";
+			}
+			break;
+
+			case UPLOADING_DOCUMENT:
+			{
+				action = "upload_document";
+			}
+		}
+		try
+		{
+			Jsoup.connect(Main.getUrl() + "/sendChatAction" + "?chat_id=" + chatId + "&action=" + action).ignoreContentType(true).post();
+		}
+		catch (IOException e)
+		{
+			Log.stackTrace(e.getStackTrace());
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Send bot condition to be accepted by user
 	 * @return true if message has been sent

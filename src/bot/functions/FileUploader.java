@@ -16,66 +16,76 @@ import bot.Main;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.attribute.FileAttributeView;
 
 /**
  * Uploads file
  */
 public class FileUploader
 {
+	private static final String METHOD_SEND_PHOTO = "/sendPhoto";
+	private static final String METHOD_SEND_VIDEO = "/sendVideo";
+	private static final String METHOD_SEND_AUDIO = "/sendAudio";
+	private static final String METHOD_SEND_DOC = "/sendDocument";
+
+
 	public enum FileType
 	{
 		PHOTO, AUDIO, VIDEO, DOCUMENT
 	}
 
 	/**
-	 * Send files
-	 *
-	 * @param fileName
+	 * Send files to specified chat in telegram
+	 * @param file
 	 * @param chatId where file has to be sent.
 	 * @param fileType {PHOTO, AUDIO, VIDEO, DOCUMENT}
 	 * @return true if file has been sent
 	 */
-	public static boolean uploadFile(String fileName, long chatId, FileType fileType)
+	public static boolean uploadFile(File file, long chatId, FileType fileType)
 	{
 		String urlMethod = "";
 		String urlParameter = "";
+		String additionalInformation = "";
 		switch (fileType)
 		{
 			case PHOTO:
 			{
-				urlMethod = "/sendPhoto";
+				urlMethod = METHOD_SEND_PHOTO;
 				urlParameter = "photo";
+				Sender.sendChatAction(Sender.ChatAction.UPLOADING_PHOTO, chatId);
 			}
 			break;
 
 			case AUDIO:
 			{
-				urlMethod = "/sendAudio";
+				urlMethod = METHOD_SEND_AUDIO;
 				urlParameter = "audio";
+				Sender.sendChatAction(Sender.ChatAction.UPLOADING_AUDIO, chatId);
 			}
 			break;
 
 			case VIDEO:
 			{
-				urlMethod = "/sendVideo";
+				urlMethod = METHOD_SEND_VIDEO;
 				urlParameter = "video";
+				Sender.sendChatAction(Sender.ChatAction.UPLOADING_VIDEO, chatId);
 			}
 			break;
 
 			case DOCUMENT:
 			{
-				urlMethod = "/sendDocument";
+				urlMethod = METHOD_SEND_DOC;
 				urlParameter = "document";
+				Sender.sendChatAction(Sender.ChatAction.UPLOADING_DOCUMENT, chatId);
 			}
 		}
 
-		String file_id = UploadedFileLogger.getFileId("tmp/" + fileName);
+		String file_id = UploadedFileLogger.getFileId("tmp/" + file.getName());
 		if (file_id == null)
 		{
 			HttpClient httpclient = HttpClientBuilder.create().build();
 			HttpPost httpPost = new HttpPost("https://api.telegram.org/bot" + Main.getIdCode() + urlMethod + "?chat_id=" + chatId);
 
-			File file = new File("tmp/" + fileName);
 			FileBody uploadFilePart = new FileBody(file);
 			MultipartEntityBuilder reqEntity = MultipartEntityBuilder.create();
 			reqEntity.addPart(urlParameter, uploadFilePart);
@@ -86,7 +96,7 @@ public class FileUploader
 				HttpResponse response = httpclient.execute(httpPost);
 				HttpEntity entity = response.getEntity();
 				String content = EntityUtils.toString(entity);
-				UploadedFileLogger.addToFileLog("tmp/" + fileName, content, UploadedFileLogger.Type.valueOf(fileType.toString()));
+				UploadedFileLogger.addToFileLog("tmp/" + file.getName(), content, UploadedFileLogger.Type.valueOf(fileType.toString()));
 				return true;
 			}
 			catch (IOException e)

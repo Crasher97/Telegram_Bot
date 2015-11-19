@@ -81,4 +81,9 @@ public class UpdateSplitter
 
 		msg.setUserFrom(new User(sender_id, first_name, last_name, username));
 	}
+
+	public void getUserLeftChat()
+	{
+
+	}
 }
