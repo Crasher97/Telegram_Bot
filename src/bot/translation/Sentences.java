@@ -25,7 +25,10 @@ public enum Sentences
 	MESSAGES_SAVED("messages_saved"),
 	BOT_IS_IN_MAINTENANCE("bot_is_maintenance"),
 	EMPTY_MESSAGE("empty_message"),
-	UNKNOWN_COMMAND("unknown_command");
+	UNKNOWN_COMMAND("unknown_command"),
+	NOT_WAITING_PARAM("not_waiting_param"),
+	WAITING_FOR_OCOMMAND("waiting_for_Ocommand"),
+	OPERATION_DELETED("operation_deleted");
 
 	private String sentence = "";
 	private static HashMap<String, String> sentences = new HashMap<String, String>();

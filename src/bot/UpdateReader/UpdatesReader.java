@@ -72,6 +72,9 @@ public class UpdatesReader
 				//INFO ABOUT SENDER
 				splitter.getUserInfo();
 
+				if(Validator.isCommand(msg))msg.setMessageType(Message.MessageType.COMMAND);
+				else if(Validator.isParam(msg))msg.setMessageType(Message.MessageType.PARAM);
+				else msg.setMessageType(Message.MessageType.TEXT);
 
 				//AGGIUNGE IL MESSAGGIO ALLA RACCOLTA
 				Messages.addMessage(msg);
@@ -100,16 +103,20 @@ public class UpdatesReader
 	@SuppressWarnings("unchecked")
 	public static Message webhookParseJSON(String receivedJSON)
 	{
-		Message message = new Message();
+		Message msg = new Message();
 
 		JSONObject jsonObject = JsonManager.getJsonFromString(receivedJSON);
-		UpdateSplitter split = new UpdateSplitter(jsonObject, message);
+		UpdateSplitter split = new UpdateSplitter(jsonObject, msg);
 		split.getMessageInfo();
 		split.getUserInfo();
 		split.getChatInfo();
 
+		if(Validator.isCommand(msg))msg.setMessageType(Message.MessageType.COMMAND);
+		else if(Validator.isParam(msg))msg.setMessageType(Message.MessageType.PARAM);
+		else msg.setMessageType(Message.MessageType.TEXT);
+
 		if (jsonObject != null)
-			return message;
+			return msg;
 		return null;
 	}
 

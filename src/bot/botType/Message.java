@@ -7,8 +7,12 @@ import java.util.Date;
 public class Message extends bot.telegramType.Message
 {
 	private long update_id;
-
 	private static DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	private MessageType messageType;
+	public enum MessageType
+	{
+		COMMAND, PARAM, TEXT;
+	}
 
 	public Message()
 	{
@@ -30,6 +34,16 @@ public class Message extends bot.telegramType.Message
 		return update_id;
 	}
 
+	public MessageType getMessageType()
+	{
+		return messageType;
+	}
+
+	public void setMessageType(MessageType messageType)
+	{
+		this.messageType = messageType;
+	}
+
 	/**
 	 * Ritorna la data sotto forma di stringa
 	 *
@@ -41,13 +55,13 @@ public class Message extends bot.telegramType.Message
 		return formatoData.format(date);
 	}
 
-	/*
+	/**
 	 * toString restituisce una string contenente tutte le informazioni in sequenza
-	 *
+	 */
 	@Override
 	public String toString()
 	{
 		return getUpdate_id() + " " + getMessageId() + " " + getUserFrom().getSenderId() + " " + getUserFrom().getFirst_name() + " " + getUserFrom().getLast_name() + " " + dataToString(getDate()) + " " + getText();
 	}
-	*/
+
 }

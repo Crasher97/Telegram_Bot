@@ -78,7 +78,7 @@ public class Sender
 
 	public enum ChatAction
 	{
-		UPLOADING_PHOTO, UPLOADING_AUDIO, UPLOADING_VIDEO, UPLOADING_DOCUMENT
+		UPLOADING_PHOTO, UPLOADING_AUDIO, UPLOADING_VIDEO, UPLOADING_DOCUMENT, WRITING_MESSAGE
 	}
 
 	public static boolean sendChatAction(ChatAction chatAction, long chatId)
@@ -108,6 +108,11 @@ public class Sender
 			case UPLOADING_DOCUMENT:
 			{
 				action = "upload_document";
+			}
+
+			case WRITING_MESSAGE:
+			{
+				action = "typing";
 			}
 		}
 		try

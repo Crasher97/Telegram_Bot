@@ -81,4 +81,9 @@ public class Commands
 	{
 		return commands;
 	}
+
+	public static Command getCommand(String command)
+	{
+		return commands.get(command);
+	}
 }
