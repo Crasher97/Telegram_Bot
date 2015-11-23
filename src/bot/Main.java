@@ -27,7 +27,7 @@ public class Main
 	private static String url = "https://api.telegram.org/bot";
 	private static boolean maintenance = false;
 	private static final long TERMS_TIME = 315400000 *100;
-	private static final int UPDATE_TIME = Integer.parseInt(Setting.readSetting("Update_Frequence","Main"));
+	private static int UPDATE_TIME;
 
 	/**
 	 * Main method program starts here
@@ -35,6 +35,8 @@ public class Main
 	public static void main(String[] args)
 	{
 		Setting.createSettingFile();
+		UPDATE_TIME = Integer.parseInt(Setting.readSetting("Update_Frequence","Main"));
+		System.out.println("DEBUGGATE IL DEBUG!");
 		if (!Setting.settingExist("Bot_ID", "Main") || Setting.readSetting("Bot_ID", "Main").equals(""))
 		{
 			Log.error("WRONG CONFIGURATION: you can configure your bot in file setting inside folder config");
@@ -366,7 +368,7 @@ public class Main
 		if (command != null)
 		{
 			command = msg.getText().split(" ")[0];
-			if (command.equals("/accept") || command.equals("/conditions"))
+			if (command.equals("accept") || command.equals("conditions"))
 			{
 				return true;
 			}
