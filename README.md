@@ -3,7 +3,7 @@ This project is a bot based on addons.
 To get our project working you need to download from here(github) and then compile yourself.
 
 How to create your addon:
-1. Download code
+1. Download codes
 2. Open with you IDE
 3. Create a new module that has as dependency our code
 4. Create a class named "Main" that **implement** addons.Addon 
